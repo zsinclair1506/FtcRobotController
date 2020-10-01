@@ -21,6 +21,7 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.tel
  * Format: Version - Date Time Timezone Team Member
  *
  * Version 1.0 - 2020-10-1 3:05AM AEST Zac S.
+ * Version 1.0.1 - 2020-10-1 1:00PM AEST Zac S.
  */
 
 /**
@@ -28,6 +29,7 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.tel
  * Format: Version - Date Time Timezone Team Member
  *
  * Version 1.0 - 2020-10-1 4:02AM AEST Zac S.
+ * Version 1.0.1 - 2020-10-1
  */
 
 @TeleOp (name="XDrive-Beta1", group="XDrive Beta")
@@ -45,35 +47,59 @@ public class XDrive extends Drivebase {
     void drive() {
         telemetry.addData("Function", "Driving");
         // I understand that I didn't consider putting left-right and forward-back controls into one method
-        if (gamepad1.left_stick_y != 0) {
+        do {
             zAxisPower = gamepad1.left_stick_y;
             frontLeft.setPower(zAxisPower);
             frontRight.setPower(-zAxisPower);
             backLeft.setPower(zAxisPower);
             backRight.setPower(-zAxisPower);
-        } else if (gamepad1.left_stick_x != 0) {
+        } while (gamepad1.left_stick_y != 0);
+
+        do {
             xAxisPower = gamepad1.left_stick_x;
             frontLeft.setPower(xAxisPower);
             frontRight.setPower(xAxisPower);
             backLeft.setPower(-xAxisPower);
             backRight.setPower(-xAxisPower);
-        } else {
-            frontLeft.setPower(0);
-            frontRight.setPower(0);
-            backLeft.setPower(0);
-            backRight.setPower(0);
-        }
+        } while (gamepad1.left_stick_x != 0);
+
     } // I am not sure if either method is going to work as intended, or if they are around the wrong way
     // I can't test if this is the case, because I don't have the materials (Expansion Hub, Battery and 1 DC Motor)
 
     @Override
     void rotate() {
         telemetry.addData("Function", "Rotating");
-        if (gamepad1.right_stick_x != 0) {
+        do {
             frontLeft.setPower(xAxisPower);
             frontRight.setPower(xAxisPower);
             backLeft.setPower(xAxisPower);
             backRight.setPower(xAxisPower);
+        }while (gamepad1.right_stick_x != 0);
+    }
+
+    @Override
+    void halt() {
+            frontLeft.setPower(0);
+            frontRight.setPower(0);
+            backLeft.setPower(0);
+            backRight.setPower(0);
+    }
+
+    @Override
+    public void runOpMode() {
+        telemetry.addData("Status: ", "Initialized");
+        telemetry.update();
+        // Wait for the game to start (driver presses PLAY)
+        waitForStart();
+
+        while (opModeIsActive()) {
+            if (gamepad1.left_stick_y != 0 || gamepad1.left_stick_x != 0) {
+                drive();
+            }else if (gamepad1.right_stick_x != 0){
+                rotate();
+            }else if (gamepad1.a){
+                halt();
+            }
         }
     }
 }

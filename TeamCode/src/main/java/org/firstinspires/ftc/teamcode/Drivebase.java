@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-public abstract class Drivebase {
+public abstract class Drivebase extends Robot{
 
     //The motors, again copied and renamed :)
     public DcMotor frontLeft;
@@ -27,11 +27,11 @@ public abstract class Drivebase {
     // abstract methods
     abstract void drive();
     abstract void rotate();
+    abstract void halt();
 
     //concrete method
     void motorStats() {
         // I forgot what I need to put here and don't really care right now [2020-10-1 2:50 AEST]
         // I remembered what to put here - TELEMETRY, still don't care though [2020-10-1 3:11AM AEST]
     }
-
 }
