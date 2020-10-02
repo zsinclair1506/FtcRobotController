@@ -1,105 +1,39 @@
 package org.firstinspires.ftc.teamcode;
 
-// Again, I copied the imports, originally, these were in RobotTest4
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.*;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
-import com.qualcomm.robotcore.hardware.Gamepad;
-import org.firstinspires.ftc.robotcore.external.Telemetry;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
+import org.firstinspires.ftc.teamcode.lib.RotationDirection;
 
 
-/**
- * Version Start Date and Time
- * Format: Version - Date Time Timezone Team Member
- *
- * Version 1.0 - 2020-10-1 3:05AM AEST Zac S.
- * Version 1.0.1 - 2020-10-1 1:00PM AEST Zac S.
- */
+public class XDrive extends DriveBase {
 
-/**
- * Version Finish Date and Time
- * Format: Version - Date Time Timezone Team Member
- *
- * Version 1.0 - 2020-10-1 4:02AM AEST Zac S.
- * Version 1.0.1 - 2020-10-1
- */
 
-@TeleOp (name="XDrive-Beta1", group="XDrive Beta")
+    public XDrive(HardwareMap map) {
 
-public class XDrive extends Drivebase {
-    public XDrive(HardwareMap hardwareMap) {
-        super(hardwareMap);
-    }
-
-    // I know this is how Minecraft Coordinates work so I assume it carries over to real life
-    float xAxisPower; // East/ West
-    float zAxisPower; // North/ South
-
-    @Override
-    void drive() {
-        telemetry.addData("Function", "Driving");
-        // I understand that I didn't consider putting left-right and forward-back controls into one method
-        do {
-            zAxisPower = gamepad1.left_stick_y;
-            frontLeft.setPower(zAxisPower);
-            frontRight.setPower(-zAxisPower);
-            backLeft.setPower(zAxisPower);
-            backRight.setPower(-zAxisPower);
-        } while (gamepad1.left_stick_y != 0);
-
-        do {
-            xAxisPower = gamepad1.left_stick_x;
-            frontLeft.setPower(xAxisPower);
-            frontRight.setPower(xAxisPower);
-            backLeft.setPower(-xAxisPower);
-            backRight.setPower(-xAxisPower);
-        } while (gamepad1.left_stick_x != 0);
-
-    } // I am not sure if either method is going to work as intended, or if they are around the wrong way
-    // I can't test if this is the case, because I don't have the materials (Expansion Hub, Battery and 1 DC Motor)
-
-    @Override
-    void rotate() {
-        telemetry.addData("Function", "Rotating");
-        do {
-            frontLeft.setPower(xAxisPower);
-            frontRight.setPower(xAxisPower);
-            backLeft.setPower(xAxisPower);
-            backRight.setPower(xAxisPower);
-        }while (gamepad1.right_stick_x != 0);
+        this.motors.put("frontLeft", map.get(DcMotor.class, "frontLeft"));
+        this.motors.put("frontRight", map.get(DcMotor.class, "frontRight"));
+        this.motors.put("backRight", map.get(DcMotor.class, "backRight"));
+        this.motors.put("backLeft", map.get(DcMotor.class, "backLeft"));
     }
 
     @Override
-    void halt() {
-            frontLeft.setPower(0);
-            frontRight.setPower(0);
-            backLeft.setPower(0);
-            backRight.setPower(0);
+    public void DrivePower(float angle, float power) {
+
     }
 
     @Override
-    public void runOpMode() {
-        telemetry.addData("Status: ", "Initialized");
-        telemetry.update();
-        // Wait for the game to start (driver presses PLAY)
-        waitForStart();
+    public void DriveDistance(float angle, float distance) {
 
-        while (opModeIsActive()) {
-            if (gamepad1.left_stick_y != 0 || gamepad1.left_stick_x != 0) {
-                drive();
-            }else if (gamepad1.right_stick_x != 0){
-                rotate();
-            }else if (gamepad1.a){
-                halt();
-            }
-        }
+    }
+
+    @Override
+    public void RotateAngle(float angle, float power) {
+
+    }
+
+    @Override
+    public void RotateDirection(RotationDirection direction, float power) {
+
     }
 }
