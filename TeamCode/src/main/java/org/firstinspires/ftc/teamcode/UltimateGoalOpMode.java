@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
@@ -11,8 +12,7 @@ public class UltimateGoalOpMode extends OpMode
 {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-    private DcMotor leftDrive = null;
-    private DcMotor rightDrive = null;
+    private DcMotor testMotor;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -20,6 +20,8 @@ public class UltimateGoalOpMode extends OpMode
     @Override
     public void init() {
         telemetry.addData("Status", "Initialized");
+
+        testMotor = hardwareMap.get(DcMotor.class, "testMotor");
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
@@ -45,7 +47,16 @@ public class UltimateGoalOpMode extends OpMode
      */
     @Override
     public void loop() {
+        double power = gamepad1.right_stick_y;
 
+        if(power > 1){
+            power = 1;
+        }
+        else if(power < -1){
+            power = -1;
+        }
+
+        testMotor.setPower(power);
     }
 
     /*
