@@ -1,8 +1,8 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.robot;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.teamcode.lib.RotationDirection;
+import org.firstinspires.ftc.teamcode.robot.lib.RotationDirection;
 
 import java.util.HashMap;
 

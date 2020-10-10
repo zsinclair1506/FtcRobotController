@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.robot;
 
 /***
  * The class responsible for the running of the conveyor mechanism on the robot

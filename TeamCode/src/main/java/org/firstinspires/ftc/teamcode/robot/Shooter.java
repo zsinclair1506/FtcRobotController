@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.robot;
 
 /***
  * The class responsible for running and controlling the shooting mechanisms on the robot

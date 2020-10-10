@@ -1,6 +1,6 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.robot;
 
-import org.firstinspires.ftc.teamcode.lib.RotationDirection;
+import org.firstinspires.ftc.teamcode.robot.lib.RotationDirection;
 
 /***
  * this class is for the switcher mechanism on the robot

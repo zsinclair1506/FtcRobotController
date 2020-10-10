@@ -1,9 +1,9 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.robot;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.lib.RotationDirection;
+import org.firstinspires.ftc.teamcode.robot.lib.RotationDirection;
 
 
 public class XDrive extends DriveBase {
