@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 /***
- * this class is for the intake mechanism on the robot 
+ * this class is for the intake mechanism on the robot
  */
 
 public class Intake extends Mechanism {
@@ -11,27 +11,27 @@ public class Intake extends Mechanism {
      * runs the intake
      */
     public void Intake(){
-
+        Intake(1);
     }
 
     /***
-     * changing the speed of the intake
-     * @param power
+     * runs the intake with a certain @power
+     * @param power defines the speed of the intake
      */
     public void Intake(double power){
 
     }
 
     /***
-     * runs the eject
+     * spits out ring from the intake
      */
     public void Eject(){
-
+        Eject(1);
     }
 
     /***
-     * changing the speed of the eject
-     * @param power
+     * runs the eject with a certain @power
+     * @param power defines the speed of the intake
      */
     public void Eject(double power){
 
