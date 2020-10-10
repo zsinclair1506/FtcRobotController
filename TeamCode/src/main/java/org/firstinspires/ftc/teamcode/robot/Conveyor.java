@@ -1,11 +1,21 @@
 package org.firstinspires.ftc.teamcode.robot;
 
+import com.qualcomm.robotcore.hardware.HardwareMap;
+
 /***
  * The class responsible for the running of the conveyor mechanism on the robot
  */
 public class Conveyor extends Mechanism {
     //private ?? motor
     private Boolean ringPresent = false;
+
+    /***
+     * Conveyor constructor
+     * @param map the hardware map for the robot
+     */
+    public Conveyor(HardwareMap map){
+
+    }
 
     /***
      * Getter for checking if ring is in conveyor mechanism

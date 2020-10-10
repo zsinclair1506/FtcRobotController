@@ -1,11 +1,21 @@
 package org.firstinspires.ftc.teamcode.robot;
 
+import com.qualcomm.robotcore.hardware.HardwareMap;
+
 /***
  * this class is for the intake mechanism on the robot
  */
 
 public class Intake extends Mechanism {
     //Private ?? motors
+
+    /***
+     * Intake constructor
+     * @param map the hardware map of the robot
+     */
+    public Intake(HardwareMap map){
+
+    }
 
     /***
      * runs the intake

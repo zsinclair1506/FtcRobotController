@@ -12,9 +12,8 @@ public class XDrive extends DriveBase {
     /***
      *
      * @param map the hardware map of the robot/phone/expansion hub.
-     * @return the existing instance of the X DriveBase or a new instance on first time.
      */
-    public void XDrive (HardwareMap map) {
+    public XDrive (HardwareMap map) {
 
         this.motors.put("frontLeft", map.get(DcMotor.class, "frontLeft"));
         this.motors.put("frontRight", map.get(DcMotor.class, "frontRight"));

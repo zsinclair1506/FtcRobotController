@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.robot;
 
+import com.qualcomm.robotcore.hardware.HardwareMap;
+
 import org.firstinspires.ftc.teamcode.robot.lib.RotationDirection;
 
 /***
@@ -7,6 +9,14 @@ import org.firstinspires.ftc.teamcode.robot.lib.RotationDirection;
  */
 public class Switcher extends Mechanism {
     //Private ?? motors
+
+    /***
+     * Switcher constructor
+     * @param map hardware map of the robot
+     */
+    public Switcher(HardwareMap map){
+
+    }
 
     /***
      * pushes a ring in a certain direction

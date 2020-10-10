@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.robot;
 
+import com.qualcomm.robotcore.hardware.HardwareMap;
+
 import org.firstinspires.ftc.teamcode.robot.lib.RotationDirection;
 
 /***
@@ -7,6 +9,14 @@ import org.firstinspires.ftc.teamcode.robot.lib.RotationDirection;
  */
 public class WobbleArm extends Mechanism {
    //private ?? motors
+
+    /***
+     * Wobblearm constructor
+     * @param map hardware map of the robot
+     */
+    public WobbleArm(HardwareMap map){
+
+    }
 
     /***
      * Rotates the arm to a set @angle with a power
