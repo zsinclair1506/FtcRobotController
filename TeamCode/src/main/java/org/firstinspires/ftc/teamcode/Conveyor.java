@@ -5,7 +5,15 @@ package org.firstinspires.ftc.teamcode;
  */
 public class Conveyor extends Mechanism {
     //private ?? motor
-    //private ?? ringpresent
+    private Boolean ringPresent = false;
+
+    /***
+     * Getter for checking if ring is in conveyor mechanism
+     * @return True if ring is present in the mechanism
+     */
+    public boolean isRingPresent(){
+        return ringPresent;
+    }
 
     /***
      * Convey rings from the intake to the shooting mechanism, with a @power [0-1]
@@ -19,7 +27,7 @@ public class Conveyor extends Mechanism {
      * Conveys rings from the intake to the shooting mechanism with a preset power
      */
     public void Convey(){
-
+        Convey(1);
     }
 
 }

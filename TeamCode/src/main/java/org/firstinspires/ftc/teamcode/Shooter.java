@@ -18,7 +18,7 @@ public class Shooter extends Mechanism {
      * Shoots a ring with a preset power
      */
     public void Shoot() {
-
+    Shoot(1);
     }
 
     /***
