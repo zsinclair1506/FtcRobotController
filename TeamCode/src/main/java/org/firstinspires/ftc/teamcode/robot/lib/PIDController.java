@@ -20,10 +20,10 @@ public class PIDController
     private boolean m_enabled = false;      // is the pid controller enabled
     private double m_prevError = 0.0;       // the prior sensor input (used to compute velocity)
     private double m_totalError = 0.0;      // the sum of the errors for use in the integral calc
-    private double m_tolerance = 1.0;      // the percentage error that is considered on target
-    private double m_setpoint = 0.0;
-    private double m_error = 0.0;
-    private double m_result = 0.0;
+    private double m_tolerance = 1.0;       // the percentage error that is considered on target
+    private double m_setpoint = 0.0;        // the desired output of the PID
+    private double m_error = 0.0;           // the difference between current and desired output
+    private double m_result = 0.0;          // the calculated result
 
     /**
      * Allocate a PID object with the given constants for P, I, D
@@ -294,12 +294,10 @@ public class PIDController
      * Set the input value to be used by the next call to performPID().
      * @param input Input value to the PID calculation.
      */
-    public void setInput(double input)
-    {
-        int     sign = 1;
+    public void setInput(double input) {
+        int sign = 1;
 
-        if (m_maximumInput > m_minimumInput)
-        {
+        if (m_maximumInput > m_minimumInput) {
             if (input < 0) sign = -1;
 
             if (Math.abs(input) > m_maximumInput)
@@ -308,8 +306,7 @@ public class PIDController
                 m_input = m_minimumInput * sign;
             else
                 m_input = input;
-        }
-        else
+        } else
             m_input = input;
     }
 }
