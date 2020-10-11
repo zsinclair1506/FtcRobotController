@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.robot.BlueSkyRobot;
 
 
-@TeleOp(name="Basic: Iterative OpMode", group="Iterative Opmode")
+@TeleOp(name="Single Motor Test", group="Robot Tests")
 public class UltimateGoalOpMode extends OpMode
 {
     // Declare OpMode members.
