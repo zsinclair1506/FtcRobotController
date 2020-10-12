@@ -28,6 +28,18 @@ public enum LogitechGamepadButtons {
     /***
      *
      */
+    STOW_ARM,
+
+    OPEN_CLAW,
+
+    /***
+     *
+     */
+    CLOSE_CLAW,
+
+    /***
+     *
+     */
     SORT_LEFT,
 
     /***
@@ -44,6 +56,21 @@ public enum LogitechGamepadButtons {
      *
      */
     SHOOT_LEFT,
+
+    /***
+     *
+     */
+    SWITCH_LEFT,
+
+    /***
+     *
+     */
+    SWITCH_RIGHT;
+
+    /***
+     *
+     */
+    RUN_CONVEYOR,
 
     private int buttonNum;
 
