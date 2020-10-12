@@ -6,7 +6,7 @@ package org.firstinspires.ftc.teamcode.robot;
 public enum LogitechGamepadButtons {
 
     /***
-     * 
+     *
      */
     START_INTAKE,
 
@@ -30,6 +30,9 @@ public enum LogitechGamepadButtons {
      */
     STOW_ARM,
 
+    /***
+     *
+     */
     OPEN_CLAW,
 
     /***
@@ -65,38 +68,10 @@ public enum LogitechGamepadButtons {
     /***
      *
      */
-    SWITCH_RIGHT;
+    SWITCH_RIGHT,
 
     /***
      *
      */
-    RUN_CONVEYOR,
-
-    private int buttonNum;
-
-    /***
-     * ???
-     * @param buttonNum
-     */
-    private LogitechGamepadButtons(int buttonNum)
-    {
-        setButtonNum(buttonNum);
-    }
-
-    /***
-     *
-     * @param buttonNum
-     * @return
-     */
-    public int getButtonNum(int buttonNum) {
-        return buttonNum;
-    }
-
-    /***
-     *
-     * @param buttonNum
-     */
-    public void setButtonNum(int buttonNum) {
-        this.buttonNum = buttonNum;
-    }
+    RUN_CONVEYOR
 }
