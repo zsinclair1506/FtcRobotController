@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.robot;
 /***
  * Class to define all the gamepad buttons.
  */
-public enum LogitechGamepadButtons {
+public enum GamepadButtons {
 
     /***
      *
