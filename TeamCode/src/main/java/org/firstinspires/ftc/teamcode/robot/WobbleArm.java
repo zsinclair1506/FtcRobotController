@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.robot;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.robot.lib.RotationDirection;
 
@@ -9,13 +10,14 @@ import org.firstinspires.ftc.teamcode.robot.lib.RotationDirection;
  */
 public class WobbleArm extends Mechanism {
    //private ?? motors
+    private Servo gripperServo;
 
     /***
      * Wobblearm constructor
      * @param map hardware map of the robot
      */
     public WobbleArm(HardwareMap map){
-
+        this.gripperServo = map.get(Servo.class, "gripperservo");
     }
 
     /***
@@ -48,7 +50,10 @@ public class WobbleArm extends Mechanism {
      * Closes the gripper on the arm
      */
    public void CloseGripper(){
-
+       /*
+            initial planning stage for the gripper
+            servo only supports set position, does not go to a certain point or spin continuous
+        */
    }
 
     /***
