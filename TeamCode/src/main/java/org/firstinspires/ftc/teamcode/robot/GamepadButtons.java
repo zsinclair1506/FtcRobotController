@@ -10,72 +10,57 @@ public enum GamepadButtons {
     /***
      *
      */
-    START_INTAKE(""),
+    START_INTAKE("dpad_up"),
 
     /***
      *
      */
-    STOP_INTAKE(""),
+    STOP_INTAKE("dpad_down"),
 
     /***
      *
      */
-    EXTEND_ARM(""),
+    EXTEND_ARM("y"),
 
     /***
      *
      */
-    RETRACT_ARM(""),
+    RETRACT_ARM("x"),
 
     /***
      *
      */
-    STOW_ARM(""),
+    OPEN_CLAW("a"),
 
     /***
      *
      */
-    OPEN_CLAW(""),
-
-    /***
-     *
-     */
-    CLOSE_CLAW(""),
+    CLOSE_CLAW("b"),
 
     /***
      * test
      */
-    SORT_LEFT(""),
+    SORT_LEFT("dpad_left"),
 
     /***
      *
      */
-    SORT_RIGHT(""),
+    SORT_RIGHT("dpad_right"),
 
     /***
      *
      */
-    SHOOT_RIGHT(""),
+    SHOOT_RIGHT("right_trigger"),
 
     /***
      *
      */
-    SHOOT_LEFT(""),
+    SHOOT_LEFT("left_trigger"),
 
     /***
      *
      */
-    SWITCH_LEFT(""),
-
-    /***
-     *
-     */
-    SWITCH_RIGHT(""),
-
-    /***
-     *
-     */
-    RUN_CONVEYOR("");
+    RUN_CONVEYOR("right_bumper");
 
     private GamepadButtons(String buttonName){
         this.buttonName = buttonName;
