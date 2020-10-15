@@ -22,10 +22,10 @@ public class GamepadWrapper {
 
     /***
      * Gets the value of the button @buttonName from the gamepad
-     * @param buttonName the button to get the value of
+     * @param buttonName the button to get the value of [eg "a" or "x"]
      * @return true if the button is pressed
      */
-    public boolean getButton(String buttonName) {//"a"
+    public boolean getButton(String buttonName) {
         try {
             Field button = gamepadClass.getField(buttonName);
             return (Boolean) button.get(gamepad);
@@ -37,7 +37,7 @@ public class GamepadWrapper {
 
     /***
      * Gets the value of the joystic @joystickAxis from the gamepad
-     * @param joystickAxis the joystick axis to get the value of
+     * @param joystickAxis the joystick axis to get the value of [eg "left_stick_y"]
      * @return float value of the joystick axis
      */
     public float getJoystick(String joystickAxis){
@@ -45,7 +45,7 @@ public class GamepadWrapper {
             Field joystick = gamepadClass.getField(joystickAxis);
             return (float) joystick.get(gamepad);
         } catch (NoSuchFieldException | IllegalAccessException e) {
-            //ignore exceptions, return false
+            //ignore exceptions, return 0
             return 0.0f;
         }
     }
