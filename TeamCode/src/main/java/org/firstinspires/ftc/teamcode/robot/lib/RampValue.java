@@ -11,15 +11,11 @@ public class RampValue {
     private int s_downDilation = 1;                 // dilation of the quadratic that decreases
     private double prevValue = 0.0;                 // previous value for calculating change
     private ElapsedTime time = new ElapsedTime();   // timer for timing functions
-    private double timeDelta = 0.0;                 // the time delta calculated from the timers
     private double maxRampAccel = 1.0;              // clamping accel for trapezoid
     private double origValue = 0.0;                 // starting value
     private RampMode rampMode;                      // the chosen ramp mode
     private double setPoint = 0.0;                  // the desired ending value
-    private double currentTime = 0.0;               // the current time since start
     private double prevTime = 0.0;                  // the time of the previous calculation
-
-    private double prevGradient = 0.0;              // the previous gradient of the up section
 
     /***
      * Constructor for no preset values
@@ -39,9 +35,9 @@ public class RampValue {
     public RampValue(RampMode mode, double maxRampAccel, double origValue, double setPoint,
                      int...dilations){
         this.rampMode = mode;
-        this.maxRampAccel = maxRampAccel;
-        this.origValue = origValue;
-        this.setPoint = setPoint;
+        this.maxRampAccel = Math.abs(maxRampAccel);
+        this.origValue = Math.abs(origValue);
+        this.setPoint = Math.abs(setPoint);
 
         if(dilations != null && dilations.length > 1){
             s_upDilation = 1 / dilations[1];
@@ -66,7 +62,7 @@ public class RampValue {
      * @param accel the maximum allowed acceleration
      */
     public void setMaxRampAccel(double accel){
-        this.maxRampAccel = accel;
+        this.maxRampAccel = Math.abs(accel);
     }
 
     /***
@@ -84,15 +80,15 @@ public class RampValue {
      * @param scurveDownDilation the dilation to set
      */
     public void setScurveDownDilation(int scurveDownDilation){
-        this.s_downDilation = scurveDownDilation;
+        this.s_downDilation = 1 / scurveDownDilation;
     }
 
     /***
      * Set the original input or starting value
-     * @param origInput the original or starting value
+     * @param origValue the original or starting value
      */
-    public void setOrigInput(double origInput){
-        this.origValue = origInput;
+    public void setOrigInput(double origValue){
+        this.origValue = Math.abs(origValue);
     }
 
     /***
@@ -100,7 +96,7 @@ public class RampValue {
      * @param setPoint the setpoint
      */
     public void setSetPoint(double setPoint){
-        this.setPoint = setPoint;
+        this.setPoint = Math.abs(setPoint);
     }
 
     /***
@@ -121,11 +117,6 @@ public class RampValue {
         return clamp(setPoint);
     }
 
-    /***
-     * Ramp up using the clamp method and the maximum.
-     * MUST be run in a loop.
-     * @return the expected value for the ramp at this time
-     */
     /***
      * Ramp up using the clamp method and the maximum. Limit acceleration to @maxRampAccel.
      * MUST be run in a loop.
@@ -160,15 +151,15 @@ public class RampValue {
         int sign = 1;
 
         // set up time values for calculation
-        currentTime = time.time();
-        timeDelta = currentTime - prevTime;
+        double currentTime = time.time();
+        double timeDelta = currentTime - prevTime;
 
         // set up sign value
         if(currentValue < 0){
             sign = -1;
         }
 
-        // all all calculations to be done in +ve space
+        // all calculations to be done in +ve space
         currentValue = Math.abs(currentValue);
 
         // choose how to set the current value based on ramp mode
@@ -180,28 +171,31 @@ public class RampValue {
 
                 break;
             case SCURVE: // smooth transition, controlled jerk
-                double expectedValue = 0.0;
+                double expectedValue;
 
                 // the gradient at which to swap between increasing velocity and decreasing velocity
-                double swapGradient = 2 * Math.sqrt((setPoint - origValue)
+                double swapGradient = 2 * Math.sqrt((Math.abs(setPoint - origValue))
                         * (s_upDilation * s_downDilation) / (s_upDilation + s_downDilation));
 
-                // current gradient of the increasing velocity section
+                // the amount of time it will take for the down curve to reach the desired value
+                double remainingTime =
+                        Math.sqrt((setPoint - currentValue) / s_downDilation);
+
+                // current gradient of the changing acceleration  section
                 double upGradient = 2 * s_upDilation * currentTime;
+                double downGradient = 2 * s_downDilation * remainingTime;
 
                 if(swapGradient >= maxRampAccel){
                     // we have constant gradient segment in the middle
                     if(upGradient < maxRampAccel){ // increasing acceleration
                         expectedValue = s_upDilation * Math.pow(currentTime, 2);
                     }
-                    else if(prevGradient < maxRampAccel /* & upGradient > maxRampAccel */){ //steady
-                        expectedValue = (prevValue + (maxRampAccel * timeDelta));
-                    }
-                    else { // decreasing acceleration
-                        double remainingTime =
-                                Math.sqrt((setPoint - currentValue)/(s_downDilation));
-                        expectedValue = expectedValue
+                    else if(downGradient <= maxRampAccel){ // decreasing acceleration
+                        expectedValue = setPoint
                                 - s_downDilation * Math.pow((remainingTime), 2);
+                    }
+                    else { //steady
+                        expectedValue = (prevValue + (maxRampAccel * timeDelta));
                     }
                 }
                 else{ // our two curves meet without constant gradient
@@ -209,18 +203,14 @@ public class RampValue {
                         expectedValue = s_upDilation * Math.pow(currentTime, 2);
                     }
                     else{ // after swapping to the decreasing curve
-                        double remainingTime =
-                                Math.sqrt((setPoint - currentValue)/(s_downDilation));
-                        expectedValue = expectedValue
+                        expectedValue = setPoint
                                 - s_downDilation * Math.pow((remainingTime), 2);
                     }
                 }
 
-                if(Math.abs(currentValue) > expectedValue){ // clamp the output
+                if(currentValue > expectedValue){ // clamp the output
                     currentValue = expectedValue;
                 }
-
-                prevGradient = upGradient;
         }
 
         prevValue = currentValue;
