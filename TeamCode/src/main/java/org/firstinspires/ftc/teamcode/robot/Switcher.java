@@ -22,7 +22,7 @@ public class Switcher extends Mechanism {
      * pushes a ring in a certain direction
      * @param direction to move the ring
      */
-    public void MoveRing(RotationDirection direction){
+    public void moveRing(RotationDirection direction){
 
     }
 }

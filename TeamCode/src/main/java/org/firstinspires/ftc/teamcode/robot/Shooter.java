@@ -20,21 +20,21 @@ public class Shooter extends Mechanism {
      * Shoots a ring with a @power
      * @param power the power with which to shoot a ring [0-1]
      */
-    public void Shoot(double power){
+    public void shoot(double power){
 
     }
 
     /***
      * Shoots a ring with a preset power
      */
-    public void Shoot() {
-    Shoot(1);
+    public void shoot() {
+    shoot(1);
     }
 
     /***
      * Loading the ring into the shooting mechanism
      */
-    public void FeedMe(){
+    public void feedMe(){
 
     }
 }

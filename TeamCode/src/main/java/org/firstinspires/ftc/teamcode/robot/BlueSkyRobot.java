@@ -14,6 +14,7 @@ public class BlueSkyRobot extends Robot {
         this.mechanisms.put("leftShooter", new Shooter(map));
         this.mechanisms.put("rightShooter", new Shooter(map));
         this.mechanisms.put("wobbleArm", new WobbleArm(map));
+        this.mechanisms.put("switcher", new Switcher(map));
         this.driveBase = new XDrive(map);
     }
 
@@ -35,5 +36,25 @@ public class BlueSkyRobot extends Robot {
 
     public void runEject(){
         ((Intake)this.mechanisms.get("intake")).runEject();
+    }
+
+    public void shootLeft(){
+        ((Shooter)this.mechanisms.get("leftShooter")).shoot();
+    }
+
+    public void shootRight(){
+        ((Shooter)this.mechanisms.get("rightShooter")).shoot();
+    }
+
+    public void clawClose(){
+        ((WobbleArm)this.mechanisms.get("wobbleArm")).closeGripper();
+    }
+
+    public void clawOpen(){
+        ((WobbleArm)this.mechanisms.get("wobbleArm")).openGripper();
+    }
+
+    public void switchConveyors(RotationDirection direction){
+        ((Switcher)this.mechanisms.get("switcher")).moveRing(direction);
     }
 }

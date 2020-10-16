@@ -2,8 +2,6 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.robot.BlueSkyRobot;
@@ -14,7 +12,7 @@ public class UltimateGoalOpMode extends OpMode
 {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-    private BlueSkyRobot BlueSky;
+    private BlueSkyRobot blueSky;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -23,7 +21,7 @@ public class UltimateGoalOpMode extends OpMode
     public void init() {
         telemetry.addData("Status", "Initialized");
 
-        this.BlueSky = new BlueSkyRobot(hardwareMap);
+        this.blueSky = new BlueSkyRobot(hardwareMap);
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
