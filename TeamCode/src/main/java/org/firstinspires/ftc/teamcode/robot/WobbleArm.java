@@ -25,7 +25,7 @@ public class WobbleArm extends Mechanism {
      * @param angle the angle to move the arm to [0-180]
      * @param power the power with which to move the arm [0-1]
      */
-   public void Rotate(double angle, double power) {
+   public void rotate(double angle, double power) {
 
    }
 
@@ -35,14 +35,14 @@ public class WobbleArm extends Mechanism {
      *                  (Clockwise or Counter Clockwise)
      * @param power the power to rotate the arm with [0-1]
      */
-   public void Rotate(RotationDirection direction, double power){
+   public void rotate(RotationDirection direction, double power){
 
    }
 
     /***
      * Opens the gripper on the arm
      */
-   public void OpenGripper(){
+   public void openGripper(){
 
    }
 
@@ -59,8 +59,8 @@ public class WobbleArm extends Mechanism {
     /***
      * Stores the arm in initial condition
      */
-   public void StoreArm(){
-       Rotate(0, 1);
-       OpenGripper();
+   public void storeArm(){
+       rotate(0, 1);
+       openGripper();
    }
 }
