@@ -12,7 +12,7 @@ public class UltimateGoalOpMode extends OpMode
 {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-    private DcMotor testMotor;
+    private DcMotor testMotor1, testMotor2;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -21,7 +21,8 @@ public class UltimateGoalOpMode extends OpMode
     public void init() {
         telemetry.addData("Status", "Initialized");
 
-        testMotor = hardwareMap.get(DcMotor.class, "testMotor");
+        testMotor1 = hardwareMap.get(DcMotor.class, "testMotor1");
+        testMotor2 = hardwareMap.get(DcMotor.class, "testMotor2");
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
@@ -56,7 +57,8 @@ public class UltimateGoalOpMode extends OpMode
             power = -1;
         }
 
-        testMotor.setPower(power);
+        testMotor1.setPower(power);
+        testMotor2.setPower(-power);
     }
 
     /*
