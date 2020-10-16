@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@TeleOp(name="Single Motor Test", group="Robot Test")
+@TeleOp(name="Motor Test", group="Robot Test")
 public class UltimateGoalOpMode extends OpMode
 {
     // Declare OpMode members.
