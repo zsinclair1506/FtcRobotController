@@ -11,8 +11,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.*;
 
 
-@TeleOp(name="Whack Motor Test", group="Robot Test")
-public class UltimateGoalOpMode extends OpMode
+@TeleOp(name="Whack Motor Test B", group="Robot Test")
+public class UltimateGoalOpModeB extends OpMode
 {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -31,10 +31,9 @@ public class UltimateGoalOpMode extends OpMode
         whackMotor1 = hardwareMap.get(DcMotor.class,"whackMotor1");
 
         conveyor1 = hardwareMap.get(CRServo.class, "conveyor1");
-
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
-        whackMotor1.setDirection(FORWARD);
+        whackMotor1.setDirection(REVERSE);
         whackMotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         whackMotor1.setTargetPosition(encoderTarget);
     }
@@ -72,7 +71,7 @@ public class UltimateGoalOpMode extends OpMode
         }
 
         if (isAPressed){
-           whackMotor1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            whackMotor1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
 
         testMotor1.setPower(power);
