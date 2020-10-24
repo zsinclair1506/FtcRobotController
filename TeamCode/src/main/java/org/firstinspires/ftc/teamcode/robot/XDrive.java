@@ -28,7 +28,10 @@ public class XDrive extends DriveBase {
      */
     @Override
     public void DrivePower(float angle, float power) {
-
+        this.motors.get("frontLeft").setPower(Math.cos(angle + Math.PI/4));
+        this.motors.get("frontRight").setPower(Math.cos(angle - Math.PI/4));
+        this.motors.get("backRight").setPower(0 - Math.cos(angle + Math.PI/4));
+        this.motors.get("backLeft").setPower(0 - Math.cos(angle - Math.PI/4));
     }
 
     /***
