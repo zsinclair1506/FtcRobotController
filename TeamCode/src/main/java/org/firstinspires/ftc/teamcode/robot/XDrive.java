@@ -27,7 +27,7 @@ public class XDrive extends DriveBase {
      * @param power
      */
     @Override
-    public void DrivePower(float angle, float power) {
+    public void DrivePower(double angle, double power) {
         this.motors.get("frontLeft").setPower(Math.cos(angle + 3*Math.PI/4));
         this.motors.get("frontRight").setPower(Math.cos(angle + Math.PI/4));
         this.motors.get("backRight").setPower(0 - Math.cos(angle + 3*Math.PI/4));
@@ -40,7 +40,7 @@ public class XDrive extends DriveBase {
      * @param distance
      */
     @Override
-    public void DriveDistance(float angle, float distance) {
+    public void DriveDistance(double angle, double distance) {
 
     }
 
@@ -50,7 +50,7 @@ public class XDrive extends DriveBase {
      * @param power
      */
     @Override
-    public void RotateAngle(float angle, float power) {
+    public void RotateAngle(double angle, double power) {
 
     }
 
@@ -60,7 +60,7 @@ public class XDrive extends DriveBase {
      * @param power
      */
     @Override
-    public void RotateDirection(RotationDirection direction, float power) {
+    public void RotateDirection(RotationDirection direction, double power) {
 
     }
 }

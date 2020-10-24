@@ -9,10 +9,10 @@ import java.util.HashMap;
 public abstract class DriveBase {
     protected HashMap<String, DcMotor> motors;
 
-    public abstract void DrivePower (float angle, float power);
-    public abstract void DriveDistance (float angle, float distance);
+    public abstract void DrivePower (double angle, double power);
+    public abstract void DriveDistance (double angle, double distance);
 
-    public abstract void RotateAngle (float angle, float power);
-    public abstract void RotateDirection (RotationDirection direction, float power);
+    public abstract void RotateAngle (double angle, double power);
+    public abstract void RotateDirection (RotationDirection direction, double power);
 
 }
