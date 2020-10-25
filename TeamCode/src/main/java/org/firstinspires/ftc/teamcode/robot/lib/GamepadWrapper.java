@@ -64,7 +64,7 @@ public class GamepadWrapper {
      * @param stick the stick to get the angle of (left or right)
      * @return the angle of the stick (0 forward, +ve clockwise)
      */
-    public double getStickAngle(String stick){
+    public double getStickAngle(String stick) {
         if (stick.contains("left") | stick.contains("right")) {
             try {
                 String joystickX = stick + "_stick_x";
@@ -74,24 +74,23 @@ public class GamepadWrapper {
 
                 double x = (double) joystick_X.get(joystickX);
                 double y = (double) joystick_Y.get(joystickY);
-                double angle = Math.atan(y / x);
-
-                if (x > 0)
-                {
-                    // Q1, Q4
-                    return Math.PI/2 - angle;
+                double angle = Math.atan(x / y);
+                
+                if (y > 0) {
+                    // Q1, Q2
+                    return angle;
                 }
-                else{
-                    // Q2, Q3
-                    return 0 - (Math.PI/2 + angle);
+                else {
+                    // Q3, Q4
+                    return Math.PI + angle;
                 }
             } catch (NoSuchFieldException | IllegalAccessException e) {
                 //ignore exceptions, return 0
                 return 0;
             }
         }
-        else{
+        else {
             return 0;
-            }
+        }
     }
 }
