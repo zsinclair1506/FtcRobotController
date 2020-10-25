@@ -49,7 +49,7 @@ public class WobbleArm extends Mechanism {
     /***
      * Closes the gripper on the arm
      */
-   public void CloseGripper(){
+   public void closeGripper(){
        /*
             initial planning stage for the gripper
             servo only supports set position, does not spin continuous
