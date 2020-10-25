@@ -36,7 +36,7 @@ public class GamepadWrapper {
     }
 
     /***
-     * Gets the value of the joystic @joystickAxis from the gamepad
+     * Gets the value of the joystick @joystickAxis from the gamepad
      * @param joystickAxis the joystick axis to get the value of [eg "left_stick_y"]
      * @return double value of the joystick axis
      */
@@ -46,7 +46,7 @@ public class GamepadWrapper {
             return (double) joystick.get(gamepad);
         } catch (NoSuchFieldException | IllegalAccessException e) {
             //ignore exceptions, return 0
-            return 0.0f;
+            return 0;
         }
     }
 
