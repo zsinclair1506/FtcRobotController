@@ -8,21 +8,21 @@ import org.firstinspires.ftc.teamcode.robot.lib.GripperPosition;
 public class Gripper extends Mechanism {
 
     /***
-     *  Closes the Gripper mechanism
+     * Closes the Gripper mechanism
      */
     public void closeGripper() {
 
     }
 
     /***
-     *  Opens the gripper mechanism
+     * Opens the gripper mechanism
      */
     public void openGripper(){
 
     }
 
     /***
-     *   Gets if the Gripper is open or not
+     * Gets if the Gripper is open or not
      * @return true if Gripper is open
      */
     public boolean getIsOPen(){
@@ -30,21 +30,21 @@ public class Gripper extends Mechanism {
     }
 
     /***
-     *  Tilts the Gripper mechanism up
+     * Tilts the Gripper mechanism up
      */
     public void tiltUp(){
 
    }
 
     /***
-     *  Tilts the Gripper mechansim down
+     * Tilts the Gripper mechansim down
      */
    public void tiltDown(){
 
    }
 
     /***
-     *  Setting the position of the gripper from Ring or Wobble Goal
+     * Setting the position of the gripper from Ring or Wobble Goal
      * @param position to move the arm to
      */
     public void moveToPos(GripperPosition position){
