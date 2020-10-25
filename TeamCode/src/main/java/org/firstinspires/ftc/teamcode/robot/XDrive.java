@@ -37,7 +37,7 @@ public class XDrive extends DriveBase {
      * @param distance
      */
     @Override
-    public void DriveDistance(double angle, double distance) {
+    public void driveDistance(double angle, double distance) {
 
     }
 

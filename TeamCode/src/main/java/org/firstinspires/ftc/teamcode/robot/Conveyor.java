@@ -29,15 +29,15 @@ public class Conveyor extends Mechanism {
      * Convey rings from the intake to the shooting mechanism, with a @power [0-1]
      * @param power the power with which to push the rings through the conveyor
      */
-    public void Convey(double power){
+    public void convey(double power){
 
     }
 
     /***
      * Conveys rings from the intake to the shooting mechanism with a preset power
      */
-    public void Convey(){
-        Convey(1);
+    public void convey(){
+        convey(1);
     }
 
 }

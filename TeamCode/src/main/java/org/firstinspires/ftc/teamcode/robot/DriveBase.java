@@ -10,7 +10,7 @@ public abstract class DriveBase {
     protected HashMap<String, DcMotor> motors;
 
     public abstract void drivePower(double angle, double power);
-    public abstract void DriveDistance (double angle, double distance);
+    public abstract void driveDistance(double angle, double distance);
 
     public abstract void rotateAngle(double angle, double power);
     public abstract void rotateDirection(RotationDirection direction, double power);
