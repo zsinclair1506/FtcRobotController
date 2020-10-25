@@ -18,24 +18,12 @@ public class BlueSkyRobot extends Robot {
         this.driveBase = new XDrive(map);
     }
 
-    public void runIntake(){
-        ((Intake)this.mechanisms.get("intake")).runIntake();
-    }
-
-    public void stopIntake(){
-        ((Intake)this.mechanisms.get("intake")).stopIntake();
-    }
-
     public void drive(double direction, double power){
         ((XDrive)this.driveBase).drivePower(direction, power);
     }
 
     public void rotate(RotationDirection direction, double power){
         ((XDrive)this.driveBase).rotateDirection(direction, power);
-    }
-
-    public void runEject(){
-        ((Intake)this.mechanisms.get("intake")).runEject();
     }
 
     public void shootLeft(){
