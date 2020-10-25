@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.robot;
 
-import com.qualcomm.robotcore.hardware.Gamepad;
-
 /***
  * Class to define all the gamepad buttons.
  */
@@ -38,7 +36,7 @@ public enum GamepadButtons {
     CLOSE_CLAW("b"),
 
     /***
-     * test
+     *
      */
     SORT_LEFT("dpad_left"),
 
@@ -62,7 +60,7 @@ public enum GamepadButtons {
      */
     RUN_CONVEYOR("right_bumper");
 
-    private GamepadButtons(String buttonName){
+    GamepadButtons(String buttonName){
         this.buttonName = buttonName;
     }
 
