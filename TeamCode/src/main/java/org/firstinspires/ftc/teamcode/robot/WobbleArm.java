@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.robot;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.robot.lib.RotationDirection;
 
@@ -10,23 +9,24 @@ import org.firstinspires.ftc.teamcode.robot.lib.RotationDirection;
  */
 public class WobbleArm extends Mechanism {
    //private ?? motors
-    private Servo gripperServo;
+    private Gripper gripper;
 
     /***
      * Wobblearm constructor
      * @param map hardware map of the robot
      */
     public WobbleArm(HardwareMap map){
-        this.gripperServo = map.get(Servo.class, "gripperservo");
+        // assign motors here
+        this.gripper = new Gripper(map);
     }
 
     /***
      * Rotates the arm to a set @angle with a power
-     * @param angle the angle to move the arm to [0-180]
+     * @param angle the angle to move the arm to [0-1]
      * @param power the power with which to move the arm [0-1]
      */
    public void rotate(double angle, double power) {
-
+        // this will need threading
    }
 
     /***
@@ -42,18 +42,15 @@ public class WobbleArm extends Mechanism {
     /***
      * Opens the gripper on the arm
      */
-   public void openGripper(){
-
+   public void gripperOpen(){
+       this.gripper.openGripper();
    }
 
     /***
      * Closes the gripper on the arm
      */
-   public void closeGripper(){
-       /*
-            initial planning stage for the gripper
-            servo only supports set position, does not spin continuous
-        */
+   public void gripperClose(){
+       this.gripper.closeGripper();
    }
 
     /***
@@ -61,6 +58,22 @@ public class WobbleArm extends Mechanism {
      */
    public void storeArm(){
        rotate(0, 1);
-       openGripper();
+       gripperOpen();
    }
+
+   public void moveArm(double angle, double power){
+
+   }
+
+   public void moveTo(double x, double y, double z) throws IllegalArgumentException{
+       throw new IllegalArgumentException("message");
+   }
+
+    public void gripperTiltUp() {
+       this.gripper.tiltUp();
+    }
+
+    public void gripperTiltDown() {
+       this.gripper.tiltDown();
+    }
 }
