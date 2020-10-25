@@ -15,7 +15,7 @@ public class Gripper extends Mechanism {
     }
 
     /***
-     * OPens the gripper mechanism
+     *  Opens the gripper mechanism
      */
     public void openGripper(){
 
@@ -30,14 +30,14 @@ public class Gripper extends Mechanism {
     }
 
     /***
-     *  tilts the Gripper mechanism up
+     *  Tilts the Gripper mechanism up
      */
     public void tiltUp(){
 
    }
 
     /***
-     *  tilts the Gripper mechansim down
+     *  Tilts the Gripper mechansim down
      */
    public void tiltDown(){
 
