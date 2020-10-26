@@ -15,7 +15,7 @@ public class WobbleArm extends Mechanism {
      * Wobblearm constructor
      * @param map hardware map of the robot
      */
-    public WobbleArm(HardwareMap map){
+    public WobbleArm(HardwareMap map) {
         // assign motors here
         this.gripper = new Gripper(map);
     }
@@ -26,7 +26,7 @@ public class WobbleArm extends Mechanism {
      * @param power the power with which to move the arm [0-1]
      */
     public void rotate(double angle, double power) {
-    // this will need threading
+        // this will need threading
     }
 
     /***
@@ -35,28 +35,28 @@ public class WobbleArm extends Mechanism {
      *                  (Clockwise or Counter Clockwise)
      * @param power the power to rotate the arm with [0-1]
      */
-    public void rotate(RotationDirection direction, double power){
+    public void rotate(RotationDirection direction, double power) {
 
     }
 
     /***
      * Opens the gripper on the arm
      */
-    public void gripperOpen(){
+    public void gripperOpen() {
         this.gripper.openGripper();
     }
 
     /***
      * Closes the gripper on the arm
      */
-    public void gripperClose(){
+    public void gripperClose() {
         this.gripper.closeGripper();
     }
 
     /***
      * Stores the arm in initial condition
      */
-    public void storeArm(){
+    public void storeArm() {
         rotate(0, 1);
         gripperOpen();
     }
@@ -66,7 +66,7 @@ public class WobbleArm extends Mechanism {
      * @param direction true for moving the arm up.
      * @param power the power with which to move the arm.
      */
-    public void armUpDown(boolean direction, double power){
+    public void armUpDown(boolean direction, double power) {
 
     }
 
@@ -74,8 +74,8 @@ public class WobbleArm extends Mechanism {
      * Moves the arm up or down.
      * @param direction true for moving the arm up.
      */
-    public void armUpDown(boolean direction){
-       armUpDown(direction, 1);
+    public void armUpDown(boolean direction) {
+        armUpDown(direction, 1);
     }
 
     /***
@@ -83,7 +83,7 @@ public class WobbleArm extends Mechanism {
      * @param direction true for moving the arm in.
      * @param power the power with which to move the arm.
      */
-    public void armInOut(boolean direction, double power){
+    public void armInOut(boolean direction, double power) {
 
     }
 
@@ -91,7 +91,7 @@ public class WobbleArm extends Mechanism {
      * Moves the arm in or out.
      * @param direction true for moving the arm in.
      */
-    public void armInOut(boolean direction){
+    public void armInOut(boolean direction) {
         armInOut(direction, 1);
     }
 
@@ -102,21 +102,27 @@ public class WobbleArm extends Mechanism {
      * @param rotation the rotation of the base, 0 at stored.
      * @throws IllegalArgumentException if the arm cannot achieve the desired input.
      */
-    public void moveTo(double r, double angle, double rotation) throws IllegalArgumentException{
-       throw new IllegalArgumentException("message");
+    public void moveTo(double r, double angle, double rotation) throws IllegalArgumentException {
+        throw new IllegalArgumentException("message");
     }
 
     /***
      * Tilt the gripper on the arm up.
      */
     public void gripperTiltUp() {
-       this.gripper.tiltUp();
+        this.gripper.tiltUp();
     }
 
     /***
      * Tilt the gripper on the arm down.
      */
     public void gripperTiltDown() {
-       this.gripper.tiltDown();
+        this.gripper.tiltDown();
     }
+
+
+    private void inverseKinematics() {
+
+    }
+
 }
