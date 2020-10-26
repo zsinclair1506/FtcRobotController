@@ -22,9 +22,9 @@ public class XDrive extends DriveBase {
     }
 
     /***
-     *
-     * @param angle
-     * @param power
+     * Drive the robot at an angle at a power.
+     * @param angle the angle to drive the robot in, 0 is forward. This base slides
+     * @param power the power with which to move the robot
      */
     @Override
     public void drivePower(double angle, double power) {
@@ -32,9 +32,9 @@ public class XDrive extends DriveBase {
     }
 
     /***
-     *
-     * @param angle
-     * @param distance
+     * Drive the robot a set distance at a certain angle. (Meant to be run in a loop)
+     * @param angle the angle to drive the robot in, 0 is forward. This base slides
+     * @param distance the distance to drive from current location
      */
     @Override
     public void driveDistance(double angle, double distance) {
@@ -42,9 +42,9 @@ public class XDrive extends DriveBase {
     }
 
     /***
-     *
-     * @param angle
-     * @param power
+     * Rotate the robot by a certain angle at a certain power.
+     * @param angle the angle to rotate through (clockwise is positive)
+     * @param power the power to rotate the drivebase with
      */
     @Override
     public void rotateAngle(double angle, double power) {
@@ -52,9 +52,10 @@ public class XDrive extends DriveBase {
     }
 
     /***
-     *
-     * @param direction
-     * @param power
+     * Rotate the robot a certain direction at a certain power (meant to be run in a loop)
+     * @param direction the rotation direction of the robot
+     *                  (top down. CLOCKWISE or COUNTER_CLOCKWISE)
+     * @param power the power with which to rotate the robot
      */
     @Override
     public void rotateDirection(RotationDirection direction, double power) {
