@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.*;
 
+import org.firstinspires.ftc.teamcode.robot.BlueSkyRobot;
 
 @TeleOp(name="Whack Motor Test", group="Robot Test")
 public class UltimateGoalOpMode extends OpMode
@@ -19,6 +20,8 @@ public class UltimateGoalOpMode extends OpMode
     private DcMotor testMotor1, testMotor2, whackMotor1;
     private CRServo conveyor1;
     private int encoderTarget = 1440;
+    private BlueSkyRobot blueSky;
+
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -31,6 +34,7 @@ public class UltimateGoalOpMode extends OpMode
         whackMotor1 = hardwareMap.get(DcMotor.class,"whackMotor1");
 
         conveyor1 = hardwareMap.get(CRServo.class, "conveyor1");
+        this.blueSky = new BlueSkyRobot(hardwareMap);
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");

@@ -6,13 +6,39 @@ import org.firstinspires.ftc.teamcode.robot.lib.RotationDirection;
 
 import java.util.HashMap;
 
+/***
+ * The actions that all drivebases must do.
+ */
 public abstract class DriveBase {
     protected HashMap<String, DcMotor> motors;
 
-    public abstract void DrivePower (float angle, float power);
-    public abstract void DriveDistance (float angle, float distance);
+    /***
+     * Drive the robot at an angle at a power.
+     * @param angle the angle to drive the robot (each drivebase will implement this differently)
+     * @param power the power to drive the robot at [0 - 1]
+     */
+    public abstract void drivePower(double angle, double power);
 
-    public abstract void RotateAngle (float angle, float power);
-    public abstract void RotateDirection (RotationDirection direction, float power);
+    /***
+     * Drive the robot a set distance at a certain angle. (Meant to be run in a loop)
+     * @param angle the angle to drive the robot (each drivebase will implement this differently)
+     * @param distance the distance to drive from current location
+     */
+    public abstract void driveDistance(double angle, double distance);
+
+    /***
+     * Rotate the robot by a certain angle at a certain power.
+     * @param angle the angle to rotate through (clockwise is positive)
+     * @param power the power to rotate the drivebase with
+     */
+    public abstract void rotateAngle(double angle, double power);
+
+    /***
+     * Rotate the robot a certain direction at a certain power (meant to be run in a loop)
+     * @param direction the rotation direction of the robot
+     *                  (top down. CLOCKWISE or COUNTER_CLOCKWISE)
+     * @param power the power with which to rotate the robot
+     */
+    public abstract void rotateDirection(RotationDirection direction, double power);
 
 }

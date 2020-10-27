@@ -90,9 +90,6 @@ lint/outputs/
 lint/tmp/
 # lint/reports/
 
-
-
 *build.gradle
 .idea/codeStyles/Project.xml
 .idea/misc.xml
-
