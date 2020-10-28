@@ -27,7 +27,7 @@ public class XDrive extends DriveBase {
      * @param power
      */
     @Override
-    public void DrivePower(float angle, float power) {
+    public void drivePower(double angle, double power) {
 
     }
 
@@ -37,7 +37,7 @@ public class XDrive extends DriveBase {
      * @param distance
      */
     @Override
-    public void DriveDistance(float angle, float distance) {
+    public void DriveDistance(double angle, double distance) {
 
     }
 
@@ -47,7 +47,7 @@ public class XDrive extends DriveBase {
      * @param power
      */
     @Override
-    public void RotateAngle(float angle, float power) {
+    public void rotateAngle(double angle, double power) {
 
     }
 
@@ -57,7 +57,7 @@ public class XDrive extends DriveBase {
      * @param power
      */
     @Override
-    public void RotateDirection(RotationDirection direction, float power) {
+    public void rotateDirection(RotationDirection direction, double power) {
 
     }
 }
