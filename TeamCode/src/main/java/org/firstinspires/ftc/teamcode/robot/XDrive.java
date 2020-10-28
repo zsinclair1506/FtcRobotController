@@ -14,6 +14,7 @@ public class XDrive extends DriveBase {
      * @param map the hardware map of the robot/phone/expansion hub.
      */
     public XDrive (HardwareMap map) {
+        super(map);
 
         this.motors.put("frontLeft", map.get(DcMotor.class, "frontLeft"));
         this.motors.put("frontRight", map.get(DcMotor.class, "frontRight"));
@@ -28,7 +29,10 @@ public class XDrive extends DriveBase {
      */
     @Override
     public void drivePower(double angle, double power) {
-
+        this.motors.get("frontLeft").setPower(Math.cos(angle + 3*Math.PI/4));
+        this.motors.get("frontRight").setPower(Math.cos(angle + Math.PI/4));
+        this.motors.get("backRight").setPower(0 - Math.cos(angle + 3*Math.PI/4));
+        this.motors.get("backLeft").setPower(0 - Math.cos(angle + Math.PI/4));
     }
 
     /***

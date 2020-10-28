@@ -36,26 +36,61 @@ public class GamepadWrapper {
     }
 
     /***
-     * Gets the value of the joystic @joystickAxis from the gamepad
+     * Gets the value of the joystick @joystickAxis from the gamepad
      * @param joystickAxis the joystick axis to get the value of [eg "left_stick_y"]
-     * @return float value of the joystick axis
+     * @return double value of the joystick axis
      */
-    public float getJoystick(String joystickAxis){
+    public double getJoystick(String joystickAxis){
         try {
             Field joystick = gamepadClass.getField(joystickAxis);
-            return (float) joystick.get(gamepad);
+            return (double) joystick.get(gamepad);
         } catch (NoSuchFieldException | IllegalAccessException e) {
             //ignore exceptions, return 0
-            return 0.0f;
+            return 0;
         }
     }
 
     /***
      * Gets the value of the trigger @trigger from the gamepad
      * @param trigger the trigger to get the value of
-     * @return float value of the trigger
+     * @return double value of the trigger
      */
-    public float getTrigger(String trigger){
+    public double getTrigger(String trigger){
         return getJoystick(trigger);
+    }
+
+    /***
+     * Assume stick forward gives 0 angle and clockwise is +ve
+     * @param stick the stick to get the angle of (left or right)
+     * @return the angle of the stick (0 forward, +ve clockwise)
+     */
+    public double getStickAngle(String stick) {
+        if (stick.contains("left") | stick.contains("right")) {
+            try {
+                String joystickX = stick + "_stick_x";
+                String joystickY = stick + "_stick_y";
+                Field joystick_X = gamepadClass.getField(joystickX);
+                Field joystick_Y = gamepadClass.getField(joystickY);
+
+                double x = (double) joystick_X.get(joystickX);
+                double y = (double) joystick_Y.get(joystickY);
+                double angle = Math.atan(x / y);
+                
+                if (y > 0) {
+                    // Q1, Q2
+                    return angle;
+                }
+                else {
+                    // Q3, Q4
+                    return Math.PI + angle;
+                }
+            } catch (NoSuchFieldException | IllegalAccessException e) {
+                //ignore exceptions, return 0
+                return 0;
+            }
+        }
+        else {
+            return 0;
+        }
     }
 }
