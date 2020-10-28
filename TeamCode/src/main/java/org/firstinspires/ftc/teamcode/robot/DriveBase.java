@@ -29,10 +29,7 @@ public abstract class DriveBase {
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
         parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
         parameters.loggingEnabled = false;
-
-        // Retrieve and initialize the IMU. We expect the IMU to be attached to an I2C port
-        // on a Core Device Interface Module, configured to be a sensor of type "AdaFruit IMU",
-        // and named "imu".
+        
         imu = map.get(BNO055IMU.class, "imu");
 
         imu.initialize(parameters);
@@ -80,22 +77,24 @@ public abstract class DriveBase {
     }
 
     /**
-     * See if we are moving in a straight line and if not return a power correction value.
+     * Check the heading, if it isn't straight, calculate required adjustment
+     * + adjustment is left
+     * - adjustment is left
      *
-     * @return Power adjustment, + is adjust left - is adjust right.
+     * @return Ajustment/ Correction for heading.
      */
     private double checkDirection() {
-        // The gain value determines how sensitive the correction is to direction changes.
-        // You will have to experiment with your robot to get small smooth direction changes
-        // to stay on a straight line.
+        // Gain is determined by the sensitivity of adjustment to direction changes
+        // Experimenting is required, this has to be changed in the program, rather than by a control
+        // Gain is correct when you maintain a straight heading
         double correction, angle, gain = .10;
 
         angle = getAngle();
 
         if (angle == 0)
-            correction = 0;             // no adjustment.
+            correction = 0;             // Adjustment is not needed as there is no error
         else
-            correction = -angle;        // reverse sign of angle for correction.
+            correction = -angle;        // Invert the angle to get the necessary correction
 
         correction = correction * gain;
 
@@ -116,6 +115,7 @@ public abstract class DriveBase {
         // getAngle() returns + when rotating counter clockwise (left) and - when rotating
         // clockwise (right).
 
+        //TODO: Update to match outputs for XDrive?
         if (degrees < 0) {   // turn right.
             leftPower = power;
             rightPower = -power;
