@@ -36,7 +36,7 @@ public enum GamepadButtons {
     SHOOTER_SHOOT("left_trigger"),
 
     /***
-     *
+     * Gamepad: 1
      */
     SHOOTER_FEED_ME("dpad_left"),
 
@@ -46,21 +46,39 @@ public enum GamepadButtons {
     CONVEYOR_RUN("right_bumper"),
 
     /***
-     *
+     * Gamepad: 2
      */
-    GRIPPER_ANGLE_FOR("dpad_right");
+    GRIPPER_ANGLE_FOR("dpad_right"),
+
+    /***
+     * Gamepad: 1
+     */
+    ROBOT_DRIVE("left_stick_y"),
+
+    /***
+     * Gamepad: 1
+     */
+    ROBOT_ROTATE("right_stick_x"),
+
+    /***
+     * Gamepad: 1
+     */
+    ROBOT____("y");
 
     /***
      *
+     * @param buttonName
      */
-
     GamepadButtons(String buttonName){
         this.buttonName = buttonName;
     }
 
-
     private String buttonName;
 
+    /***
+     * Getter for the buttonName String
+     * @return buttonName, buttonName is 'gotten' and returned
+     */
     public String getButtonName(){
         return buttonName;
     }
