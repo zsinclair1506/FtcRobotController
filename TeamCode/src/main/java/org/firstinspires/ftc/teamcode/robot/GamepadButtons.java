@@ -1,68 +1,60 @@
 package org.firstinspires.ftc.teamcode.robot;
 
-import com.qualcomm.robotcore.hardware.Gamepad;
-
 /***
  * Class to define all the gamepad buttons.
  */
 public enum GamepadButtons {
 
     /***
-     *
+     * Gamepad: 2
      */
-    START_INTAKE("dpad_up"),
+    GRIPPER_RAISE("dpad_up"),
+
+    /***
+     * Gamepad: 2
+     */
+    GRIPPER_LOWER("dpad_down"),
+
+    /***
+     * Gamepad: 2
+     */
+    ARM_ROTATE("x"),
+
+    /***
+     * Gamepad: 2
+     */
+    GRIPPER_OPEN("a"),
+
+    /***
+     * Gamepad: 2
+     */
+    GRIPPER_CLOSE("b"),
+
+    /***
+     * Gamepad: 1
+     */
+    SHOOTER_SHOOT("left_trigger"),
 
     /***
      *
      */
-    STOP_INTAKE("dpad_down"),
+    SHOOTER_FEED_ME("dpad_left"),
+
+    /***
+     * Gamepad: 2
+     */
+    CONVEYOR_RUN("right_bumper"),
 
     /***
      *
      */
-    EXTEND_ARM("y"),
+    GRIPPER_ANGLE_FOR("dpad_right");
 
     /***
      *
      */
-    RETRACT_ARM("x"),
 
-    /***
-     *
-     */
-    OPEN_CLAW("a"),
-
-    /***
-     *
-     */
-    CLOSE_CLAW("b"),
-
-    /***
-     * test
-     */
-    SORT_LEFT("dpad_left"),
-
-    /***
-     *
-     */
-    SORT_RIGHT("dpad_right"),
-
-    /***
-     *
-     */
-    SHOOT_RIGHT("right_trigger"),
-
-    /***
-     *
-     */
-    SHOOT_LEFT("left_trigger"),
-
-    /***
-     *
-     */
-    RUN_CONVEYOR("right_bumper");
-
-    private GamepadButtons(String buttonName){
+    GamepadButtons(String buttonName){
         this.buttonName = buttonName;
     }
 
