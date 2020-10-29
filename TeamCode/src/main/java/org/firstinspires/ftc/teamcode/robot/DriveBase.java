@@ -1,7 +1,13 @@
 package org.firstinspires.ftc.teamcode.robot;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.robot.lib.RotationDirection;
 import org.firstinspires.ftc.teamcode.robot.lib.Vector;
 
@@ -45,3 +51,8 @@ public abstract class DriveBase {
     public abstract Vector motorNormalise(Vector vector);
 }
 
+    public double IMUdriveCorrection(double desiredHeading){
+
+        return 0;
+    }
+}
