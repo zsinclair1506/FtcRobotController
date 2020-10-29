@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.robot.lib;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
 
+import org.firstinspires.ftc.robotcore.external.navigation.MotionDetection;
+
 import java.lang.reflect.Field;
 
 /***
@@ -61,14 +63,14 @@ public class GamepadWrapper {
 
     /***
      * Assume stick forward gives 0 angle and clockwise is +ve
-     * @param stick the stick to get the angle of (left or right)
+     * @param stick the stick to get the angle of (left_stick or right_stick)
      * @return the angle of the stick (0 forward, +ve clockwise)
      */
-    public double getStickAngle(String stick) {
+    private double getStickAngle(String stick) {
         if (stick.contains("left") | stick.contains("right")) {
             try {
-                String joystickX = stick + "_stick_x";
-                String joystickY = stick + "_stick_y";
+                String joystickX = stick + "_x";
+                String joystickY = stick + "_y";
                 Field joystick_X = gamepadClass.getField(joystickX);
                 Field joystick_Y = gamepadClass.getField(joystickY);
 
@@ -92,5 +94,36 @@ public class GamepadWrapper {
         else {
             return 0;
         }
+    }
+
+    /***
+     * Get the magnitude of the stick displacement (for power calculations)
+     * @param stick the stick to get the magnitude of displacement for
+     * @return the magnitude of the displacement
+     */
+    private double getStickMagnitude(String stick){
+        try {
+            String joystickX = stick + "_x";
+            String joystickY = stick + "_y";
+            Field joystick_X = gamepadClass.getField(joystickX);
+            Field joystick_Y = gamepadClass.getField(joystickY);
+
+            double x = (double) joystick_X.get(joystickX);
+            double y = (double) joystick_Y.get(joystickY);
+
+            return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            //ignore exceptions, return 0
+            return 0;
+        }
+    }
+
+    /***
+     * Get the vector for the joystick of the gamepad.
+     * @param stick the stick to get the vector for
+     * @return the vector of the joystick
+     */
+    public Vector getStick(String stick){
+        return new Vector(getStickMagnitude(stick), getStickAngle(stick));
     }
 }

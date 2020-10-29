@@ -9,6 +9,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.robot.lib.RotationDirection;
+import org.firstinspires.ftc.teamcode.robot.lib.Vector;
 
 import java.util.HashMap;
 
@@ -141,6 +142,7 @@ public abstract class DriveBase {
     }
 
     public abstract void DrivePower (double angle, double power);
+    public abstract void DrivePower (Vector driveVector);
     public abstract void DriveDistance (double angle, double distance);
 
     public abstract void RotateAngle (double angle, double power);
