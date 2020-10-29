@@ -2,69 +2,77 @@ package org.firstinspires.ftc.teamcode.robot;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-/***
- * this class is for the intake mechanism on the robot
- */
+import org.firstinspires.ftc.teamcode.robot.lib.IntakePosition;
 
+/***
+ * This class is for the intake mechanism on the robot. This mechanism has linear motion bottom
+ * to top. Has a pop out and pop in action for gripping the ring. It also has rotation to place
+ * ring in the passive hopper.
+ */
 public class Intake extends Mechanism {
-    //Private ?? motors
+    //private Servo rotationServo;
+    //private CRServo vertServo;
+    //private Servo grabServo;
 
     /***
      * Intake constructor
      * @param map the hardware map of the robot
      */
     public Intake(HardwareMap map){
+        //map servos from hardware map
+    }
+
+    /***
+     * lifts the intake mechanism up from the floor
+     */
+    public void lift(){
 
     }
 
     /***
-     * runs the intake
+     * causes the intake mechanism to grab a ring
      */
-    public void runIntake(){
-        runIntake(1);
-    }
-
-    /***
-     * runs the intake with a certain @power
-     * @param power defines the speed of the intake
-     */
-    public void runIntake(double power){
+    public void grab(){
 
     }
 
     /***
-     * spits out ring from the intake
+     * causes the intake mechanism to release a ring
      */
-    public void runEject(){
-        runEject(1);
-    }
-
-    /***
-     * runs the eject with a certain @power
-     * @param power defines the speed of the intake
-     */
-    public void runEject(double power){
+    public void release(){
 
     }
 
     /***
-     * extends the intake mechanism past the frame of the robot
+     * lowers the intake mechanism to the floor
      */
-    public void extend(){
+    public void lower(){
 
     }
 
     /***
-     * retracts the intake mechanism into the frame of the robot
+     * stop all motion on the intake mechanism
      */
-    public void retract(){
+    public void stop(){
 
     }
 
     /***
-     *
+     * go through the actions to drop a ring off at the hopper
      */
-    public void stopIntake() {
+    public void dropOff(){
+        /*
+        Will likely have to be a thread since this series of actions will take time and we want
+        to continue to move around and do other things. Will have to check for thread running in
+        each of the other methods to make sure we're not accessing data concurrently.
+         */
+    }
+
+    /***
+     * rotates the intake mechanism to a set location
+     * @param position the position to rotate the intake to (INTAKE or DROP_OFF)
+     */
+    public void rotate(IntakePosition position){
 
     }
 }
