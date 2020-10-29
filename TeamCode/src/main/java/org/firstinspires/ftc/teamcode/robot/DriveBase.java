@@ -18,5 +18,5 @@ public abstract class DriveBase {
     public abstract void rotateDirection (RotationDirection direction, double power);
 
     public abstract Vector motorNormalise(Vector vector);
-    }
+}
 

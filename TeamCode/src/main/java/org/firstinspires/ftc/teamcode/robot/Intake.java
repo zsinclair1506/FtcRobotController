@@ -20,30 +20,30 @@ public class Intake extends Mechanism {
     /***
      * runs the intake
      */
-    public void Intake(){
-        Intake(1);
+    public void runIntake(){
+        runIntake(1);
     }
 
     /***
      * runs the intake with a certain @power
      * @param power defines the speed of the intake
      */
-    public void Intake(double power){
+    public void runIntake(double power){
 
     }
 
     /***
      * spits out ring from the intake
      */
-    public void Eject(){
-        Eject(1);
+    public void runEject(){
+        runEject(1);
     }
 
     /***
      * runs the eject with a certain @power
      * @param power defines the speed of the intake
      */
-    public void Eject(double power){
+    public void runEject(double power){
 
     }
 
@@ -57,7 +57,14 @@ public class Intake extends Mechanism {
     /***
      * retracts the intake mechanism into the frame of the robot
      */
-    public void Retract(){
+    public void retract(){
+
+    }
+
+    /***
+     *
+     */
+    public void stopIntake() {
 
     }
 }
