@@ -33,7 +33,7 @@ public enum GamepadButtons {
     /***
      * Gamepad: 1
      */
-    SHOOTER_SHOOT("left_trigger"),
+    SHOOTER_SHOOT("right_trigger"),
 
     /***
      * Gamepad: 1
@@ -53,12 +53,12 @@ public enum GamepadButtons {
     /***
      * Gamepad: 1
      */
-    ROBOT_DRIVE("left_stick_y"),
+    ROBOT_DRIVE("left_stick"),
 
     /***
      * Gamepad: 1
      */
-    ROBOT_ROTATE("right_stick_x"),
+    ROBOT_ROTATE("right_stick"),
 
     /***
      * Gamepad: 1
