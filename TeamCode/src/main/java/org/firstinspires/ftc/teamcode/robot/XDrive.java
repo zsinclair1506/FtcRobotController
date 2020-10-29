@@ -29,7 +29,7 @@ public class XDrive extends DriveBase {
      * @param power
      */
     @Override
-    public void DrivePower(double angle, double power) {
+    public void drivePower(double angle, double power) {
         this.motors.get("frontLeft").setPower(power * Math.cos(angle + 3*Math.PI/4));
         this.motors.get("frontRight").setPower(power * Math.cos(angle + Math.PI/4));
         this.motors.get("backRight").setPower(power * (0 - Math.cos(angle + 3*Math.PI/4)));
@@ -41,16 +41,18 @@ public class XDrive extends DriveBase {
      * @param driveVector the vector to drive the robot along
      */
     @Override
-    public void DrivePower(Vector driveVector) {
-        driveVector = driveVector.normalise();
-        this.motors.get("frontLeft").setPower(
-                Math.cos(driveVector.getAngleBetween(Vector.X_2) + 3*Math.PI/4));
-        this.motors.get("frontRight").setPower(
-                Math.cos(driveVector.getAngleBetween(Vector.X_2) + Math.PI/4));
-        this.motors.get("backRight").setPower(
-                0 - Math.cos(driveVector.getAngleBetween(Vector.X_2) + 3*Math.PI/4));
-        this.motors.get("backLeft").setPower(
-                0 - Math.cos(driveVector.getAngleBetween(Vector.X_2) + Math.PI/4));
+    public void drivePower(Vector driveVector) {
+        Vector drive = this.motorNormalise(driveVector);
+
+        this.motors.get("frontLeft").setPower(drive.getMagnitude()
+                * Math.cos(drive.getAngleBetween(Vector.X_2) - Math.PI/4));
+        this.motors.get("frontRight").setPower(drive.getMagnitude()
+                * Math.cos(drive.getAngleBetween(Vector.X_2) + Math.PI/4));
+        this.motors.get("backRight").setPower(drive.getMagnitude()
+                * Math.cos(drive.getAngleBetween(Vector.X_2) - Math.PI/4));
+        this.motors.get("backLeft").setPower(drive.getMagnitude()
+                * Math.cos(drive.getAngleBetween(Vector.X_2) + Math.PI/4));
+
     }
 
     /***
@@ -59,7 +61,7 @@ public class XDrive extends DriveBase {
      * @param distance
      */
     @Override
-    public void DriveDistance(double angle, double distance) {
+    public void driveDistance(double angle, double distance) {
 
     }
 
@@ -69,7 +71,7 @@ public class XDrive extends DriveBase {
      * @param power
      */
     @Override
-    public void RotateAngle(double angle, double power) {
+    public void rotateAngle(double angle, double power) {
 
     }
 
@@ -79,7 +81,32 @@ public class XDrive extends DriveBase {
      * @param power
      */
     @Override
-    public void RotateDirection(RotationDirection direction, double power) {
+    public void rotateDirection(RotationDirection direction, double power) {
 
+    }
+
+    /***
+     * Creates a vector with the maximum value of 1 when input to the motors while preserving the
+     * initial vector
+     * @param vector the original vector to motorNormalise
+     * @return the new vector with magnitude large enough to make the max motor value 1
+     */
+    @Override
+    public Vector motorNormalise(Vector vector) {
+        vector = vector.getUnit();
+        double[] values = new double[4];
+        values[0] = Math.cos(vector.getAngleBetween(Vector.X_2) - Math.PI/4);
+        values[1] = Math.cos(vector.getAngleBetween(Vector.X_2) + Math.PI/4);
+        values[2] = 0 - Math.cos(vector.getAngleBetween(Vector.X_2) - Math.PI/4);
+        values[3] = 0 - Math.cos(vector.getAngleBetween(Vector.X_2) + Math.PI/4);
+
+        double maxValue = values[0];
+        for(int i = 1; i < values.length; i++){
+            if(values[i] > maxValue){
+                maxValue = values[i];
+            }
+        }
+
+        return vector.scale(1 / maxValue);
     }
 }

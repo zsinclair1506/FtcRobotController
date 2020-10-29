@@ -62,12 +62,12 @@ public class GamepadWrapper {
     }
 
     /***
-     * Assume stick forward gives 0 angle and clockwise is +ve
+     * Get the angle the stick is being pressed in. (0 is +ve X)
      * @param stick the stick to get the angle of (left_stick or right_stick)
-     * @return the angle of the stick (0 forward, +ve clockwise)
+     * @return the angle of the stick
      */
     private double getStickAngle(String stick) {
-        if (stick.contains("left") | stick.contains("right")) {
+        if (stick.contains("left_stick") | stick.contains("right_stick")) {
             try {
                 String joystickX = stick + "_x";
                 String joystickY = stick + "_y";
@@ -76,6 +76,8 @@ public class GamepadWrapper {
 
                 double x = (double) joystick_X.get(joystickX);
                 double y = (double) joystick_Y.get(joystickY);
+
+                /* this was for 0 forward
                 double angle = Math.atan(x / y);
                 
                 if (y > 0) {
@@ -86,6 +88,10 @@ public class GamepadWrapper {
                     // Q3, Q4
                     return Math.PI + angle;
                 }
+                */
+
+                return Math.atan2(x, y);
+
             } catch (NoSuchFieldException | IllegalAccessException e) {
                 //ignore exceptions, return 0
                 return 0;
@@ -112,6 +118,7 @@ public class GamepadWrapper {
             double y = (double) joystick_Y.get(joystickY);
 
             return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+
         } catch (NoSuchFieldException | IllegalAccessException e) {
             //ignore exceptions, return 0
             return 0;
@@ -120,7 +127,7 @@ public class GamepadWrapper {
 
     /***
      * Get the vector for the joystick of the gamepad.
-     * @param stick the stick to get the vector for
+     * @param stick the stick to get the vector for (left_stick or right_stick)
      * @return the vector of the joystick
      */
     public Vector getStick(String stick){

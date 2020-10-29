@@ -141,16 +141,17 @@ public abstract class DriveBase {
          */
     }
 
-    public abstract void DrivePower (double angle, double power);
-    public abstract void DrivePower (Vector driveVector);
-    public abstract void DriveDistance (double angle, double distance);
+    public abstract void drivePower (double angle, double power);
+    public abstract void drivePower (Vector driveVector);
+    public abstract void driveDistance (double angle, double distance);
 
-    public abstract void RotateAngle (double angle, double power);
-    public abstract void RotateDirection (RotationDirection direction, double power);
+    public abstract void rotateAngle (double angle, double power);
+    public abstract void rotateDirection (RotationDirection direction, double power);
+
+    public abstract Vector motorNormalise(Vector vector);
 
     public double IMUdriveCorrection(double desiredHeading){
 
         return 0;
     }
-
 }
