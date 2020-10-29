@@ -16,8 +16,8 @@ public class Vector {
 
 
     /***
-     * Create a vector with
-     * @param inVaules
+     * Create a vector with the incoming values
+     * @param inVaules the values to create the vector with
      */
     public Vector(double... inVaules) {
         this.values = inVaules;
@@ -44,10 +44,10 @@ public class Vector {
     }
 
     /***
-     *
-     * @return
+     * Calculates a vector that has magnitude of 1 but the same direction as this vector.
+     * @return the unit vector
      */
-    public Vector normalise() {
+    public Vector getUnit() {
         double d = this.getMagnitude();
         if (d > 0){
             double[] vector = new double[this.getSize()];
@@ -69,10 +69,19 @@ public class Vector {
         return Math.pow(this.dot(this), 1 / (this.getSize()));
     }
 
+    /**
+     * Calculates the angle between this vector and the incoming vector.
+     * @param vector the vector to get the angle between
+     * @return
+     */
     public double getAngleBetween(Vector vector){
         return Math.acos(this.dot(vector)/(Math.sqrt(this.dot(this) * vector.dot(vector))));
     }
 
+    /***
+     * Gets the size of the vector (how any dimensions)
+     * @return the dimension of the vector
+     */
     private int getSize(){
         return this.getValues().length;
     }
@@ -125,6 +134,11 @@ public class Vector {
         return this;
     }
 
+    /***
+     * Add a vector to this vector.
+     * @param vector the vector to add
+     * @return the sum of the two vectors
+     */
     public Vector add(Vector vector){
         double d[] = new double[this.getSize()];
         if(this.checkSize(vector)){
@@ -138,6 +152,11 @@ public class Vector {
         return new Vector(1);
     }
 
+    /***
+     * Subtracts a vector from this vector.
+     * @param vector the vector to subtract
+     * @return the sum of the two vectors
+     */
     public Vector subtract(Vector vector){
         double d[] = new double[this.getSize()];
         if(this.checkSize(vector)){
@@ -151,6 +170,11 @@ public class Vector {
         return this;
     }
 
+    /***
+     * Checks whether the incoming vector is the same size.
+     * @param vector the vector to check against this
+     * @return true if the vectors are the same size
+     */
     private boolean checkSize(Vector vector){
         return this.getSize() == vector.getSize();
     }
@@ -183,5 +207,19 @@ public class Vector {
         }
 
         return false;
+    }
+
+    /***
+     * Increases the magnitude of the vector by the scale factor.
+     * @param scaleValue the value to scale the vector by
+     * @return a new vector with values scaled by scaleValue
+     */
+    public Vector scale(double scaleValue) {
+        double[] values = new double[this.getSize()];
+        for(int i = 0; i < this.getSize(); i++) {
+            values[i] = this.values[i] * scaleValue;
+        }
+
+        return new Vector(values);
     }
 }
