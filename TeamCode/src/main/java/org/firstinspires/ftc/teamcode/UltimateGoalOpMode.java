@@ -50,8 +50,8 @@ public class UltimateGoalOpMode extends OpMode
     @Override
     public void loop() {
         GamepadButtons.ROBOT_DRIVE.getButtonName();
-        GamepadWrapper.getTrigger(GamepadButtons.SHOOTER_SHOOT.getButtonName());
-        bluesky.
+
+        blueSky.shootRight(GamepadWrapper.getTrigger(GamepadButtons.SHOOTER_SHOOT.getButtonName()));
         GamepadButtons.ROBOT_ROTATE.getButtonName();
 
     }
