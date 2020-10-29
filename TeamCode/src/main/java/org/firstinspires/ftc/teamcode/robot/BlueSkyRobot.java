@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.robot.lib.IntakePosition;
 import org.firstinspires.ftc.teamcode.robot.lib.RotationDirection;
+import org.firstinspires.ftc.teamcode.robot.lib.Vector;
 
 /***
  * The specific robot for this year. Mainly used to pass actions between the Operation Mode and
@@ -30,6 +31,14 @@ public class BlueSkyRobot extends Robot {
      */
     public void drive(double direction, double power){
         ((XDrive)this.driveBase).drivePower(direction, power);
+    }
+
+    /***
+     * @see DriveBase for more information.
+     * @param driveVector @see DriveBase for more information.
+     */
+    public void drive(Vector driveVector){
+        ((XDrive)this.driveBase).drivePower(driveVector);
     }
 
     /***

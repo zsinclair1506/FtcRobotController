@@ -51,12 +51,11 @@ public class UltimateGoalOpMode extends OpMode
      */
     @Override
     public void loop() {
-        GamepadButtons.ROBOT_DRIVE.getButtonName();
-        if (driveGamepad.getTrigger(GamepadButtons.SHOOTER_SHOOT.getButtonName()) > 0.75) {
+        blueSky.drive(driveGamepad.getStick(GamepadButtons.ROBOT_DRIVE.getButtonName()));
+
+        if (driveGamepad.getTrigger(GamepadButtons.SHOOTER_SHOOT.getButtonName()) > 0.50) {
             blueSky.shooterShoot();
         }
-        GamepadButtons.ROBOT_ROTATE.getButtonName();
-
     }
 
     /*
