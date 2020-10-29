@@ -19,6 +19,9 @@ import java.util.HashMap;
 public abstract class DriveBase {
     protected HashMap<String, DcMotor> motors;
 
+    public DriveBase(HardwareMap map){
+
+    }
     /***
      * Drive the robot at an angle at a power.
      * @param angle the angle to drive the robot (each drivebase will implement this differently)
@@ -49,10 +52,6 @@ public abstract class DriveBase {
     public abstract void rotateDirection(RotationDirection direction, double power);
 
     public abstract Vector motorNormalise(Vector vector);
-}
 
-    public double IMUdriveCorrection(double desiredHeading){
-
-        return 0;
-    }
+    public abstract void drivePower(Vector driveVector);
 }

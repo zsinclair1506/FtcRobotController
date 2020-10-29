@@ -65,21 +65,22 @@ public enum GamepadButtons {
      */
     ROBOT____("y");
 
+    private static String buttonName;
+
     /***
      *
      * @param buttonName
      */
     GamepadButtons(String buttonName){
-        this.buttonName = buttonName;
+        buttonName = buttonName;
     }
 
-    private String buttonName;
 
     /***
      * Getter for the buttonName String
      * @return buttonName, buttonName is 'gotten' and returned
      */
-    public String getButtonName(){
+    public static String getButtonName(){
         return buttonName;
     }
 

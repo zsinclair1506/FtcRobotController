@@ -15,6 +15,7 @@ public class UltimateGoalOpMode extends OpMode
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
     private BlueSkyRobot blueSky;
+    private GamepadWrapper driveGamepad, operatorGamepad;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -24,6 +25,7 @@ public class UltimateGoalOpMode extends OpMode
         telemetry.addData("Status", "Initialized");
 
         this.blueSky = new BlueSkyRobot(hardwareMap);
+
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
@@ -50,8 +52,9 @@ public class UltimateGoalOpMode extends OpMode
     @Override
     public void loop() {
         GamepadButtons.ROBOT_DRIVE.getButtonName();
-
-        blueSky.shootRight(GamepadWrapper.getTrigger(GamepadButtons.SHOOTER_SHOOT.getButtonName()));
+        if (driveGamepad.getTrigger(GamepadButtons.SHOOTER_SHOOT.getButtonName()) > 0.75) {
+            blueSky.shooterShoot();
+        }
         GamepadButtons.ROBOT_ROTATE.getButtonName();
 
     }
