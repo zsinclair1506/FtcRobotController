@@ -159,5 +159,24 @@ public class BlueSkyRobot extends Robot {
         ((WobbleArm)this.mechanisms.get("wobbleArm")).rotate(direction, 1);
     }
 
+    /***
+     * @see Loader for more information.
+     */
+    public void loaderLoad(){
+        ((Loader)this.mechanisms.get("loader")).load();
+    }
 
+    /***
+     * @see Loader for more information.
+     */
+    public void loaderRaise(){
+        ((Loader)this.mechanisms.get("loader")).raise();
+    }
+
+    /***
+     * @see Loader for more information.
+     */
+    public void loaderLower(){
+        ((Loader)this.mechanisms.get("loader")).lower();
+    }
 }
