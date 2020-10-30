@@ -18,6 +18,9 @@ public class UltimateGoalOpMode extends OpMode
     private BlueSkyRobot blueSky;
     private GamepadWrapper driveGamepad, operatorGamepad;
 
+    // Set to print telemetry data to the phone
+    private boolean debug = true;
+
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -53,7 +56,9 @@ public class UltimateGoalOpMode extends OpMode
     @Override
     public void loop() {
         blueSky.drive(driveGamepad.getStickVector(GamepadButtons.ROBOT_DRIVE.getButtonName()));
-        telemetry.update();
+        if(debug) {
+            telemetry.update();
+        }
     }
     /*
      * Code to run ONCE after the driver hits STOP
