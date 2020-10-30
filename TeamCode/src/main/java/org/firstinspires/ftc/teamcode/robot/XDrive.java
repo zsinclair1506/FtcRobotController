@@ -19,10 +19,14 @@ public class XDrive extends DriveBase {
      */
     public XDrive (HardwareMap map, Telemetry telemetry) {
         super(map, telemetry);
-        this.motors.put("frontLeft", map.get(DcMotor.class, "frontLeft"));
-        this.motors.put("frontRight", map.get(DcMotor.class, "frontRight"));
-        this.motors.put("backRight", map.get(DcMotor.class, "backRight"));
-        this.motors.put("backLeft", map.get(DcMotor.class, "backLeft"));
+        this.addMotor(MotorMap.XDRIVE_FRONT_LEFT_DC.getMotorName(),
+                map.get(DcMotor.class, MotorMap.XDRIVE_FRONT_LEFT_DC.getMotorName()));
+        this.addMotor(MotorMap.XDRIVE_FRONT_RIGHT_DC.getMotorName(),
+                map.get(DcMotor.class, MotorMap.XDRIVE_FRONT_RIGHT_DC.getMotorName()));
+        this.addMotor(MotorMap.XDRIVE_BACK_RIGHT_DC.getMotorName(),
+                map.get(DcMotor.class, MotorMap.XDRIVE_BACK_RIGHT_DC.getMotorName()));
+        this.addMotor(MotorMap.XDRIVE_BACK_LEFT_DC.getMotorName(),
+                map.get(DcMotor.class, MotorMap.XDRIVE_BACK_LEFT_DC.getMotorName()));
     }
 
     /***
@@ -32,10 +36,14 @@ public class XDrive extends DriveBase {
      */
     @Override
     public void drivePower(double angle, double power) {
-        this.motors.get("frontLeft").setPower(power * Math.cos(angle + 3*Math.PI/4));
-        this.motors.get("frontRight").setPower(power * Math.cos(angle + Math.PI/4));
-        this.motors.get("backRight").setPower(power * (0 - Math.cos(angle + 3*Math.PI/4)));
-        this.motors.get("backLeft").setPower(power * (0 - Math.cos(angle + Math.PI/4)));
+        this.getMotor(MotorMap.XDRIVE_FRONT_LEFT_DC.getMotorName()).setPower(
+                power * Math.cos(angle + 3*Math.PI/4));
+        this.getMotor(MotorMap.XDRIVE_FRONT_RIGHT_DC.getMotorName()).setPower(
+                power * Math.cos(angle + Math.PI/4));
+        this.getMotor(MotorMap.XDRIVE_BACK_RIGHT_DC.getMotorName()).setPower(
+                power * (0 - Math.cos(angle + 3*Math.PI/4)));
+        this.getMotor(MotorMap.XDRIVE_BACK_LEFT_DC.getMotorName()).setPower(
+                power * (0 - Math.cos(angle + Math.PI/4)));
     }
 
     /***
@@ -52,16 +60,14 @@ public class XDrive extends DriveBase {
             drive = driveVector;
         }
 
-
-        this.motors.get("frontLeft").setPower(drive.getMagnitude()
-                * Math.cos(drive.getAngleBetween(Vector.X_2) - Math.PI/4));
-        this.motors.get("frontRight").setPower(drive.getMagnitude()
-                * Math.cos(drive.getAngleBetween(Vector.X_2) + Math.PI/4));
-        this.motors.get("backRight").setPower(drive.getMagnitude()
-                * Math.cos(drive.getAngleBetween(Vector.X_2) - Math.PI/4));
-        this.motors.get("backLeft").setPower(drive.getMagnitude()
-                * Math.cos(drive.getAngleBetween(Vector.X_2) + Math.PI/4));
-
+        this.getMotor(MotorMap.XDRIVE_FRONT_LEFT_DC.getMotorName()).setPower(
+                drive.getMagnitude() * Math.cos(drive.getAngleBetween(Vector.X_2) - Math.PI/4));
+        this.getMotor(MotorMap.XDRIVE_FRONT_RIGHT_DC.getMotorName()).setPower(
+                drive.getMagnitude() * Math.cos(drive.getAngleBetween(Vector.X_2) + Math.PI/4));
+        this.getMotor(MotorMap.XDRIVE_BACK_RIGHT_DC.getMotorName()).setPower(
+                (-drive.getMagnitude()) * Math.cos(drive.getAngleBetween(Vector.X_2) - Math.PI/4));
+        this.getMotor(MotorMap.XDRIVE_BACK_LEFT_DC.getMotorName()).setPower(
+                (-drive.getMagnitude()) * Math.cos(drive.getAngleBetween(Vector.X_2) + Math.PI/4));
     }
 
     /***
