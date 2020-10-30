@@ -56,8 +56,10 @@ public class UltimateGoalOpMode extends OpMode
         if (driveGamepad.getTrigger(GamepadButtons.SHOOTER_SHOOT.getButtonName()) > 0.50) {
             blueSky.shooterShoot();
         }
+        if (operatorGamepad.getTrigger(GamepadButtons.CONVEYOR_RUN.getButtonName()) > 0.2){
+            blueSky.conveyorRun();
     }
-
+    }
     /*
      * Code to run ONCE after the driver hits STOP
      */
