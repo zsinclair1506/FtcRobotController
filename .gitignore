@@ -90,8 +90,4 @@ lint/tmp/
 *build.gradle
 .idea/codeStyles/Project.xml
 .idea/misc.xml
-.idea/misc.xml
-.idea
-.idea/*
-.idea*
 gradle/wrapper/gradle-wrapper.properties
