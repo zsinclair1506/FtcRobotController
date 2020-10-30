@@ -123,6 +123,6 @@ public class XDrive extends DriveBase {
             }
         }
 
-        return vector.scale(1 / maxValue);
+        return vector.scale(1.0 / maxValue);
     }
 }
