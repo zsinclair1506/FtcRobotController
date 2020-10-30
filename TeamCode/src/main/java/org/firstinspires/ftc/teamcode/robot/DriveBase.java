@@ -17,7 +17,7 @@ import java.util.HashMap;
  * The actions that all drivebases must do.
  */
 public abstract class DriveBase {
-    protected HashMap<String, DcMotor> motors;
+    protected HashMap<String, DcMotor> motors = new HashMap<>();
 
     public DriveBase(HardwareMap map){
 
