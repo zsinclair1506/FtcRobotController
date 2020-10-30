@@ -18,12 +18,12 @@ public class BlueSkyRobot extends Robot {
      * @param map the hardware map containing all the hardware on the robot.
      */
     public BlueSkyRobot(HardwareMap map, Telemetry telemetry){
-        //this.mechanisms.put("conveyor", new Conveyor(map, telemetry));
-        //this.mechanisms.put("intake", new Intake(map, telemetry));
-        this.mechanisms.put("shooter", new Shooter(map, telemetry));
-        //this.mechanisms.put("wobbleArm", new WobbleArm(map, telemetry));
-        this.mechanisms.put("loader", new Loader(map, telemetry));
-        this.driveBase = new XDrive(map, telemetry);
+        this.addMechanism("conveyor", new Conveyor(map, telemetry));
+        this.addMechanism("intake", new Intake(map, telemetry));
+        this.addMechanism("shooter", new Shooter(map, telemetry));
+        this.addMechanism("wobbleArm", new WobbleArm(map, telemetry));
+        this.addMechanism("loader", new Loader(map, telemetry));
+        this.setDriveBase(new XDrive(map, telemetry));
     }
 
     /***
@@ -32,7 +32,7 @@ public class BlueSkyRobot extends Robot {
      * @param power @see DriveBase for more information.
      */
     public void drive(double direction, double power){
-        ((XDrive)this.driveBase).drivePower(direction, power);
+        ((XDrive)this.getDriveBase()).drivePower(direction, power);
     }
 
     /***
@@ -40,7 +40,7 @@ public class BlueSkyRobot extends Robot {
      * @param driveVector @see DriveBase for more information.
      */
     public void drive(Vector driveVector){
-        ((XDrive)this.driveBase).drivePower(driveVector);
+        ((XDrive)this.getDriveBase()).drivePower(driveVector);
     }
 
     /***
@@ -49,70 +49,71 @@ public class BlueSkyRobot extends Robot {
      * @param power @see DriveBase for more information.
      */
     public void rotate(RotationDirection direction, double power){
-        ((XDrive)this.driveBase).rotateDirection(direction, power);
+        ((XDrive)this.getDriveBase()).rotateDirection(direction, power);
     }
 
     /***
      * @see Shooter for more information.
      */
     public void shooterShoot(){
-        ((Shooter)this.mechanisms.get("shooter")).shoot();
+        ((Shooter)this.getMechanism("shooter")).shoot();
     }
 
     /***
+     * TODO figure out how to use this
      * @see Shooter for more information.
      */
     public void shooterFeedMe(){
-        ((Shooter)this.mechanisms.get("shooter")).feedMe();
+        ((Shooter)this.getMechanism("shooter")).feedMe();
     }
 
     /***
      * @see Gripper for more information.
      */
     public void clawClose(){
-        ((WobbleArm)this.mechanisms.get("wobbleArm")).gripperClose();
+        ((WobbleArm)this.getMechanism("wobbleArm")).gripperClose();
     }
 
     /***
      * @see Gripper for more information.
      */
     public void clawOpen(){
-        ((WobbleArm)this.mechanisms.get("wobbleArm")).gripperOpen();
+        ((WobbleArm)this.getMechanism("wobbleArm")).gripperOpen();
     }
 
     /***
      * @see Conveyor for more information.
      */
     public void conveyorRun(){
-        ((Conveyor)this.mechanisms.get("conveyor")).convey();
+        ((Conveyor)this.getMechanism("conveyor")).convey();
     }
 
     /***
      * @see WobbleArm for more information.
      */
     public void gripperLower(){
-        ((WobbleArm)this.mechanisms.get("wobbleArm")).gripperTiltDown();
+        ((WobbleArm)this.getMechanism("wobbleArm")).gripperTiltDown();
     }
 
     /***
      * @see WobbleArm for more information.
      */
     public void gripperRaise(){
-        ((WobbleArm)this.mechanisms.get("wobbleArm")).gripperTiltUp();
+        ((WobbleArm)this.getMechanism("wobbleArm")).gripperTiltUp();
     }
 
     /***
      * @see Intake for more information.
      */
     public void intakeLower(){
-        ((Intake)this.mechanisms.get("intake")).lower();
+        ((Intake)this.getMechanism("intake")).lower();
     }
 
     /***
      * @see Intake for more information.
      */
     public void intakeLift(){
-        ((Intake)this.mechanisms.get("intake")).lift();
+        ((Intake)this.getMechanism("intake")).lift();
     }
 
     /***
@@ -120,35 +121,35 @@ public class BlueSkyRobot extends Robot {
      * @param position @see Intake for more information.
      */
     public void intakeLRotate(IntakePosition position){
-        ((Intake)this.mechanisms.get("intake")).rotate(position);
+        ((Intake)this.getMechanism("intake")).rotate(position);
     }
 
     /***
      * @see Intake for more information.
      */
     public void intakeGrab(){
-        ((Intake)this.mechanisms.get("intake")).grab();
+        ((Intake)this.getMechanism("intake")).grab();
     }
 
     /***
      * @see Intake for more information.
      */
     public void intakeRelease(){
-        ((Intake)this.mechanisms.get("intake")).release();
+        ((Intake)this.getMechanism("intake")).release();
     }
 
     /***
      * @see Intake for more information.
      */
     public void intakeDropOff(){
-        ((Intake)this.mechanisms.get("intake")).dropOff();
+        ((Intake)this.getMechanism("intake")).dropOff();
     }
 
     /***
      * @see Intake for more information.
      */
     public void intakeStop(){
-        ((Intake)this.mechanisms.get("intake")).stop();
+        ((Intake)this.getMechanism("intake")).stop();
     }
 
     /***
@@ -156,27 +157,27 @@ public class BlueSkyRobot extends Robot {
      * @param direction @see WobbleArm for more information.
      */
     public void wobbleArmRotate(RotationDirection direction){
-        ((WobbleArm)this.mechanisms.get("wobbleArm")).rotate(direction, 1);
+        ((WobbleArm)this.getMechanism("wobbleArm")).rotate(direction, 1);
     }
 
     /***
      * @see Loader for more information.
      */
     public void loaderLoad(){
-        ((Loader)this.mechanisms.get("loader")).load();
+        ((Loader)this.getMechanism("loader")).load();
     }
 
     /***
      * @see Loader for more information.
      */
     public void loaderRaise(){
-        ((Loader)this.mechanisms.get("loader")).raise();
+        ((Loader)this.getMechanism("loader")).raise();
     }
 
     /***
      * @see Loader for more information.
      */
     public void loaderLower(){
-        ((Loader)this.mechanisms.get("loader")).lower();
+        ((Loader)this.getMechanism("loader")).lower();
     }
 }
