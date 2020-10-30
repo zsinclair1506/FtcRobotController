@@ -1,6 +1,9 @@
 package org.firstinspires.ftc.teamcode.robot.lib;
 
 
+import android.sax.TextElementListener;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 /***
  * PID controller courtesy of Peter Tischler, with modifications.
@@ -24,6 +27,7 @@ public class PIDController
     private double m_setpoint = 0.0;        // the desired output of the PID
     private double m_error = 0.0;           // the difference between current and desired output
     private double m_result = 0.0;          // the calculated result
+    private Telemetry telemetry;
 
     /**
      * Allocate a PID object with the given constants for P, I, D
@@ -31,11 +35,12 @@ public class PIDController
      * @param Ki the integral coefficient
      * @param Kd the derivative coefficient
      */
-    public PIDController(double Kp, double Ki, double Kd)
+    public PIDController(double Kp, double Ki, double Kd, Telemetry telemetry)
     {
         m_P = Kp;
         m_I = Ki;
         m_D = Kd;
+        this.telemetry = telemetry;
     }
 
     /**

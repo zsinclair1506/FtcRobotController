@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.robot.lib;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 /***
  * Vector class defining things for 2 and 3 dimensional vectors. While some things will work with
  * n-dimensional vectors, cross products in n-dimensional space are too complicated for this simple
@@ -7,6 +9,7 @@ package org.firstinspires.ftc.teamcode.robot.lib;
  */
 public class Vector {
     private double values[];
+    private Telemetry telemetry;
 
     public static Vector X_2 = new Vector(2,1, 0);
     public static Vector X_3 = new Vector(3, 1, 0, 0);
@@ -28,7 +31,8 @@ public class Vector {
      * @param magnitude the magnitude of the vector (length)
      * @param angle the angle of the vector from the X axis
      */
-    public Vector(double magnitude, double angle){
+    public Vector(double magnitude, double angle, Telemetry telemetry){
+        this.telemetry = telemetry;
         this.values = new double[]{magnitude * Math.cos(angle), magnitude * Math.sin(angle)};
     }
 
@@ -66,7 +70,7 @@ public class Vector {
      * @return the magnitude of the vector
      */
     public double getMagnitude(){
-        return Math.pow(this.dot(this), 1 / (this.getSize()));
+        return Math.pow(this.dot(this), 1.0 / (this.getSize()));
     }
 
     /**
@@ -101,7 +105,7 @@ public class Vector {
             return total;
         }
 
-        return 1;
+        return 2;
 
     }
 

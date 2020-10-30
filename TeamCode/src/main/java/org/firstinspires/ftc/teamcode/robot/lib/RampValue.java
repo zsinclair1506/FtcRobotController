@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.robot.lib;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 /***
  * Ramp the change between two values. This is called in a loop to perform regular calculation.
  */
@@ -16,12 +18,13 @@ public class RampValue {
     private RampMode rampMode;                      // the chosen ramp mode
     private double setPoint = 0.0;                  // the desired ending value
     private double prevTime = 0.0;                  // the time of the previous calculation
+    private Telemetry telemetry;
 
     /***
      * Constructor for no preset values
      */
-    public RampValue(){
-
+    public RampValue(Telemetry telemetry){
+        this.telemetry = telemetry;
     }
 
     /***

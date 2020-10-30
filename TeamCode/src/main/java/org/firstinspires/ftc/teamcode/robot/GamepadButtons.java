@@ -6,70 +6,82 @@ package org.firstinspires.ftc.teamcode.robot;
 public enum GamepadButtons {
 
     /***
-     *
+     * Gamepad: 2
      */
-    START_INTAKE("dpad_up"),
+    GRIPPER_RAISE("dpad_up"),
+
+    /***
+     * Gamepad: 2
+     */
+    GRIPPER_LOWER("dpad_down"),
+
+    /***
+     * Gamepad: 2
+     */
+    ARM_ROTATE("x"),
+
+    /***
+     * Gamepad: 2
+     */
+    GRIPPER_OPEN("a"),
+
+    /***
+     * Gamepad: 2
+     */
+    GRIPPER_CLOSE("b"),
+
+    /***
+     * Gamepad: 1
+     */
+    SHOOTER_SHOOT("right_trigger"),
+
+    /***
+     * Gamepad: 1
+     */
+    SHOOTER_FEED_ME("dpad_left"),
+
+    /***
+     * Gamepad: 2
+     */
+    CONVEYOR_RUN("right_trigger"),
+
+    /***
+     * Gamepad: 2
+     */
+    GRIPPER_ANGLE_FOR("dpad_right"),
+
+    /***
+     * Gamepad: 1
+     */
+    ROBOT_DRIVE("left_stick"),
+
+    /***
+     * Gamepad: 1
+     */
+    ROBOT_ROTATE("right_stick"),
+
+    /***
+     * Gamepad: 1
+     */
+    ROBOT____("y");
+
+    private final String buttonName;
 
     /***
      *
+     * @param bName
      */
-    STOP_INTAKE("dpad_down"),
-
-    /***
-     *
-     */
-    EXTEND_ARM("y"),
-
-    /***
-     *
-     */
-    RETRACT_ARM("x"),
-
-    /***
-     *
-     */
-    OPEN_CLAW("a"),
-
-    /***
-     *
-     */
-    CLOSE_CLAW("b"),
-
-    /***
-     * test
-     */
-    SORT_LEFT("dpad_left"),
-
-    /***
-     *
-     */
-    SORT_RIGHT("dpad_right"),
-
-    /***
-     *
-     */
-    SHOOT_RIGHT("right_trigger"),
-
-    /***
-     *
-     */
-    SHOOT_LEFT("left_trigger"),
-
-    /***
-     *
-     */
-    RUN_CONVEYOR("right_bumper");
-
-    private GamepadButtons(String buttonName){
-        this.buttonName = buttonName;
+    GamepadButtons(String bName){
+        buttonName = bName;
     }
 
 
-    private String buttonName;
-
+    /***
+     * Getter for the buttonName String
+     * @return buttonName, buttonName is 'gotten' and returned
+     */
     public String getButtonName(){
         return buttonName;
     }
-
 
 }

@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.robot.lib;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.robotcore.external.navigation.MotionDetection;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import java.lang.reflect.Field;
 
@@ -13,13 +14,15 @@ import java.lang.reflect.Field;
 public class GamepadWrapper {
     private Gamepad gamepad;
     private Class gamepadClass = Gamepad.class; // used for reflection to get the fields
+    private Telemetry telemetry;
 
     /***
      * Constructor for the @GamepadWrapper
      * @param gamepad the gamepad that this wraps (around)
      */
-    public GamepadWrapper(Gamepad gamepad){
+    public GamepadWrapper(Gamepad gamepad, Telemetry telemetry){
         this.gamepad = gamepad;
+        this.telemetry = telemetry;
     }
 
     /***
@@ -49,7 +52,7 @@ public class GamepadWrapper {
             Field joystick = gamepadClass.getField(joystickAxis);
             joystick.setAccessible(true);
 
-            return (double) joystick.get(gamepad);
+            return Double.valueOf((float) joystick.get(gamepad));
         } catch (NoSuchFieldException | IllegalAccessException e) {
             //ignore exceptions, return 0
             return 0;
@@ -75,9 +78,9 @@ public class GamepadWrapper {
             String joystickX = stick + "_x";
             String joystickY = stick + "_y";
             double x = this.getJoystick(joystickX);
-            double y = this.getJoystick(joystickY);
+            double y = 0 - this.getJoystick(joystickY);
 
-            return Math.atan2(x, y);
+            return Math.atan2(y, x);
         }
         else {
             return 0;
@@ -94,7 +97,7 @@ public class GamepadWrapper {
         String joystickY = stick + "_y";
 
         double x = this.getJoystick(joystickX);
-        double y = this.getJoystick(joystickY);
+        double y = 0 - this.getJoystick(joystickY);
 
         return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
     }
@@ -104,7 +107,7 @@ public class GamepadWrapper {
      * @param stick the stick to get the vector for (left_stick or right_stick)
      * @return the vector of the joystick
      */
-    public Vector getStick(String stick){
-        return new Vector(getStickMagnitude(stick), getStickAngle(stick));
+    public Vector getStickVector(String stick){
+        return new Vector(this.getStickMagnitude(stick), this.getStickAngle(stick), telemetry);
     }
 }
