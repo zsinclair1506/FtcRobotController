@@ -43,7 +43,7 @@ public enum GamepadButtons {
     /***
      * Gamepad: 2
      */
-    CONVEYOR_RUN("right_bumper"),
+    CONVEYOR_RUN("right_trigger"),
 
     /***
      * Gamepad: 2
