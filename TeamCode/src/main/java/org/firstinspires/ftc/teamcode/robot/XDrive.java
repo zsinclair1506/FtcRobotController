@@ -42,7 +42,14 @@ public class XDrive extends DriveBase {
      */
     @Override
     public void drivePower(Vector driveVector) {
-        Vector drive = this.motorNormalise(driveVector);
+        Vector drive;
+        if(driveVector.getMagnitude() > 0.8) {
+            drive = this.motorNormalise(driveVector);
+        }
+        else{
+            drive = driveVector;
+        }
+
 
         this.motors.get("frontLeft").setPower(drive.getMagnitude()
                 * Math.cos(drive.getAngleBetween(Vector.X_2) - Math.PI/4));
