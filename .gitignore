@@ -86,8 +86,6 @@ lint/outputs/
 lint/tmp/
 # lint/reports/
 
-# annoyances
-*build.gradle
-.idea/codeStyles/Project.xml
+#annoyances
 .idea/misc.xml
-gradle/wrapper/gradle-wrapper.properties
+.idea/compiler.xml
