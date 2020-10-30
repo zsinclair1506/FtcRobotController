@@ -101,7 +101,7 @@ public class Vector {
             return total;
         }
 
-        return 1;
+        return 2;
 
     }
 

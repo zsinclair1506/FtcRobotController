@@ -75,7 +75,7 @@ public class GamepadWrapper {
             String joystickX = stick + "_x";
             String joystickY = stick + "_y";
             double x = this.getJoystick(joystickX);
-            double y = this.getJoystick(joystickY);
+            double y = 0 - this.getJoystick(joystickY);
 
             return Math.atan2(x, y);
         }
@@ -94,7 +94,7 @@ public class GamepadWrapper {
         String joystickY = stick + "_y";
 
         double x = this.getJoystick(joystickX);
-        double y = this.getJoystick(joystickY);
+        double y = 0 - this.getJoystick(joystickY);
 
         return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
     }
@@ -104,7 +104,7 @@ public class GamepadWrapper {
      * @param stick the stick to get the vector for (left_stick or right_stick)
      * @return the vector of the joystick
      */
-    public Vector getStick(String stick){
+    public Vector getStickVector(String stick){
         return new Vector(this.getStickMagnitude(stick), this.getStickAngle(stick));
     }
 }

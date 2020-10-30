@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.robot.BlueSkyRobot;
 import org.firstinspires.ftc.teamcode.robot.GamepadButtons;
 import org.firstinspires.ftc.teamcode.robot.lib.GamepadWrapper;
+import org.firstinspires.ftc.teamcode.robot.lib.Vector;
 
 
 @TeleOp(name="Default TeleOp", group="Final RunModes")
@@ -53,15 +54,21 @@ public class UltimateGoalOpMode extends OpMode
     @Override
     public void loop() {
         telemetry.addData("Button", GamepadButtons.ROBOT_DRIVE.getButtonName());
-        //blueSky.drive(driveGamepad.getStick(GamepadButtons.ROBOT_DRIVE.getButtonName()));
-/**
+        telemetry.addData("Mag",
+                driveGamepad.getStickVector(GamepadButtons.ROBOT_DRIVE.getButtonName()).getMagnitude());
+        telemetry.addData("Angle",
+                driveGamepad.getStickVector(GamepadButtons.ROBOT_DRIVE.getButtonName())
+                        .getAngleBetween(Vector.X_2));
+        blueSky.drive(driveGamepad.getStickVector(GamepadButtons.ROBOT_DRIVE.getButtonName()));
+        telemetry.update();
+        /**
         if (driveGamepad.getTrigger(GamepadButtons.SHOOTER_SHOOT.getButtonName()) > 0.50) {
             blueSky.shooterShoot();
         }
         if (operatorGamepad.getTrigger(GamepadButtons.CONVEYOR_RUN.getButtonName()) > 0.2){
             blueSky.conveyorRun();
-    }
- */
+        }
+        */
     }
     /*
      * Code to run ONCE after the driver hits STOP
