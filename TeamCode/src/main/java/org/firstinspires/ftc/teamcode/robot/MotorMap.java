@@ -18,22 +18,22 @@ public enum MotorMap {
     /***
      * The front left drivebase DC motor
      */
-    XDRIVE_FRONT_LEFT_DC(""),
+    XDRIVE_FRONT_LEFT_DC("frontLeft"),
 
     /***
      * The front right drivebase DC motor
      */
-    XDRIVE_FRONT_RIGHT_DC(""),
+    XDRIVE_FRONT_RIGHT_DC("frontRight"),
 
     /***
      * The back right drivebase DC motor
      */
-    XDRIVE_BACK_RIGHT_DC(""),
+    XDRIVE_BACK_RIGHT_DC("backRight"),
 
     /***
      * The bark left drivebase DC motor
      */
-    XDRIVE_BACK_LEFT_DC(""),
+    XDRIVE_BACK_LEFT_DC("backLeft"),
 
     /***
      * The servo at the end of the intake to grab the rings
@@ -79,7 +79,7 @@ public enum MotorMap {
     /***
      * The string the motor is defined with on the hubs
      */
-    private String motorName;
+    private final String motorName;
 
     /***
      * Constructor assigning the name to the enumeration
