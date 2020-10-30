@@ -53,8 +53,6 @@ public class UltimateGoalOpMode extends OpMode
      */
     @Override
     public void loop() {
-        blueSky.drive(driveGamepad.getStickVector(GamepadButtons.ROBOT_DRIVE.getButtonName()));
-        telemetry.update();
     }
     /*
      * Code to run ONCE after the driver hits STOP
