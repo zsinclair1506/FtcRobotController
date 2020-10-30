@@ -33,10 +33,7 @@ public class Vector {
      */
     public Vector(double magnitude, double angle, Telemetry telemetry){
         this.telemetry = telemetry;
-        telemetry.addData("mag", magnitude);
-        telemetry.addData("angle", angle);
         this.values = new double[]{magnitude * Math.cos(angle), magnitude * Math.sin(angle)};
-        telemetry.addData("values", this.values);
     }
 
     /***
@@ -73,7 +70,7 @@ public class Vector {
      * @return the magnitude of the vector
      */
     public double getMagnitude(){
-        return Math.pow(this.dot(this), 1 / (this.getSize()));
+        return Math.pow(this.dot(this), 1.0 / (this.getSize()));
     }
 
     /**

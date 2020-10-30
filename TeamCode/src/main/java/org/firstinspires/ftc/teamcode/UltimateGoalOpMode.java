@@ -53,25 +53,8 @@ public class UltimateGoalOpMode extends OpMode
      */
     @Override
     public void loop() {
-        telemetry.addData("Mag",
-                driveGamepad.getStickVector(GamepadButtons.ROBOT_DRIVE.getButtonName()).getMagnitude());
-        telemetry.addData("Angle",
-                driveGamepad.getStickVector(GamepadButtons.ROBOT_DRIVE.getButtonName())
-                        .getAngleBetween(Vector.X_2));
-        telemetry.addData("Joystickx", gamepad1.left_stick_x);
-        telemetry.addData("::", driveGamepad.getJoystick(GamepadButtons.ROBOT_DRIVE.getButtonName()+"_x"));
-        telemetry.addData("Joysticky", gamepad1.left_stick_y);
-        telemetry.addData("::", driveGamepad.getJoystick(GamepadButtons.ROBOT_DRIVE.getButtonName()+"_y"));
-        //blueSky.drive(driveGamepad.getStickVector(GamepadButtons.ROBOT_DRIVE.getButtonName()));
+        blueSky.drive(driveGamepad.getStickVector(GamepadButtons.ROBOT_DRIVE.getButtonName()));
         telemetry.update();
-        /**
-        if (driveGamepad.getTrigger(GamepadButtons.SHOOTER_SHOOT.getButtonName()) > 0.50) {
-            blueSky.shooterShoot();
-        }
-        if (operatorGamepad.getTrigger(GamepadButtons.CONVEYOR_RUN.getButtonName()) > 0.2){
-            blueSky.conveyorRun();
-        }
-        */
     }
     /*
      * Code to run ONCE after the driver hits STOP
