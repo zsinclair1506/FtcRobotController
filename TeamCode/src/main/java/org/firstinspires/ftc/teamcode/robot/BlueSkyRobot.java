@@ -22,6 +22,7 @@ public class BlueSkyRobot extends Robot {
         //this.mechanisms.put("intake", new Intake(map, telemetry));
         this.mechanisms.put("shooter", new Shooter(map, telemetry));
         //this.mechanisms.put("wobbleArm", new WobbleArm(map, telemetry));
+        this.mechanisms.put("loader", new Loader(map, telemetry));
         this.driveBase = new XDrive(map, telemetry);
     }
 
