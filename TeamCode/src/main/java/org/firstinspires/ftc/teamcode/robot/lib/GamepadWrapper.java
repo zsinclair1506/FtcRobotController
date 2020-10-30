@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.robot.lib;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.robotcore.external.navigation.MotionDetection;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import java.lang.reflect.Field;
 
@@ -13,13 +14,15 @@ import java.lang.reflect.Field;
 public class GamepadWrapper {
     private Gamepad gamepad;
     private Class gamepadClass = Gamepad.class; // used for reflection to get the fields
+    private Telemetry telemetry;
 
     /***
      * Constructor for the @GamepadWrapper
      * @param gamepad the gamepad that this wraps (around)
      */
-    public GamepadWrapper(Gamepad gamepad){
+    public GamepadWrapper(Gamepad gamepad, Telemetry telemetry){
         this.gamepad = gamepad;
+        this.telemetry = telemetry;
     }
 
     /***

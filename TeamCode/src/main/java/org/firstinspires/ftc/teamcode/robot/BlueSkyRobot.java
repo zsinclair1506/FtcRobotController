@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.robot;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.robot.lib.IntakePosition;
 import org.firstinspires.ftc.teamcode.robot.lib.RotationDirection;
 import org.firstinspires.ftc.teamcode.robot.lib.Vector;
@@ -16,12 +17,12 @@ public class BlueSkyRobot extends Robot {
      * Constructor for this years' robot. Creates all the mechanisms and the drivebase.
      * @param map the hardware map containing all the hardware on the robot.
      */
-    public BlueSkyRobot(HardwareMap map){
-        this.mechanisms.put("conveyor", new Conveyor(map));
-        this.mechanisms.put("intake", new Intake(map));
-        this.mechanisms.put("shooter", new Shooter(map));
-        this.mechanisms.put("wobbleArm", new WobbleArm(map));
-        this.driveBase = new XDrive(map);
+    public BlueSkyRobot(HardwareMap map, Telemetry telemetry){
+        this.mechanisms.put("conveyor", new Conveyor(map, telemetry));
+        this.mechanisms.put("intake", new Intake(map, telemetry));
+        this.mechanisms.put("shooter", new Shooter(map, telemetry));
+        this.mechanisms.put("wobbleArm", new WobbleArm(map, telemetry));
+        this.driveBase = new XDrive(map, telemetry);
     }
 
     /***

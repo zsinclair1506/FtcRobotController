@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import java.util.HashMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 /***
  * The class responsible for the running of the conveyor mechanism on the robot
  */
@@ -18,7 +20,8 @@ public class Conveyor extends Mechanism {
      * Conveyor constructor
      * @param map the hardware map for the robot
      */
-    public Conveyor(HardwareMap map){
+    public Conveyor(HardwareMap map, Telemetry telemetry){
+        super(telemetry);
         conveyorServo = map.get(CRServo.class, "conveyorServo");
     }
 
