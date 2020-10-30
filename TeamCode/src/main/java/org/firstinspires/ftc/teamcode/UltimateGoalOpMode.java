@@ -25,7 +25,8 @@ public class UltimateGoalOpMode extends OpMode
         telemetry.addData("Status", "Initialized");
 
         this.blueSky = new BlueSkyRobot(hardwareMap);
-
+        this.driveGamepad = new GamepadWrapper(gamepad1);
+        this.operatorGamepad = new GamepadWrapper(gamepad2);
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
@@ -51,14 +52,16 @@ public class UltimateGoalOpMode extends OpMode
      */
     @Override
     public void loop() {
-        blueSky.drive(driveGamepad.getStick(GamepadButtons.ROBOT_DRIVE.getButtonName()));
-
+        telemetry.addData("Button", GamepadButtons.ROBOT_DRIVE.getButtonName());
+        //blueSky.drive(driveGamepad.getStick(GamepadButtons.ROBOT_DRIVE.getButtonName()));
+/**
         if (driveGamepad.getTrigger(GamepadButtons.SHOOTER_SHOOT.getButtonName()) > 0.50) {
             blueSky.shooterShoot();
         }
         if (operatorGamepad.getTrigger(GamepadButtons.CONVEYOR_RUN.getButtonName()) > 0.2){
             blueSky.conveyorRun();
     }
+ */
     }
     /*
      * Code to run ONCE after the driver hits STOP

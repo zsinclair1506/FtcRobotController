@@ -131,6 +131,6 @@ public class GamepadWrapper {
      * @return the vector of the joystick
      */
     public Vector getStick(String stick){
-        return new Vector(getStickMagnitude(stick), getStickAngle(stick));
+        return new Vector(this.getStickMagnitude(stick), this.getStickAngle(stick));
     }
 }

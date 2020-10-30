@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.robot.lib.RotationDirection;
 import org.firstinspires.ftc.teamcode.robot.lib.Vector;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
+
 
 public class XDrive extends DriveBase {
 
