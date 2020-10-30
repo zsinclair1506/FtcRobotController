@@ -17,4 +17,38 @@ public abstract class Robot {
      */
     protected DriveBase driveBase;
 
+    /***
+     * Adds a mechanism to the mechanisms collection
+     * @param name the unique name of the mechanism to add (the key)
+     * @param mechanism the mechanism to add (the value)
+     */
+    protected void addMechanism(String name, Mechanism mechanism){
+        this.mechanisms.put(name, mechanism);
+    }
+
+    /***
+     * Gets a mechanism from the mechanism collection
+     * @param name the name of the mechanism (key)
+     * @return the mechanism if it exists or null
+     */
+    protected Mechanism getMechanism(String name){
+        return this.mechanisms.get(name);
+    }
+
+    /***
+     * Sets the drivebase of the robot
+     * @param driveBase the drivebase to set for the robot
+     */
+    protected void setDriveBase(DriveBase driveBase){
+        this.driveBase = driveBase;
+    }
+
+    /***
+     * Gets the current drivebase of the robot
+     * @return the drivebase the robot is using
+     */
+    protected DriveBase getDriveBase(){
+        return this.driveBase;
+    }
+
 }
