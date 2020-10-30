@@ -70,4 +70,21 @@ public abstract class DriveBase {
      */
     public abstract Vector motorNormalise(Vector vector);
 
+    /***
+     * Get the motor from the collection of motors for this drivebase.
+     * @param motorName the name of the motor to get
+     * @return a motor with the given name
+     */
+    protected DcMotor getMotor(String motorName){
+        return motors.get(motorName);
+    }
+
+    /***
+     * Adds a motor to the
+     * @param motorName
+     * @param motor
+     */
+    protected void addMotor(String motorName, DcMotor motor){
+        motors.put(motorName, motor);
+    }
 }
