@@ -19,7 +19,7 @@ public class UltimateGoalOpMode extends OpMode
     private GamepadWrapper driveGamepad, operatorGamepad;
 
     // Set to print telemetry data to the phone
-    private boolean debug = true;
+    private boolean debug = false;
 
     /*
      * Code to run ONCE when the driver hits INIT
