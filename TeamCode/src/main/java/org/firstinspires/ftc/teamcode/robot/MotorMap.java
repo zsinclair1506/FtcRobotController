@@ -54,7 +54,7 @@ public enum MotorMap {
      * The motor for the whackystick shooter
      *
      */
-    SHOOTER_DC(""),
+    SHOOTER_DC("hammerMotor"),
 
     /***
      * The servo for the loader mechanism
