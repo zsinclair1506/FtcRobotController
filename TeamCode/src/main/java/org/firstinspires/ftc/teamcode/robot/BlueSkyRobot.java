@@ -2,8 +2,10 @@ package org.firstinspires.ftc.teamcode.robot;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.robot.lib.IntakePosition;
 import org.firstinspires.ftc.teamcode.robot.lib.RotationDirection;
+import org.firstinspires.ftc.teamcode.robot.lib.Vector;
 
 /***
  * The specific robot for this year. Mainly used to pass actions between the Operation Mode and
@@ -15,12 +17,12 @@ public class BlueSkyRobot extends Robot {
      * Constructor for this years' robot. Creates all the mechanisms and the drivebase.
      * @param map the hardware map containing all the hardware on the robot.
      */
-    public BlueSkyRobot(HardwareMap map){
-        this.mechanisms.put("conveyor", new Conveyor(map));
-        this.mechanisms.put("intake", new Intake(map));
-        this.mechanisms.put("shooter", new Shooter(map));
-        this.mechanisms.put("wobbleArm", new WobbleArm(map));
-        this.driveBase = new XDrive(map);
+    public BlueSkyRobot(HardwareMap map, Telemetry telemetry){
+        this.mechanisms.put("conveyor", new Conveyor(map, telemetry));
+        this.mechanisms.put("intake", new Intake(map, telemetry));
+        this.mechanisms.put("shooter", new Shooter(map, telemetry));
+        this.mechanisms.put("wobbleArm", new WobbleArm(map, telemetry));
+        this.driveBase = new XDrive(map, telemetry);
     }
 
     /***
@@ -30,6 +32,14 @@ public class BlueSkyRobot extends Robot {
      */
     public void drive(double direction, double power){
         ((XDrive)this.driveBase).drivePower(direction, power);
+    }
+
+    /***
+     * @see DriveBase for more information.
+     * @param driveVector @see DriveBase for more information.
+     */
+    public void drive(Vector driveVector){
+        ((XDrive)this.driveBase).drivePower(driveVector);
     }
 
     /***

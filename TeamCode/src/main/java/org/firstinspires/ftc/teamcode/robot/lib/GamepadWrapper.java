@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.robot.lib;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.robotcore.external.navigation.MotionDetection;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import java.lang.reflect.Field;
 
@@ -13,13 +14,15 @@ import java.lang.reflect.Field;
 public class GamepadWrapper {
     private Gamepad gamepad;
     private Class gamepadClass = Gamepad.class; // used for reflection to get the fields
+    private Telemetry telemetry;
 
     /***
      * Constructor for the @GamepadWrapper
      * @param gamepad the gamepad that this wraps (around)
      */
-    public GamepadWrapper(Gamepad gamepad){
+    public GamepadWrapper(Gamepad gamepad, Telemetry telemetry){
         this.gamepad = gamepad;
+        this.telemetry = telemetry;
     }
 
     /***
@@ -30,6 +33,8 @@ public class GamepadWrapper {
     public boolean getButton(String buttonName) {
         try {
             Field button = gamepadClass.getField(buttonName);
+            button.setAccessible(true);
+
             return (Boolean) button.get(gamepad);
         } catch (NoSuchFieldException | IllegalAccessException e) {
             //ignore exceptions, return false
@@ -45,7 +50,9 @@ public class GamepadWrapper {
     public double getJoystick(String joystickAxis){
         try {
             Field joystick = gamepadClass.getField(joystickAxis);
-            return (double) joystick.get(gamepad);
+            joystick.setAccessible(true);
+
+            return Double.valueOf((float) joystick.get(gamepad));
         } catch (NoSuchFieldException | IllegalAccessException e) {
             //ignore exceptions, return 0
             return 0;
@@ -68,34 +75,12 @@ public class GamepadWrapper {
      */
     private double getStickAngle(String stick) {
         if (stick.contains("left_stick") | stick.contains("right_stick")) {
-            try {
-                String joystickX = stick + "_x";
-                String joystickY = stick + "_y";
-                Field joystick_X = gamepadClass.getField(joystickX);
-                Field joystick_Y = gamepadClass.getField(joystickY);
+            String joystickX = stick + "_x";
+            String joystickY = stick + "_y";
+            double x = this.getJoystick(joystickX);
+            double y = 0 - this.getJoystick(joystickY);
 
-                double x = (double) joystick_X.get(joystickX);
-                double y = (double) joystick_Y.get(joystickY);
-
-                /* this was for 0 forward
-                double angle = Math.atan(x / y);
-                
-                if (y > 0) {
-                    // Q1, Q2
-                    return angle;
-                }
-                else {
-                    // Q3, Q4
-                    return Math.PI + angle;
-                }
-                */
-
-                return Math.atan2(x, y);
-
-            } catch (NoSuchFieldException | IllegalAccessException e) {
-                //ignore exceptions, return 0
-                return 0;
-            }
+            return Math.atan2(y, x);
         }
         else {
             return 0;
@@ -108,21 +93,13 @@ public class GamepadWrapper {
      * @return the magnitude of the displacement
      */
     private double getStickMagnitude(String stick){
-        try {
-            String joystickX = stick + "_x";
-            String joystickY = stick + "_y";
-            Field joystick_X = gamepadClass.getField(joystickX);
-            Field joystick_Y = gamepadClass.getField(joystickY);
+        String joystickX = stick + "_x";
+        String joystickY = stick + "_y";
 
-            double x = (double) joystick_X.get(joystickX);
-            double y = (double) joystick_Y.get(joystickY);
+        double x = this.getJoystick(joystickX);
+        double y = 0 - this.getJoystick(joystickY);
 
-            return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
-
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            //ignore exceptions, return 0
-            return 0;
-        }
+        return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
     }
 
     /***
@@ -130,7 +107,7 @@ public class GamepadWrapper {
      * @param stick the stick to get the vector for (left_stick or right_stick)
      * @return the vector of the joystick
      */
-    public Vector getStick(String stick){
-        return new Vector(getStickMagnitude(stick), getStickAngle(stick));
+    public Vector getStickVector(String stick){
+        return new Vector(this.getStickMagnitude(stick), this.getStickAngle(stick), telemetry);
     }
 }

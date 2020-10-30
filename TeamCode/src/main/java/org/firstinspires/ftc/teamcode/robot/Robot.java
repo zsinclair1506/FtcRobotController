@@ -10,7 +10,7 @@ public abstract class Robot {
     /***
      * mechasnisms - A hashmap of mechanisms and their names
      */
-    protected HashMap<String, Mechanism> mechanisms;
+    protected HashMap<String, Mechanism> mechanisms = new HashMap<>();
 
     /***
      * driveBase - the field for the drivebase of the robot

@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.robot;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.robot.lib.RotationDirection;
 
 /***
@@ -15,7 +16,8 @@ public class Loader extends Mechanism {
      * Loader constructor
      * @param map hardware map of the robot
      */
-    public Loader(HardwareMap map){
+    public Loader(HardwareMap map, Telemetry telemetry){
+        super(telemetry);
         this.loaderMotor = map.get(Servo.class, "loaderMotor");
     }
 

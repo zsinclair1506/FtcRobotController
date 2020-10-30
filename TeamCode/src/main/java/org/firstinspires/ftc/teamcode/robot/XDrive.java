@@ -3,8 +3,11 @@ package org.firstinspires.ftc.teamcode.robot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.robot.lib.RotationDirection;
 import org.firstinspires.ftc.teamcode.robot.lib.Vector;
+
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
 
 public class XDrive extends DriveBase {
@@ -14,13 +17,16 @@ public class XDrive extends DriveBase {
      *
      * @param map the hardware map of the robot/phone/expansion hub.
      */
-    public XDrive (HardwareMap map) {
-        super(map);
-
-        this.motors.put("frontLeft", map.get(DcMotor.class, "frontLeft"));
-        this.motors.put("frontRight", map.get(DcMotor.class, "frontRight"));
-        this.motors.put("backRight", map.get(DcMotor.class, "backRight"));
-        this.motors.put("backLeft", map.get(DcMotor.class, "backLeft"));
+    public XDrive (HardwareMap map, Telemetry telemetry) {
+        super(map, telemetry);
+        this.addMotor(MotorMap.XDRIVE_FRONT_LEFT_DC.getMotorName(),
+                map.get(DcMotor.class, MotorMap.XDRIVE_FRONT_LEFT_DC.getMotorName()));
+        this.addMotor(MotorMap.XDRIVE_FRONT_RIGHT_DC.getMotorName(),
+                map.get(DcMotor.class, MotorMap.XDRIVE_FRONT_RIGHT_DC.getMotorName()));
+        this.addMotor(MotorMap.XDRIVE_BACK_RIGHT_DC.getMotorName(),
+                map.get(DcMotor.class, MotorMap.XDRIVE_BACK_RIGHT_DC.getMotorName()));
+        this.addMotor(MotorMap.XDRIVE_BACK_LEFT_DC.getMotorName(),
+                map.get(DcMotor.class, MotorMap.XDRIVE_BACK_LEFT_DC.getMotorName()));
     }
 
     /***
@@ -30,10 +36,14 @@ public class XDrive extends DriveBase {
      */
     @Override
     public void drivePower(double angle, double power) {
-        this.motors.get("frontLeft").setPower(power * Math.cos(angle + 3*Math.PI/4));
-        this.motors.get("frontRight").setPower(power * Math.cos(angle + Math.PI/4));
-        this.motors.get("backRight").setPower(power * (0 - Math.cos(angle + 3*Math.PI/4)));
-        this.motors.get("backLeft").setPower(power * (0 - Math.cos(angle + Math.PI/4)));
+        this.getMotor(MotorMap.XDRIVE_FRONT_LEFT_DC.getMotorName()).setPower(
+                power * Math.cos(angle + 3*Math.PI/4));
+        this.getMotor(MotorMap.XDRIVE_FRONT_RIGHT_DC.getMotorName()).setPower(
+                power * Math.cos(angle + Math.PI/4));
+        this.getMotor(MotorMap.XDRIVE_BACK_RIGHT_DC.getMotorName()).setPower(
+                power * (0 - Math.cos(angle + 3*Math.PI/4)));
+        this.getMotor(MotorMap.XDRIVE_BACK_LEFT_DC.getMotorName()).setPower(
+                power * (0 - Math.cos(angle + Math.PI/4)));
     }
 
     /***
@@ -42,16 +52,22 @@ public class XDrive extends DriveBase {
      */
     @Override
     public void drivePower(Vector driveVector) {
-        Vector drive = this.motorNormalise(driveVector);
+        Vector drive;
+        if(driveVector.getMagnitude() > 0.8) {
+            drive = this.motorNormalise(driveVector);
+        }
+        else{
+            drive = driveVector;
+        }
 
-        this.motors.get("frontLeft").setPower(drive.getMagnitude()
-                * Math.cos(drive.getAngleBetween(Vector.X_2) - Math.PI/4));
-        this.motors.get("frontRight").setPower(drive.getMagnitude()
-                * Math.cos(drive.getAngleBetween(Vector.X_2) + Math.PI/4));
-        this.motors.get("backRight").setPower(drive.getMagnitude()
-                * Math.cos(drive.getAngleBetween(Vector.X_2) - Math.PI/4));
-        this.motors.get("backLeft").setPower(drive.getMagnitude()
-                * Math.cos(drive.getAngleBetween(Vector.X_2) + Math.PI/4));
+        this.getMotor(MotorMap.XDRIVE_FRONT_LEFT_DC.getMotorName()).setPower(
+                drive.getMagnitude() * Math.cos(drive.getAngleBetween(Vector.X_2) - Math.PI/4));
+        this.getMotor(MotorMap.XDRIVE_FRONT_RIGHT_DC.getMotorName()).setPower(
+                drive.getMagnitude() * Math.cos(drive.getAngleBetween(Vector.X_2) + Math.PI/4));
+        this.getMotor(MotorMap.XDRIVE_BACK_RIGHT_DC.getMotorName()).setPower(
+                (-drive.getMagnitude()) * Math.cos(drive.getAngleBetween(Vector.X_2) - Math.PI/4));
+        this.getMotor(MotorMap.XDRIVE_BACK_LEFT_DC.getMotorName()).setPower(
+                (-drive.getMagnitude()) * Math.cos(drive.getAngleBetween(Vector.X_2) + Math.PI/4));
     }
 
     /***
@@ -107,6 +123,6 @@ public class XDrive extends DriveBase {
             }
         }
 
-        return vector.scale(1 / maxValue);
+        return vector.scale(1.0 / maxValue);
     }
 }

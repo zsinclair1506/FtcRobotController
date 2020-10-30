@@ -2,11 +2,11 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.*;
+import org.firstinspires.ftc.teamcode.robot.BlueSkyRobot;
+import org.firstinspires.ftc.teamcode.robot.GamepadButtons;
+import org.firstinspires.ftc.teamcode.robot.lib.GamepadWrapper;
 
 import org.firstinspires.ftc.teamcode.robot.BlueSkyRobot;
 
@@ -16,14 +16,18 @@ public class UltimateGoalOpMode extends OpMode
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
     private BlueSkyRobot blueSky;
+    private GamepadWrapper driveGamepad, operatorGamepad;
 
     /*
      * Code to run ONCE when the driver hits INIT
      */
     @Override
     public void init() {
+        this.blueSky = new BlueSkyRobot(hardwareMap, telemetry);
+        this.driveGamepad = new GamepadWrapper(gamepad1, telemetry);
+        this.operatorGamepad = new GamepadWrapper(gamepad2, telemetry);
 
-        this.blueSky = new BlueSkyRobot(hardwareMap);
+        // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
 
     }
@@ -48,9 +52,9 @@ public class UltimateGoalOpMode extends OpMode
      */
     @Override
     public void loop() {
-
+        blueSky.drive(driveGamepad.getStickVector(GamepadButtons.ROBOT_DRIVE.getButtonName()));
+        telemetry.update();
     }
-
     /*
      * Code to run ONCE after the driver hits STOP
      */

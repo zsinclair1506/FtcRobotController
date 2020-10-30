@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.robot;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.robot.lib.GripperPosition;
 
 /***
@@ -14,8 +15,8 @@ public class Gripper extends Mechanism {
      * Gripper constructor. Maps servos for grippers.
      * @param map the hardware map to get the servos from.
      */
-    public Gripper(HardwareMap map){
-
+    public Gripper(HardwareMap map, Telemetry telemetry){
+        super(telemetry);
     }
 
     /***
