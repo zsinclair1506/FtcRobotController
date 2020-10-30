@@ -49,7 +49,7 @@ public class GamepadWrapper {
             Field joystick = gamepadClass.getField(joystickAxis);
             joystick.setAccessible(true);
 
-            return (double) joystick.get(gamepad);
+            return Double.valueOf((float) joystick.get(gamepad));
         } catch (NoSuchFieldException | IllegalAccessException e) {
             //ignore exceptions, return 0
             return 0;
