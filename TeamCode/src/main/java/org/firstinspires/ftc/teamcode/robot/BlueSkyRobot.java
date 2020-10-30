@@ -19,10 +19,10 @@ public class BlueSkyRobot extends Robot {
      */
     public BlueSkyRobot(HardwareMap map, Telemetry telemetry){
         this.addMechanism("conveyor", new Conveyor(map, telemetry));
-        this.addMechanism("intake", new Intake(map, telemetry));
+//        this.addMechanism("intake", new Intake(map, telemetry));
         this.addMechanism("shooter", new Shooter(map, telemetry));
-        this.addMechanism("wobbleArm", new WobbleArm(map, telemetry));
-        this.addMechanism("loader", new Loader(map, telemetry));
+//        this.addMechanism("wobbleArm", new WobbleArm(map, telemetry));
+//        this.addMechanism("loader", new Loader(map, telemetry));
         this.setDriveBase(new XDrive(map, telemetry));
     }
 
