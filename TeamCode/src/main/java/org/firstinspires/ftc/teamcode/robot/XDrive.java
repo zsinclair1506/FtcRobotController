@@ -60,6 +60,8 @@ public class XDrive extends DriveBase {
             drive = driveVector;
         }
 
+        telemetry.addData("motor name:", this.getMotor(MotorMap.XDRIVE_FRONT_LEFT_DC.getMotorName()).getDeviceName());
+
         this.getMotor(MotorMap.XDRIVE_FRONT_LEFT_DC.getMotorName()).setPower(
                 drive.getMagnitude() * Math.cos(drive.getAngleBetween(Vector.X_2) - Math.PI/4));
         this.getMotor(MotorMap.XDRIVE_FRONT_RIGHT_DC.getMotorName()).setPower(
