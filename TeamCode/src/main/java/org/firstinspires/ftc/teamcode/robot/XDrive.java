@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.robot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.robot.lib.RotationDirection;
 
 
@@ -13,8 +14,8 @@ public class XDrive extends DriveBase {
      *
      * @param map the hardware map of the robot/phone/expansion hub.
      */
-    public XDrive (HardwareMap map) {
-
+    public XDrive (HardwareMap map, Telemetry telemetry) {
+        super(map, telemetry);
         this.motors.put("frontLeft", map.get(DcMotor.class, "frontLeft"));
         this.motors.put("frontRight", map.get(DcMotor.class, "frontRight"));
         this.motors.put("backRight", map.get(DcMotor.class, "backRight"));

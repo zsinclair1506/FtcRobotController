@@ -1,7 +1,9 @@
 package org.firstinspires.ftc.teamcode.robot;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.robot.lib.RotationDirection;
 
 import java.util.HashMap;
@@ -11,6 +13,11 @@ import java.util.HashMap;
  */
 public abstract class DriveBase {
     protected HashMap<String, DcMotor> motors;
+    protected Telemetry telemetry;
+
+    public DriveBase(HardwareMap map, Telemetry telemetry){
+        this.telemetry = telemetry;
+    }
 
     /***
      * Drive the robot at an angle at a power.

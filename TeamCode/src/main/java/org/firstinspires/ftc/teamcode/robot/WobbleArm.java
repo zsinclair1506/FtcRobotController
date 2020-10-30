@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.robot;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.robot.lib.RotationDirection;
 
 /***
@@ -15,9 +16,11 @@ public class WobbleArm extends Mechanism {
      * Wobblearm constructor
      * @param map hardware map of the robot
      */
-    public WobbleArm(HardwareMap map){
+    public WobbleArm(HardwareMap map, Telemetry telemetry){
         // assign motors here
-        this.gripper = new Gripper(map);
+        super(telemetry);
+        this.gripper = new Gripper(map, telemetry);
+
     }
 
     /***

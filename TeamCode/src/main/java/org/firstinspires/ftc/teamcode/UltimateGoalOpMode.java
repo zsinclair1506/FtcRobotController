@@ -21,7 +21,7 @@ public class UltimateGoalOpMode extends OpMode
     public void init() {
         telemetry.addData("Status", "Initialized");
 
-        this.blueSky = new BlueSkyRobot(hardwareMap);
+        this.blueSky = new BlueSkyRobot(hardwareMap, telemetry);
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");

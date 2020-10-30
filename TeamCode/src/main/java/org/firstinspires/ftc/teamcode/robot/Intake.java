@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.robot;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.robot.lib.IntakePosition;
 
 /***
@@ -18,8 +19,9 @@ public class Intake extends Mechanism {
      * Intake constructor
      * @param map the hardware map of the robot
      */
-    public Intake(HardwareMap map){
+    public Intake(HardwareMap map, Telemetry telemetry){
         //map servos from hardware map
+        super(telemetry);
     }
 
     /***
