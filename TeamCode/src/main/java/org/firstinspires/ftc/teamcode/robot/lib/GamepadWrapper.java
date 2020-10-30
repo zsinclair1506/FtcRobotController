@@ -80,7 +80,7 @@ public class GamepadWrapper {
             double x = this.getJoystick(joystickX);
             double y = 0 - this.getJoystick(joystickY);
 
-            return Math.atan2(x, y);
+            return Math.atan2(y, x);
         }
         else {
             return 0;
@@ -108,6 +108,6 @@ public class GamepadWrapper {
      * @return the vector of the joystick
      */
     public Vector getStickVector(String stick){
-        return new Vector(this.getStickMagnitude(stick), this.getStickAngle(stick));
+        return new Vector(this.getStickMagnitude(stick), this.getStickAngle(stick), telemetry);
     }
 }
