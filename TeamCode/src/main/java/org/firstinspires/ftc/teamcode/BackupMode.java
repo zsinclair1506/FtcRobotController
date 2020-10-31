@@ -20,13 +20,15 @@ import static org.firstinspires.ftc.teamcode.robot.lib.IntakePositions.TWO;
 /**
  * Backup OpMode using inefficient programming instead of the Object Oriented Prorgamming originally
  * planned for use in the 2020-21 season.
+ *
  * @author Zac Sinclair
+ * @version 1.0.0
  */
 @TeleOp (name="Old School OpMode", group="Back-Ups")
 
 //TODO: Add in Telemetry to all Methods
 
-public class NationalsTest4 extends LinearOpMode {
+public class BackupMode extends LinearOpMode {
     // Declare OpMode members
         // Runtime timer - default mesurement in seconds
     private ElapsedTime runtime;
@@ -36,7 +38,7 @@ public class NationalsTest4 extends LinearOpMode {
     private Servo intakeRotate, intakeClaw;
 
     // constructor
-    public NationalsTest4 () {
+    public BackupMode () {
             // Note - can't initialise DcMotor variables here - must be done inside runOpMode()
             // method below
             // Instantiate a runtime timer
@@ -44,11 +46,10 @@ public class NationalsTest4 extends LinearOpMode {
     } // end constructor
         // Initialise hardware - Note that this can't be done in the constructor as
         // JBot Java requires that it be done in the runOpMode() method
-    
-    // Methods for robot movement control
-        // Move robot forwards or backwards
 
     //TODO: Implement Slow-Mode
+
+    //  Movement Control Methods
 
     /***
      * The default drive for this instruction set, using the float value from the joystick to
@@ -150,6 +151,13 @@ public class NationalsTest4 extends LinearOpMode {
         }
     }
 
+    /***
+     * The method that controls the position of the intake arm
+     * Takes three different positions, changed using the d-pad
+     * Uses an enumerator and switch statement, passing the position in.
+     *
+     * @param position, 3 options, defines the position of the the servo controlling the arm
+     */
     private void intakeRotate(IntakePositions position) {
         switch (position) {
             case ONE:
@@ -166,30 +174,38 @@ public class NationalsTest4 extends LinearOpMode {
     
     @Override
     public void runOpMode() {
-        telemetry.addData("Status: ", "Initialized");
+        telemetry.addData("Status: ", "Ready to Go");
         telemetry.update();
 
         //TODO: Implement new control methods into Direction Methods
-        DirectionMethods dMethod = new DirectionMethods(hardwareMap);
+        //DirectionMethods dMethod = new DirectionMethods(hardwareMap);
 
+        //  Drivebase Motors
         frontLeft = hardwareMap.dcMotor.get("frontLeft");
         frontRight = hardwareMap.dcMotor.get("frontRight");
         backRight = hardwareMap.dcMotor.get("backRight");
         backLeft = hardwareMap.dcMotor.get("backLeft");
 
-            // Initialize the hardware variables - ***can only be done inside runOpMode()***.
-            // Note that the strings used here as parameters to 'get' must correspond to
-            // the names assigned during the robot configuration step
-            // (using the FTC Robot Controller app on the phone).
+        //  Intake Servos
+        intakeClaw = hardwareMap.servo.get("intakeClaw");
+        intakeRotate = hardwareMap.servo.get("intakeRotator");
+
+        //  Intake Continuous Servo
+        intakeLift = hardwareMap.crservo.get("intakeLift");
+
+            //  Initialize the hardware variables - ***can only be done inside runOpMode()***.
+            //  Note that the strings used here as parameters to 'get' must correspond to
+            //  the names assigned during the robot configuration step
+            //  (using the FTC Robot Controller app on the phone).
         
-            // Wait for the game to start (driver presses PLAY)          
+            //  Wait for the game to start (driver presses PLAY)
         waitForStart();
-            // Start timer - saves running time in seconds
+            //  Start timer - saves running time in seconds
         runtime.reset();
    
-            // run until the end of the match (driver presses STOP)
+            //  run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            // Drive controls
+            //  Drive controls
             if (gamepad1.left_stick_y != 0) {
                 driveforward(gamepad1.left_stick_y);
             }else if (gamepad1.left_stick_x != 0){
@@ -206,14 +222,13 @@ public class NationalsTest4 extends LinearOpMode {
                 intakeOpen();
             }else if (gamepad2.b){
                 intakeClose();
-            }
-            else {
+            }else {
                 brake();
             }
 
-                // Show the elapsed game time and wheel power.
+                //  Show the elapsed game time and wheel power.
             telemetry.addData("Status: ", "/nRun Time: " + runtime.toString() + "secs");
-            telemetry.addData("Motors", "left (%.2f), right (%.2f), rleft(%.2f), rright(%.2f)");
+            telemetry.addData("Motors", "Left (%.2f), Right (%.2f), Back Left(%.2f), Back Right(%.2f)");
             telemetry.update();
         } // end while (opModeIsActive()) Loop
     } // end runOpMode()
