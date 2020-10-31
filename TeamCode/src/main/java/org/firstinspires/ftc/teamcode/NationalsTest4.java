@@ -11,6 +11,11 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.DirectionMethods;
+import org.firstinspires.ftc.teamcode.robot.lib.IntakePositions;
+
+import static org.firstinspires.ftc.teamcode.robot.lib.IntakePositions.ONE;
+import static org.firstinspires.ftc.teamcode.robot.lib.IntakePositions.THREE;
+import static org.firstinspires.ftc.teamcode.robot.lib.IntakePositions.TWO;
 
 /**
  * Backup OpMode using inefficient programming instead of the Object Oriented Prorgamming originally
@@ -145,12 +150,20 @@ public class NationalsTest4 extends LinearOpMode {
         }
     }
 
-    private void intakeRotate(boolean isOpen){
-        if(){
-
+    private void intakeRotate(IntakePositions position) {
+        switch (position) {
+            case ONE:
+                intakeRotate.setPosition(0.0);
+                break;
+            case TWO:
+                intakeRotate.setPosition(0.33);
+                break;
+            case THREE:
+                intakeRotate.setPosition(0.66);
+                break;
         }
     }
-
+    
     @Override
     public void runOpMode() {
         telemetry.addData("Status: ", "Initialized");
@@ -183,7 +196,18 @@ public class NationalsTest4 extends LinearOpMode {
                 driveSide(gamepad1.left_stick_x);
             }else if (gamepad1.right_stick_x != 0){
                 driveSpin(gamepad1.right_stick_x);
-            }else {
+            }else if (gamepad2.dpad_right){
+                intakeRotate(THREE);
+            }else if (gamepad2.dpad_up) {
+                intakeRotate(TWO);
+            }else if (gamepad2.dpad_left) {
+                intakeRotate(ONE);
+            }else if (gamepad2.a){
+                intakeOpen();
+            }else if (gamepad2.b){
+                intakeClose();
+            }
+            else {
                 brake();
             }
 
