@@ -1,13 +1,8 @@
 package org.firstinspires.ftc.teamcode.robot;
 
-import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.robot.lib.RotationDirection;
 import org.firstinspires.ftc.teamcode.robot.lib.Vector;
@@ -59,6 +54,12 @@ public abstract class DriveBase {
      * @param power the power with which to rotate the robot
      */
     public abstract void rotateDirection(RotationDirection direction, double power);
+
+    /***
+     * Rotate the robot according to a vector
+     * @param vector the vector that rotates the robot accordingly
+     */
+    public abstract void rotateDirection(Vector vector);
 
     /***
      * Gets the largest component of the vector for the drive wheels and scales the magnitude

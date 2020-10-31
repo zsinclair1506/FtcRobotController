@@ -9,6 +9,7 @@ import org.firstinspires.ftc.teamcode.robot.GamepadButtons;
 import org.firstinspires.ftc.teamcode.robot.lib.GamepadWrapper;
 
 import org.firstinspires.ftc.teamcode.robot.BlueSkyRobot;
+import org.firstinspires.ftc.teamcode.robot.lib.Vector;
 
 @TeleOp(name="Whack Motor Test", group="Robot Test")
 public class UltimateGoalOpMode extends OpMode
@@ -56,10 +57,10 @@ public class UltimateGoalOpMode extends OpMode
     @Override
     public void loop() {
         blueSky.drive(driveGamepad.getStickVector(GamepadButtons.ROBOT_DRIVE.getButtonName()));
-        if(debug) {
-            telemetry.update();
-        }
+
+        blueSky.rotate(driveGamepad.getStickVector(GamepadButtons.ROBOT_ROTATE.getButtonName()));
     }
+
     /*
      * Code to run ONCE after the driver hits STOP
      */
