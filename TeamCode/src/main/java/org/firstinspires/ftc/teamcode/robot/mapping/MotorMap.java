@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.robot;
+package org.firstinspires.ftc.teamcode.robot.mapping;
 
 /***
  * A map of the motors on the hubs
@@ -54,7 +54,7 @@ public enum MotorMap {
      * The motor for the whackystick shooter
      *
      */
-    SHOOTER_DC(""),
+    SHOOTER_DC("whackyStick"),
 
     /***
      * The servo for the loader mechanism
