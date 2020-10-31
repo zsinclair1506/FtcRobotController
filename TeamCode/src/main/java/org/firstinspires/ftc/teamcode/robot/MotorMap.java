@@ -59,7 +59,7 @@ public enum MotorMap {
     /***
      * The servo for the loader mechanism
      */
-    LOADER_SERVO(""),
+    LOADER_SERVO("loaderMotor"),
 
     /***
      * The continuous rotation servo for the arm mounted to the chassis (shoulder)
