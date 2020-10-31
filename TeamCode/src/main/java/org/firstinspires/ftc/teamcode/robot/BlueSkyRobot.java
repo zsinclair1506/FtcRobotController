@@ -73,15 +73,17 @@ public class BlueSkyRobot extends Robot {
 
     /***
      * @see Gripper for more information.
+     * @param button
      */
-    public void clawClose(){
+    public void clawClose(boolean button){
         ((WobbleArm)this.getMechanism("wobbleArm")).gripperClose();
     }
 
     /***
      * @see Gripper for more information.
+     * @param button
      */
-    public void clawOpen(){
+    public void clawOpen(boolean button){
         ((WobbleArm)this.getMechanism("wobbleArm")).gripperOpen();
     }
 
