@@ -17,7 +17,7 @@ public class Loader extends Mechanism {
      */
     public Loader(HardwareMap map, Telemetry telemetry){
         super(telemetry);
-        this.loaderMotor = map.get(Servo.class, "loaderMotor");
+        this.loaderMotor = map.get(Servo.class, MotorMap.LOADER_SERVO.getMotorName());
     }
 
     /***
