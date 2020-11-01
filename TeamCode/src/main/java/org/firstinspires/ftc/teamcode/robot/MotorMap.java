@@ -13,7 +13,7 @@ public enum MotorMap {
     /***
      * The continuous rotation servo for the conveyor
      */
-    CONVEYOR_CRSERVO(""),
+    CONVEYOR_CRSERVO("conveyor"),
 
     /***
      * The front left drivebase DC motor

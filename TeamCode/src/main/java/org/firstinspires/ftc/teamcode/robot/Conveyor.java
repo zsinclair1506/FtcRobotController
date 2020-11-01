@@ -21,7 +21,7 @@ public class Conveyor extends Mechanism {
      */
     public Conveyor(HardwareMap map, Telemetry telemetry){
         super(telemetry);
-        conveyorServo = map.get(CRServo.class, "conveyorServo");
+        conveyorServo = map.get(CRServo.class, MotorMap.CONVEYOR_CRSERVO.getMotorName());
     }
 
     /***
