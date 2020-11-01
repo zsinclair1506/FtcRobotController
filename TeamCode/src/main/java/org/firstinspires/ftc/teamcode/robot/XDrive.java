@@ -27,6 +27,9 @@ public class XDrive extends DriveBase {
                 map.get(DcMotor.class, MotorMap.XDRIVE_BACK_LEFT_DC.getMotorName()));
     }
 
+    /***
+     * Combines the power of the rotation and strafe and scales the maximum value to be between 1
+     */
     @Override
     public void drive() {
         this.byOurPowersCombined();
@@ -119,8 +122,8 @@ public class XDrive extends DriveBase {
 
         // calculate the max value
         for(String motor : this.getMotors().keySet()){
-            maxValue = maxValue < this.getDrivePowers().get(motor)
-                    ? this.getDrivePowers().get(motor) : maxValue;
+            maxValue = maxValue < Math.abs(this.getDrivePowers().get(motor))
+                    ? Math.abs(this.getDrivePowers().get(motor)) : maxValue;
         }
 
         // only scale the value if it is above 1. This will be most of the time.
