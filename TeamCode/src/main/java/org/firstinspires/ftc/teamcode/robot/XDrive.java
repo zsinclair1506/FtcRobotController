@@ -11,13 +11,12 @@ import org.firstinspires.ftc.teamcode.robot.mapping.MotorMap;
 
 public class XDrive extends DriveBase {
 
-
     /***
      *
      * @param map the hardware map of the robot/phone/expansion hub.
      */
     public XDrive (HardwareMap map, Telemetry telemetry) {
-        super(map, telemetry);
+        super(telemetry);
         this.addMotor(MotorMap.XDRIVE_FRONT_LEFT_DC.getMotorName(),
                 map.get(DcMotor.class, MotorMap.XDRIVE_FRONT_LEFT_DC.getMotorName()));
         this.addMotor(MotorMap.XDRIVE_FRONT_RIGHT_DC.getMotorName(),
@@ -28,13 +27,18 @@ public class XDrive extends DriveBase {
                 map.get(DcMotor.class, MotorMap.XDRIVE_BACK_LEFT_DC.getMotorName()));
     }
 
+    @Override
+    public void drive() {
+
+    }
+
     /***
      * Drive the robot at an angle at a power.
      * @param angle the angle to drive the robot in, 0 is forward. This base slides
      * @param power the power with which to move the robot
      */
     @Override
-    public void drivePower(double angle, double power) {
+    public void setStrafe(double angle, double power) {
         this.getMotor(MotorMap.XDRIVE_FRONT_LEFT_DC.getMotorName()).setPower(
                 power * Math.cos(angle + 3*Math.PI/4));
         this.getMotor(MotorMap.XDRIVE_FRONT_RIGHT_DC.getMotorName()).setPower(
@@ -50,7 +54,7 @@ public class XDrive extends DriveBase {
      * @param driveVector the vector to drive the robot along
      */
     @Override
-    public void drivePower(Vector driveVector) {
+    public void setStrafe(Vector driveVector) {
         Vector drive = driveVector;
         if(driveVector.getMagnitude() > 0.8) {
             drive = this.motorNormalise(driveVector);
@@ -94,7 +98,7 @@ public class XDrive extends DriveBase {
      * @param power the power with which to rotate the robot
      */
     @Override
-    public void rotateDirection(RotationDirection direction, double power) {
+    public void setRotation(RotationDirection direction, double power) {
         this.getMotor(MotorMap.XDRIVE_FRONT_LEFT_DC.getMotorName()).setPower(power);
         this.getMotor(MotorMap.XDRIVE_FRONT_RIGHT_DC.getMotorName()).setPower(power);
         this.getMotor(MotorMap.XDRIVE_BACK_RIGHT_DC.getMotorName()).setPower(power);
@@ -106,10 +110,10 @@ public class XDrive extends DriveBase {
      * @param vector the vector to rotate the drivebase
      */
     @Override
-    public void rotateDirection(Vector vector) {
+    public void setRotation(Vector vector) {
         RotationDirection direction = Math.cos(vector.getAngleBetween(Vector.X_2)) < Math.PI/2
                 ? RotationDirection.CLOCKWISE : RotationDirection.COUNTER_CLOCKWISE ;
-        rotateDirection(direction, vector.getMagnitude());
+        setRotation(direction, vector.getMagnitude());
     }
 
     /***

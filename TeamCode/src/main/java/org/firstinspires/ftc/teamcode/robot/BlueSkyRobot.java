@@ -32,7 +32,7 @@ public class BlueSkyRobot extends Robot {
      * @param power @see DriveBase for more information.
      */
     public void drive(double direction, double power){
-        ((XDrive)this.getDriveBase()).drivePower(direction, power);
+        ((XDrive)this.getDriveBase()).setStrafe(direction, power);
     }
 
     /***
@@ -40,7 +40,7 @@ public class BlueSkyRobot extends Robot {
      * @param driveVector @see DriveBase for more information.
      */
     public void drive(Vector driveVector){
-        ((XDrive)this.getDriveBase()).drivePower(driveVector);
+        ((XDrive)this.getDriveBase()).setStrafe(driveVector);
     }
 
     /***
@@ -49,11 +49,11 @@ public class BlueSkyRobot extends Robot {
      * @param power @see DriveBase for more information.
      */
     public void rotate(RotationDirection direction, double power){
-        ((XDrive)this.getDriveBase()).rotateDirection(direction, power);
+        ((XDrive)this.getDriveBase()).setRotation(direction, power);
     }
 
     public void rotate(Vector vector){
-        ((XDrive)this.getDriveBase()).rotateDirection(vector);
+        ((XDrive)this.getDriveBase()).setRotation(vector);
     }
 
     /***

@@ -13,25 +13,37 @@ import java.util.HashMap;
  * The actions that all drivebases must do.
  */
 public abstract class DriveBase {
-    protected HashMap<String, DcMotor> motors = new HashMap<>();
+    private HashMap<String, DcMotor> motors = new HashMap<>();
+    private HashMap<String, Double> motorPowers = new HashMap<>();
     protected Telemetry telemetry;
 
-    public DriveBase(HardwareMap map, Telemetry telemetry){
+    /***
+     * Constructor for the DriveBase that makes telemetry available to all DriveBases.
+     * @param telemetry the telemetry for the DriveBases
+     */
+    public DriveBase(Telemetry telemetry){
         this.telemetry = telemetry;
     }
 
     /***
-     * Drive the robot at an angle at a power.
+     * Execute the programmed drive mechanic
+     */
+    public abstract void drive();
+
+    /***
+     * Set the motor power for the motors to drive at the set angle. Will need to execute
+     * @see DriveBase#drive(). Must be run in a loop.
      * @param angle the angle to drive the robot (each drivebase will implement this differently)
      * @param power the power to drive the robot at [0 - 1]
      */
-    public abstract void drivePower(double angle, double power);
+    public abstract void setStrafe(double angle, double power);
 
     /***
-     * Drive the robot along a vector.
+     * Set the motor power for the motors to drive at the set angle. Will need to execute
+     * @see DriveBase#drive(). Must be run in a loop.
      * @param vector the vector to drive the robot at
      */
-    public abstract void drivePower(Vector vector);
+    public abstract void setStrafe(Vector vector);
 
     /***
      * Drive the robot a set distance at a certain angle. (Meant to be run in a loop)
@@ -48,18 +60,20 @@ public abstract class DriveBase {
     public abstract void rotateAngle(double angle, double power);
 
     /***
-     * Rotate the robot a certain direction at a certain power (meant to be run in a loop)
+     * Set the motor power for the motors to rotate at the set power. Will need to execute
+     * @see DriveBase#drive(). Must be run in a loop.
      * @param direction the rotation direction of the robot
      *                  (top down. CLOCKWISE or COUNTER_CLOCKWISE)
      * @param power the power with which to rotate the robot
      */
-    public abstract void rotateDirection(RotationDirection direction, double power);
+    public abstract void setRotation(RotationDirection direction, double power);
 
     /***
-     * Rotate the robot according to a vector
+     * Set the motor power for the motors to rotate at the set power. Will need to execute
+     * @see DriveBase#drive(). Must be run in a loop.
      * @param vector the vector that rotates the robot accordingly
      */
-    public abstract void rotateDirection(Vector vector);
+    public abstract void setRotation(Vector vector);
 
     /***
      * Gets the largest component of the vector for the drive wheels and scales the magnitude
@@ -77,15 +91,41 @@ public abstract class DriveBase {
      * @return a motor with the given name
      */
     protected DcMotor getMotor(String motorName){
-        return motors.get(motorName);
+        return this.motors.get(motorName);
     }
 
     /***
-     * Adds a motor to the
-     * @param motorName
-     * @param motor
+     * Adds a motor to the motor hashmap.
+     * @param motorName the name of the motor to add
+     * @param motor the motor to add
      */
     protected void addMotor(String motorName, DcMotor motor){
-        motors.put(motorName, motor);
+        this.motors.put(motorName, motor);
+    }
+
+    /***
+     * Get the motor power from the collection of motor powers
+     * @param motorName the name of the motor to get the power for
+     * @return the power the motor is set to
+     */
+    protected double getMotorPower(String motorName){
+        return this.motorPowers.get(motorName);
+    }
+
+    /***
+     * Add motor power to the collection of motors
+     * @param motorName the name of the motor to set power to
+     * @param power the power to set the motor
+     */
+    protected void setMotorPower(String motorName, double power){
+        this.motorPowers.put(motorName, power);
+    }
+
+    /***
+     * Gets the collection of motors
+     * @return the collection of motors
+     */
+    protected HashMap getMotors(){
+        return this.motors;
     }
 }
