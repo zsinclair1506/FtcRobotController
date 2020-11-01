@@ -12,7 +12,6 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * The class responsible for the running of the conveyor mechanism on the robot
  */
 public class Conveyor extends Mechanism {
-
     private CRServo conveyorServo;
     private Boolean ringPresent = false;
 
@@ -22,15 +21,7 @@ public class Conveyor extends Mechanism {
      */
     public Conveyor(HardwareMap map, Telemetry telemetry){
         super(telemetry);
-        conveyorServo = map.get(CRServo.class, "conveyorServo");
-    }
-
-    /***
-     * Getter for checking if ring is in conveyor mechanism
-     * @return True if ring is present in the mechanism
-     */
-    public boolean isRingPresent(){
-        return ringPresent;
+        conveyorServo = map.get(CRServo.class, MotorMap.CONVEYOR_CRSERVO.getMotorName());
     }
 
     /***
