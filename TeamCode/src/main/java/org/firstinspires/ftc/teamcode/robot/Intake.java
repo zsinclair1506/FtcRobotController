@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.robot;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.robot.lib.IntakePosition;
@@ -17,6 +18,52 @@ public class Intake extends Mechanism {
     private Servo rotationServo;
     private CRServo vertServo;
     private Servo grabServo;
+
+    private class CRServoThread extends Thread {
+        // As a note, I'm assuming Telemetry is not thread safe so not using it here
+        private CRServo crservo;
+        private double servoPower;
+        private ElapsedTime runTume = new ElapsedTime();
+
+        /***
+         * Constructor for the thread
+         * @param crservo the servo to run asynchronously
+         */
+        public CRServoThread (CRServo crservo, double power){
+            this.crservo = crservo;
+            this.servoPower = power;
+        }
+
+        /***
+         * Initialises servo parameters
+         */
+        private void init(){
+        }
+
+        /***
+         * Returns whether this thread is running or not
+         * @return true if the thread is running
+         */
+        public boolean isRunning(){
+            return this.isAlive();
+        }
+
+        /***
+         * Runs the DCMotor to the desired position
+         */
+        @Override
+        public void run() {
+
+        }
+
+        /***
+         * Sets the servo power to inpower or 1, whichever is smaller
+         * @param inPower the power to set the shooter motor to run at
+         */
+        public void setPower(double inPower) {
+            this.servoPower = (inPower > 1 ? 1 : inPower);
+        }
+    }
 
     /***
      * Intake constructor
