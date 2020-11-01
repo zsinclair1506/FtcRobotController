@@ -8,7 +8,7 @@ public enum MotorMap {
     /***
      * The servo opening and closing the gripper
      */
-    GRIPPER_SERVO("gripperservo"),
+    GRIPPER_SERVO("gripper"),
 
     /***
      * The continuous rotation servo for the conveyor
@@ -59,7 +59,7 @@ public enum MotorMap {
     /***
      * The servo for the loader mechanism
      */
-    LOADER_SERVO(""),
+    LOADER_SERVO("loader"),
 
     /***
      * The continuous rotation servo for the arm mounted to the chassis (shoulder)
