@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.robot;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.robot.lib.RotationDirection;
@@ -10,11 +9,13 @@ import org.firstinspires.ftc.teamcode.robot.lib.Vector;
 import java.util.HashMap;
 
 /***
- * The actions that all drivebases must do.
+ * The actions that all drivebases must do as well as some common access methods.
  */
 public abstract class DriveBase {
     private HashMap<String, DcMotor> motors = new HashMap<>();
-    private HashMap<String, Double> motorPowers = new HashMap<>();
+    private HashMap<String, Double> rotateMotorPowers = new HashMap<>();
+    private HashMap<String, Double> strafeMotorPowers = new HashMap<>();
+    private HashMap<String, Double> drivePower = new HashMap<>();
     protected Telemetry telemetry;
 
     /***
@@ -76,14 +77,12 @@ public abstract class DriveBase {
     public abstract void setRotation(Vector vector);
 
     /***
-     * Gets the largest component of the vector for the drive wheels and scales the magnitude
-     * to allow a motor to be working at 100% (1) even if the vector would only achieve .7 (should
+     * Gets the largest component of the motors for the drive wheels and scales the magnitude
+     * to allow a motor to be working at 100% (1) even if the motor would only achieve .7 (should
      * be limited to if the magnitude is close to 1 [0.8 or greater?] otherwise it will always be
      * driving full power)
-     * @param vector the vector to normalise
-     * @return the 'normalised' vector to the motor power
      */
-    public abstract Vector motorNormalise(Vector vector);
+    protected abstract void motorNormalise();
 
     /***
      * Get the motor from the collection of motors for this drivebase.
@@ -105,27 +104,66 @@ public abstract class DriveBase {
 
     /***
      * Get the motor power from the collection of motor powers
-     * @param motorName the name of the motor to get the power for
-     * @return the power the motor is set to
+     * @param motorName the name of the motor to set the power for
+     * @param power the power to set
      */
-    protected double getMotorPower(String motorName){
-        return this.motorPowers.get(motorName);
+    protected void setStrafeMotorPower(String motorName, double power){
+        this.strafeMotorPowers.put(motorName, power);
     }
 
     /***
      * Add motor power to the collection of motors
      * @param motorName the name of the motor to set power to
-     * @param power the power to set the motor
+     * @param power the power to set
      */
-    protected void setMotorPower(String motorName, double power){
-        this.motorPowers.put(motorName, power);
+    protected void setRotateMotorPower(String motorName, double power){
+        this.rotateMotorPowers.put(motorName, power);
     }
 
     /***
      * Gets the collection of motors
      * @return the collection of motors
      */
-    protected HashMap getMotors(){
+    protected HashMap<String, DcMotor> getMotors(){
         return this.motors;
+    }
+
+    /***
+     * Gets the collection of motor drive power
+     * @return the motor drive power map
+     */
+    protected HashMap<String, Double> getDrivePowers(){
+        return this.drivePower;
+    }
+
+    protected double getDrivePower(String motorName){
+        return this.getDrivePowers().get(motorName);
+    }
+
+    /***
+     * Set the power for the driving of the motors. This is the final power that is applied to the
+     * motors. It will need to be between -1 and 1.
+     * @param motorName the name of the motor to set the power for
+     * @param power the power to set to the motor
+     */
+    protected void setDrivePower(String motorName, double power){
+        this.drivePower.put(motorName, power);
+    }
+
+    /***
+     * Combines the strafe and rotate powers into drive power.
+     */
+    protected void combineMotorPower(){
+        for(String motor : this.strafeMotorPowers.keySet()){
+            this.setDrivePower(motor,
+                    this.strafeMotorPowers.get(motor) + this.rotateMotorPowers.get(motor));
+        }
+    }
+
+    /***
+     * Com
+     */
+    protected void byOurPowersCombined(){
+        this.combineMotorPower();
     }
 }
