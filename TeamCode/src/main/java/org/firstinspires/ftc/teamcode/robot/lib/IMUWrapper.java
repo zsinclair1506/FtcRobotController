@@ -3,21 +3,22 @@ package org.firstinspires.ftc.teamcode.robot.lib;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
-
 public class IMUWrapper {
 
     BNO055IMU imu;
     Orientation lastAngles = new Orientation();
+    Telemetry telemetry;
     double globalAngle, power = .30, correction;
 
-    public IMUWrapper(HardwareMap map) {
+    public IMUWrapper(HardwareMap map, Telemetry telemetry) {
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+        this.telemetry = telemetry;
 
         parameters.mode = BNO055IMU.SensorMode.IMU;
         parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
@@ -29,9 +30,7 @@ public class IMUWrapper {
         imu.initialize(parameters);
 
         // make sure the imu gyro is calibrated before continuing.
-        telemetry.addData("Mode", "waiting for start");
         telemetry.addData("imu calibration status", imu.getCalibrationStatus().toString());
-        telemetry.update();
     }
 
     /**
@@ -58,7 +57,7 @@ public class IMUWrapper {
 
         double deltaAngle = angles.firstAngle - lastAngles.firstAngle;
 
-        if (deltaAngle < (-1 * Math.PI))
+        if (deltaAngle < (-Math.PI))
             deltaAngle += (2 * Math.PI);
         else if (deltaAngle > Math.PI)
             deltaAngle -= (2 * Math.PI);

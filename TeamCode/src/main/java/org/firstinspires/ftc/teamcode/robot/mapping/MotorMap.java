@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.robot;
+package org.firstinspires.ftc.teamcode.robot.mapping;
 
 /***
  * A map of the motors on the hubs
@@ -8,12 +8,12 @@ public enum MotorMap {
     /***
      * The servo opening and closing the gripper
      */
-    GRIPPER_SERVO("gripperservo"),
+    GRIPPER_SERVO("gripper"),
 
     /***
      * The continuous rotation servo for the conveyor
      */
-    CONVEYOR_CRSERVO(""),
+    CONVEYOR_CRSERVO("conveyor"),
 
     /***
      * The front left drivebase DC motor
@@ -54,12 +54,12 @@ public enum MotorMap {
      * The motor for the whackystick shooter
      *
      */
-    SHOOTER_DC(""),
+    SHOOTER_DC("whackyStick"),
 
     /***
      * The servo for the loader mechanism
      */
-    LOADER_SERVO(""),
+    LOADER_SERVO("loader"),
 
     /***
      * The continuous rotation servo for the arm mounted to the chassis (shoulder)

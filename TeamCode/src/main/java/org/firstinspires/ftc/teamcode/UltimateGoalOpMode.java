@@ -5,10 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.robot.BlueSkyRobot;
-import org.firstinspires.ftc.teamcode.robot.GamepadButtons;
+import org.firstinspires.ftc.teamcode.robot.mapping.GamepadButtons;
 import org.firstinspires.ftc.teamcode.robot.lib.GamepadWrapper;
-
-import org.firstinspires.ftc.teamcode.robot.BlueSkyRobot;
 
 @TeleOp(name="Whack Motor Test", group="Robot Test")
 public class UltimateGoalOpMode extends OpMode
@@ -55,11 +53,15 @@ public class UltimateGoalOpMode extends OpMode
      */
     @Override
     public void loop() {
-        blueSky.drive(driveGamepad.getStickVector(GamepadButtons.ROBOT_DRIVE.getButtonName()));
-        if(debug) {
-            telemetry.update();
-        }
+        blueSky.setStrafe(driveGamepad.getStickVector(GamepadButtons.ROBOT_DRIVE.getButtonName()));
+        blueSky.setRotate(driveGamepad.getStickVector(GamepadButtons.ROBOT_ROTATE.getButtonName()));
+        blueSky.drive();
+
+        blueSky.clawOpen(operatorGamepad.getButton(GamepadButtons.GRIPPER_OPEN.getButtonName()));
+
+        blueSky.clawClose(operatorGamepad.getButton(GamepadButtons.GRIPPER_CLOSE.getButtonName()));
     }
+
     /*
      * Code to run ONCE after the driver hits STOP
      */

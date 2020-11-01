@@ -19,10 +19,10 @@ public class BlueSkyRobot extends Robot {
      */
     public BlueSkyRobot(HardwareMap map, Telemetry telemetry){
         this.addMechanism("conveyor", new Conveyor(map, telemetry));
-        this.addMechanism("intake", new Intake(map, telemetry));
-        this.addMechanism("shooter", new Shooter(map, telemetry));
-        this.addMechanism("wobbleArm", new WobbleArm(map, telemetry));
-        this.addMechanism("loader", new Loader(map, telemetry));
+//        this.addMechanism("intake", new Intake(map, telemetry));
+//        this.addMechanism("shooter", new Shooter(map, telemetry));
+//        this.addMechanism("wobbleArm", new WobbleArm(map, telemetry));
+//        this.addMechanism("loader", new Loader(map, telemetry));
         this.setDriveBase(new XDrive(map, telemetry));
     }
 
@@ -31,16 +31,16 @@ public class BlueSkyRobot extends Robot {
      * @param direction @see DriveBase for more information.
      * @param power @see DriveBase for more information.
      */
-    public void drive(double direction, double power){
-        ((XDrive)this.getDriveBase()).drivePower(direction, power);
+    public void setStrafe(double direction, double power){
+        ((XDrive)this.getDriveBase()).setStrafe(direction, power);
     }
 
     /***
      * @see DriveBase for more information.
      * @param driveVector @see DriveBase for more information.
      */
-    public void drive(Vector driveVector){
-        ((XDrive)this.getDriveBase()).drivePower(driveVector);
+    public void setStrafe(Vector driveVector){
+        ((XDrive)this.getDriveBase()).setStrafe(driveVector);
     }
 
     /***
@@ -48,8 +48,12 @@ public class BlueSkyRobot extends Robot {
      * @param direction @see DriveBase for more information.
      * @param power @see DriveBase for more information.
      */
-    public void rotate(RotationDirection direction, double power){
-        ((XDrive)this.getDriveBase()).rotateDirection(direction, power);
+    public void setRotate(RotationDirection direction, double power){
+        ((XDrive)this.getDriveBase()).setRotation(direction, power);
+    }
+
+    public void setRotate(Vector vector){
+        ((XDrive)this.getDriveBase()).setRotation(vector);
     }
 
     /***
@@ -69,15 +73,17 @@ public class BlueSkyRobot extends Robot {
 
     /***
      * @see Gripper for more information.
+     * @param button
      */
-    public void clawClose(){
+    public void clawClose(boolean button){
         ((WobbleArm)this.getMechanism("wobbleArm")).gripperClose();
     }
 
     /***
      * @see Gripper for more information.
+     * @param button
      */
-    public void clawOpen(){
+    public void clawOpen(boolean button){
         ((WobbleArm)this.getMechanism("wobbleArm")).gripperOpen();
     }
 
@@ -179,5 +185,12 @@ public class BlueSkyRobot extends Robot {
      */
     public void loaderLower(){
         ((Loader)this.getMechanism("loader")).lower();
+    }
+
+    /***
+     * @see DriveBase for more information.
+     */
+    public void drive(){
+        ((XDrive) this.getDriveBase()).drive();
     }
 }

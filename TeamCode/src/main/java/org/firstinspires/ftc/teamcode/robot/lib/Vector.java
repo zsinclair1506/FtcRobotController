@@ -11,11 +11,11 @@ public class Vector {
     private double values[];
     private Telemetry telemetry;
 
-    public static Vector X_2 = new Vector(2,1, 0);
-    public static Vector X_3 = new Vector(3, 1, 0, 0);
-    public static Vector Y_2 = new Vector(2,0, 1);
-    public static Vector Y_3 = new Vector(3, 0, 1, 0);
-    public static Vector Z_3 = new Vector(3, 0, 0, 1);
+    public static Vector X_2 = new Vector(1, 0);
+    public static Vector X_3 = new Vector(1, 0, 0);
+    public static Vector Y_2 = new Vector(0, 1);
+    public static Vector Y_3 = new Vector(0, 1, 0);
+    public static Vector Z_3 = new Vector(0, 0, 1);
 
 
     /***
@@ -79,7 +79,7 @@ public class Vector {
      * @return
      */
     public double getAngleBetween(Vector vector){
-        return Math.acos(this.dot(vector)/(Math.sqrt(this.dot(this) * vector.dot(vector))));
+        return (this.getValues()[1] < 0 ? -1 : 1) * Math.acos(this.dot(vector)/(this.getMagnitude() * vector.getMagnitude()));
     }
 
     /***

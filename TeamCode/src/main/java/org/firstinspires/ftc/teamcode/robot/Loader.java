@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.robot.lib.RotationDirection;
+import org.firstinspires.ftc.teamcode.robot.mapping.MotorMap;
 
 /***
  * this class is for the loader mechanism on the robot
@@ -18,7 +18,7 @@ public class Loader extends Mechanism {
      */
     public Loader(HardwareMap map, Telemetry telemetry){
         super(telemetry);
-        this.loaderMotor = map.get(Servo.class, "loaderMotor");
+        this.loaderMotor = map.get(Servo.class, MotorMap.LOADER_SERVO.getMotorName());
     }
 
     /***
