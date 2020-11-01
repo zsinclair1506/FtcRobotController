@@ -7,7 +7,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.robot.BlueSkyRobot;
 import org.firstinspires.ftc.teamcode.robot.mapping.GamepadButtons;
 import org.firstinspires.ftc.teamcode.robot.lib.GamepadWrapper;
-import org.firstinspires.ftc.teamcode.robot.lib.Vector;
 
 @TeleOp(name="Whack Motor Test", group="Robot Test")
 public class UltimateGoalOpMode extends OpMode
@@ -54,9 +53,9 @@ public class UltimateGoalOpMode extends OpMode
      */
     @Override
     public void loop() {
-        blueSky.drive(driveGamepad.getStickVector(GamepadButtons.ROBOT_DRIVE.getButtonName()));
-
-        blueSky.rotate(driveGamepad.getStickVector(GamepadButtons.ROBOT_ROTATE.getButtonName()));
+        blueSky.setStrafe(driveGamepad.getStickVector(GamepadButtons.ROBOT_DRIVE.getButtonName()));
+        blueSky.setRotate(driveGamepad.getStickVector(GamepadButtons.ROBOT_ROTATE.getButtonName()));
+        blueSky.drive();
 
         blueSky.clawOpen(operatorGamepad.getButton(GamepadButtons.GRIPPER_OPEN.getButtonName()));
 
