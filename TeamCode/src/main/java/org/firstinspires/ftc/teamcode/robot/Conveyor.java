@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import java.util.HashMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.robot.mapping.MotorMap;
 
 /***
  * The class responsible for the running of the conveyor mechanism on the robot
