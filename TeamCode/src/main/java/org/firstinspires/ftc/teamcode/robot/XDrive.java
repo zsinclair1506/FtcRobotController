@@ -33,9 +33,17 @@ public class XDrive extends DriveBase {
      */
     @Override
     public void drive() {
+        telemetry.addData("preCombination","");
+        telemetry.update();
         this.byOurPowersCombined();
+        telemetry.addData("postCombination","");
+        telemetry.update();
+
         this.motorNormalise();
+        telemetry.addData("postNorm","");
+        telemetry.update();
         for(String motorName : this.getMotors().keySet()){
+            telemetry.addData("motorName", motorName);
             this.getMotor(motorName).setPower(this.getDrivePowers().get(motorName));
         }
     }

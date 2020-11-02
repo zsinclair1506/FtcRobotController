@@ -185,6 +185,8 @@ public class BlueSkyRobot extends Robot {
      * @see DriveBase for more information.
      */
     public void drive(){
+        telemetry.addData("startDrive", "");
+        telemetry.update();
         ((XDrive) this.getDriveBase()).drive();
     }
 

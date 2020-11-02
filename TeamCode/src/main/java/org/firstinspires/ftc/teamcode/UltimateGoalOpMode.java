@@ -24,12 +24,15 @@ public class UltimateGoalOpMode extends OpMode
      */
     @Override
     public void init() {
+        telemetry.addData("beginInit","");
+        telemetry.update();
         this.blueSky = new BlueSkyRobot(hardwareMap, telemetry);
         this.driveGamepad = new GamepadWrapper(gamepad1, telemetry);
         this.operatorGamepad = new GamepadWrapper(gamepad2, telemetry);
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
+        telemetry.update();
 
     }
 
@@ -45,7 +48,11 @@ public class UltimateGoalOpMode extends OpMode
      */
     @Override
     public void start() {
+        telemetry.addData("preReset","");
+        telemetry.update();
         runtime.reset();
+        telemetry.addData("postReset","");
+        telemetry.update();
     }
 
     /*
@@ -54,9 +61,10 @@ public class UltimateGoalOpMode extends OpMode
     @Override
     public void loop() {
         telemetry.addData("preJoystick","");
+        telemetry.update();
         blueSky.setStrafe(driveGamepad.getStickVector(GamepadButtons.ROBOT_STRAFE.getButtonName()));
         blueSky.setRotate(driveGamepad.getStickVector(GamepadButtons.ROBOT_ROTATE.getButtonName()));
-//        blueSky.drive();
+        blueSky.drive();
 
 //        if(driveGamepad.getTrigger(GamepadButtons.SHOOTER_SHOOT.getButtonName()) > 0.5){
 //            blueSky.shooterShoot();
@@ -66,12 +74,12 @@ public class UltimateGoalOpMode extends OpMode
 //            blueSky.shooterFeedMe();
 //        }
 
-        if(operatorGamepad.getTrigger(GamepadButtons.CONVEYOR_RUN.getButtonName()) > 0.8){
-            blueSky.conveyorRun();
-        }
-        else if(operatorGamepad.getTrigger(GamepadButtons.CONVEYOR_RUN.getButtonName()) < 0.8){
-            blueSky.conveyorStop();
-        }
+//        if(operatorGamepad.getTrigger(GamepadButtons.CONVEYOR_RUN.getButtonName()) > 0.8){
+//            blueSky.conveyorRun();
+//        }
+//        else if(operatorGamepad.getTrigger(GamepadButtons.CONVEYOR_RUN.getButtonName()) < 0.8){
+//            blueSky.conveyorStop();
+//        }
     }
 
     /*
