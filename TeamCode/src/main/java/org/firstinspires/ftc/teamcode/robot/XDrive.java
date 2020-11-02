@@ -28,7 +28,8 @@ public class XDrive extends DriveBase {
     }
 
     /***
-     * Combines the power of the rotation and strafe and scales the maximum value to be between 1
+     * Combines the power of the rotation and strafe and scales the maximum value to be between 0
+     * and 1.
      */
     @Override
     public void drive() {
