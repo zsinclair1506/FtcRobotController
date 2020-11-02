@@ -17,7 +17,6 @@ public abstract class DriveBase extends Mechanism {
     private HashMap<String, Double> rotateMotorPowers = new HashMap<>();
     private HashMap<String, Double> strafeMotorPowers = new HashMap<>();
     private HashMap<String, Double> drivePower = new HashMap<>();
-    protected Telemetry telemetry;
 
     /***
      * Constructor for the DriveBase that makes telemetry available to all DriveBases.
