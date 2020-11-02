@@ -66,8 +66,11 @@ public class UltimateGoalOpMode extends OpMode
 //            blueSky.shooterFeedMe();
 //        }
 
-        if(operatorGamepad.getTrigger(GamepadButtons.CONVEYOR_RUN.getButtonName()) > 0.5){
+        if(operatorGamepad.getTrigger(GamepadButtons.CONVEYOR_RUN.getButtonName()) > 0.8){
             blueSky.conveyorRun();
+        }
+        else if(operatorGamepad.getTrigger(GamepadButtons.CONVEYOR_RUN.getButtonName()) < 0.8){
+            blueSky.conveyorStop();
         }
     }
 

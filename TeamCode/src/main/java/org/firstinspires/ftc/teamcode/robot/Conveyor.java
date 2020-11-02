@@ -29,14 +29,22 @@ public class Conveyor extends Mechanism {
      * @param power the power with which to push the rings through the conveyor
      */
     public void convey(double power){
-        conveyorServo.setPower(power);
+        this.conveyorServo.setPower(power);
     }
 
     /***
      * Conveys rings from the intake to the shooting mechanism with a preset power
      */
     public void convey(){
-        convey(1);
+        this.conveyorServo.getController().pwmEnable();
+        this.convey(1);
+    }
+
+    /***
+     * Stops the conveyor
+     */
+    public void stop(){
+        this.conveyorServo.getController().pwmDisable();
     }
 
 }

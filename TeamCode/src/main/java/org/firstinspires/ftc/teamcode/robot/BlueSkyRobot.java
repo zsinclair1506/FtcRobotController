@@ -186,4 +186,11 @@ public class BlueSkyRobot extends Robot {
     public void drive(){
         ((XDrive) this.getDriveBase()).drive();
     }
+
+    /***
+     * @see Conveyor for more information.
+     */
+    public void conveyorStop(){
+        ((Conveyor)this.mechanisms.get(MechanismMap.CONVEYOR.getName())).stop();
+    }
 }
