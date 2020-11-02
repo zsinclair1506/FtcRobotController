@@ -53,7 +53,7 @@ public class UltimateGoalOpMode extends OpMode
      */
     @Override
     public void loop() {
-        blueSky.setStrafe(driveGamepad.getStickVector(GamepadButtons.ROBOT_DRIVE.getButtonName()));
+        blueSky.setStrafe(driveGamepad.getStickVector(GamepadButtons.ROBOT_STRAFE.getButtonName()));
         blueSky.setRotate(driveGamepad.getStickVector(GamepadButtons.ROBOT_ROTATE.getButtonName()));
         blueSky.drive();
 
