@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.robot.mapping.MechanismMap;
 import org.firstinspires.ftc.teamcode.robot.mapping.MotorMap;
 
 /***
@@ -19,6 +20,7 @@ public class Shooter extends Mechanism {
     public Shooter(HardwareMap map, Telemetry telemetry, Robot robot){
         super(telemetry, robot);
         whackyStick = map.get(DcMotor.class, MotorMap.SHOOTER_DC.getMotorName());
+        this.getInterlock().registerInterlock(this.robot.getMechanism(MechanismMap.SHOOTER.getName()));
     }
 
     /***
