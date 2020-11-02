@@ -4,12 +4,13 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.robot.mapping.MotorMap;
 
 /***
  * The class responsible for running and controlling the shooting mechanisms on the robot
  */
 public class Shooter extends Mechanism {
-    //private ?? motors
+    private DcMotor whackyStick;
 
     /***
      * Shooter constructor
@@ -17,15 +18,19 @@ public class Shooter extends Mechanism {
      */
     public Shooter(HardwareMap map, Telemetry telemetry, Robot robot){
         super(telemetry, robot);
-//        this.whackyStick = map.get(DcMotor.class, MotorMap.SHOOTER_DC.getMotorName());
+        whackyStick = map.get(DcMotor.class, MotorMap.SHOOTER_DC.getMotorName());
     }
 
     /***
-     * Shoots a ring with a @power
+     * Shoots a ring with a power
      * @param power the power with which to shoot a ring [0-1]
      */
     public void shoot(double power){
-
+        if (!whackyStick.isBusy()){
+            whackyStick.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            whackyStick.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            whackyStick.setPower(power);
+        }
     }
 
     /***

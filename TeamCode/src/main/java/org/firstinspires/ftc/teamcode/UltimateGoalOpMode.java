@@ -5,26 +5,32 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.robot.BlueSkyRobot;
+import org.firstinspires.ftc.teamcode.robot.mapping.GamepadButtons;
+import org.firstinspires.ftc.teamcode.robot.lib.GamepadWrapper;
 
-
-@TeleOp(name="Default TeleOp", group="Final RunModes")
+@TeleOp(name="Whack Motor Test", group="Robot Test")
 public class UltimateGoalOpMode extends OpMode
 {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
     private BlueSkyRobot blueSky;
+    private GamepadWrapper driveGamepad, operatorGamepad;
+
+    // Set to print telemetry data to the phone
+    private boolean debug = false;
 
     /*
      * Code to run ONCE when the driver hits INIT
      */
     @Override
     public void init() {
-        telemetry.addData("Status", "Initialized");
-
         this.blueSky = new BlueSkyRobot(hardwareMap, telemetry);
+        this.driveGamepad = new GamepadWrapper(gamepad1, telemetry);
+        this.operatorGamepad = new GamepadWrapper(gamepad2, telemetry);
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
+
     }
 
     /*
@@ -47,6 +53,19 @@ public class UltimateGoalOpMode extends OpMode
      */
     @Override
     public void loop() {
+        blueSky.setStrafe(driveGamepad.getStickVector(GamepadButtons.ROBOT_STRAFE.getButtonName()));
+        blueSky.setRotate(driveGamepad.getStickVector(GamepadButtons.ROBOT_ROTATE.getButtonName()));
+        blueSky.drive();
+
+        if(driveGamepad.getTrigger(GamepadButtons.SHOOTER_SHOOT.getButtonName()) > 0.5){
+            blueSky.shooterShoot();
+        }
+
+        if(driveGamepad.getButton(GamepadButtons.SHOOTER_FEED_ME.getButtonName())){
+            blueSky.shooterFeedMe();
+        }
+
+
 
     }
 

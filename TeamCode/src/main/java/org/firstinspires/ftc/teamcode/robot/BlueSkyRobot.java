@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.robot.lib.IntakePosition;
 import org.firstinspires.ftc.teamcode.robot.lib.RotationDirection;
+import org.firstinspires.ftc.teamcode.robot.lib.Vector;
 
 /***
  * The specific robot for this year. Mainly used to pass actions between the Operation Mode and
@@ -17,11 +18,12 @@ public class BlueSkyRobot extends Robot {
      * @param map the hardware map containing all the hardware on the robot.
      */
     public BlueSkyRobot(HardwareMap map, Telemetry telemetry){
-//        this.mechanisms.put("conveyor", new Conveyor(map, telemetry));
-//        this.mechanisms.put("intake", new Intake(map, telemetry));
-//        this.mechanisms.put("shooter", new Shooter(map, telemetry));
-//        this.mechanisms.put("wobbleArm", new WobbleArm(map, telemetry));
-//        this.driveBase = new XDrive(map, telemetry);
+        this.addMechanism("conveyor", new Conveyor(map, telemetry, this));
+//        this.addMechanism("intake", new Intake(map, telemetry, this));
+//        this.addMechanism("shooter", new Shooter(map, telemetry, this));
+//        this.addMechanism("wobbleArm", new WobbleArm(map, telemetry, this));
+//        this.addMechanism("loader", new Loader(map, telemetry, this));
+        this.setDriveBase(new XDrive(map, telemetry, this));
     }
 
     /***
@@ -29,8 +31,16 @@ public class BlueSkyRobot extends Robot {
      * @param direction @see DriveBase for more information.
      * @param power @see DriveBase for more information.
      */
-    public void drive(double direction, double power){
-        ((XDrive)this.driveBase).drivePower(direction, power);
+    public void setStrafe(double direction, double power){
+        ((XDrive)this.getDriveBase()).setStrafe(direction, power);
+    }
+
+    /***
+     * @see DriveBase for more information.
+     * @param driveVector @see DriveBase for more information.
+     */
+    public void setStrafe(Vector driveVector){
+        ((XDrive)this.getDriveBase()).setStrafe(driveVector);
     }
 
     /***
@@ -38,116 +48,138 @@ public class BlueSkyRobot extends Robot {
      * @param direction @see DriveBase for more information.
      * @param power @see DriveBase for more information.
      */
-    public void rotate(RotationDirection direction, double power){
-        ((XDrive)this.driveBase).rotateDirection(direction, power);
+    public void setRotate(RotationDirection direction, double power){
+        ((XDrive)this.getDriveBase()).setRotation(direction, power);
+    }
+
+    public void setRotate(Vector vector){
+        ((XDrive)this.getDriveBase()).setRotation(vector);
     }
 
     /***
      * @see Shooter for more information.
      */
     public void shooterShoot(){
-        ((Shooter)this.mechanisms.get("shooter")).shoot();
+        ((Shooter)this.getMechanism("shooter")).shoot();
     }
 
     /***
+     * TODO figure out how to use this
      * @see Shooter for more information.
      */
     public void shooterFeedMe(){
-        ((Shooter)this.mechanisms.get("shooter")).feedMe();
+        ((Shooter)this.getMechanism("shooter")).feedMe();
     }
 
     /***
      * @see Gripper for more information.
      */
-    public void clawClose(){
-        ((WobbleArm)this.mechanisms.get("wobbleArm")).gripperClose();
+    public void gripperClose(){
+        ((WobbleArm)this.getMechanism("wobbleArm")).gripperClose();
     }
 
     /***
      * @see Gripper for more information.
      */
-    public void clawOpen(){
-        ((WobbleArm)this.mechanisms.get("wobbleArm")).gripperOpen();
+    public void gripperOpen(){
+        ((WobbleArm)this.getMechanism("wobbleArm")).gripperOpen();
     }
 
     /***
      * @see Conveyor for more information.
      */
     public void conveyorRun(){
-        ((Conveyor)this.mechanisms.get("conveyor")).convey();
+        ((Conveyor)this.getMechanism("conveyor")).convey();
     }
 
     /***
      * @see WobbleArm for more information.
      */
     public void gripperLower(){
-        ((WobbleArm)this.mechanisms.get("wobbleArm")).gripperTiltDown();
+        ((WobbleArm)this.getMechanism("wobbleArm")).gripperTiltDown();
     }
 
     /***
      * @see WobbleArm for more information.
      */
     public void gripperRaise(){
-        ((WobbleArm)this.mechanisms.get("wobbleArm")).gripperTiltUp();
+        ((WobbleArm)this.getMechanism("wobbleArm")).gripperTiltUp();
     }
 
     /***
      * @see Intake for more information.
      */
     public void intakeLower(){
-        ((Intake)this.mechanisms.get("intake")).lower();
+        ((Intake)this.getMechanism("intake")).lower();
     }
 
     /***
      * @see Intake for more information.
      */
     public void intakeLift(){
-        ((Intake)this.mechanisms.get("intake")).lift();
-    }
-
-    /***
-     * @see Intake for more information.
-     * @param position @see Intake for more information.
-     */
-    public void intakeLRotate(IntakePosition position){
-        ((Intake)this.mechanisms.get("intake")).rotate(position);
+        ((Intake)this.getMechanism("intake")).lift();
     }
 
     /***
      * @see Intake for more information.
      */
     public void intakeGrab(){
-        ((Intake)this.mechanisms.get("intake")).grab();
+        ((Intake)this.getMechanism("intake")).grab();
     }
 
     /***
      * @see Intake for more information.
      */
     public void intakeRelease(){
-        ((Intake)this.mechanisms.get("intake")).release();
+        ((Intake)this.getMechanism("intake")).release();
     }
 
     /***
      * @see Intake for more information.
      */
-    public void intakeDropOff(){
-        ((Intake)this.mechanisms.get("intake")).dropOff();
+    public void intakeCycle(){
+        ((Intake)this.getMechanism("intake")).dropOff();
+    }
+
+    /***
+     * @see Intake for more information.
+     */
+    public void intakeRotate(){
+        ((Intake) this.getMechanism("intake")).rotate();
     }
 
     /***
      * @see Intake for more information.
      */
     public void intakeStop(){
-        ((Intake)this.mechanisms.get("intake")).stop();
+        ((Intake)this.getMechanism("intake")).stop();
     }
 
     /***
-     * @see WobbleArm for more information.
-     * @param direction @see WobbleArm for more information.
+     * @see Loader for more information.
      */
-    public void wobbleArmRotate(RotationDirection direction){
-        ((WobbleArm)this.mechanisms.get("wobbleArm")).rotate(direction, 1);
+    public void loaderLoad(){
+        ((Loader)this.getMechanism("loader")).load();
     }
 
+    /***
+     * @see Loader for more information.
+     */
+    public void loaderRaise(){
+        ((Loader)this.getMechanism("loader")).raise();
+    }
 
+    /***
+     * @see Loader for more information.
+     */
+    public void loaderLower(){
+        ((Loader)this.getMechanism("loader")).lower();
+    }
+
+    /***
+     * @see DriveBase for more information.
+     */
+    public void drive(){
+        ((XDrive) this.getDriveBase()).drive();
+    }
 }

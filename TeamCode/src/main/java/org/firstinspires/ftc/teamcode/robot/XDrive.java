@@ -5,21 +5,38 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.robot.lib.RotationDirection;
+import org.firstinspires.ftc.teamcode.robot.lib.Vector;
+import org.firstinspires.ftc.teamcode.robot.mapping.MotorMap;
 
 
 public class XDrive extends DriveBase {
-
 
     /***
      *
      * @param map the hardware map of the robot/phone/expansion hub.
      */
     public XDrive (HardwareMap map, Telemetry telemetry, Robot robot) {
-        super(map, telemetry, robot);
-        this.motors.put("frontLeft", map.get(DcMotor.class, "frontLeft"));
-        this.motors.put("frontRight", map.get(DcMotor.class, "frontRight"));
-        this.motors.put("backRight", map.get(DcMotor.class, "backRight"));
-        this.motors.put("backLeft", map.get(DcMotor.class, "backLeft"));
+        super(telemetry, robot);
+        this.addMotor(MotorMap.XDRIVE_FRONT_LEFT_DC.getMotorName(),
+                map.get(DcMotor.class, MotorMap.XDRIVE_FRONT_LEFT_DC.getMotorName()));
+        this.addMotor(MotorMap.XDRIVE_FRONT_RIGHT_DC.getMotorName(),
+                map.get(DcMotor.class, MotorMap.XDRIVE_FRONT_RIGHT_DC.getMotorName()));
+        this.addMotor(MotorMap.XDRIVE_BACK_RIGHT_DC.getMotorName(),
+                map.get(DcMotor.class, MotorMap.XDRIVE_BACK_RIGHT_DC.getMotorName()));
+        this.addMotor(MotorMap.XDRIVE_BACK_LEFT_DC.getMotorName(),
+                map.get(DcMotor.class, MotorMap.XDRIVE_BACK_LEFT_DC.getMotorName()));
+    }
+
+    /***
+     * Combines the power of the rotation and strafe and scales the maximum value to be between 1
+     */
+    @Override
+    public void drive() {
+        this.byOurPowersCombined();
+        this.motorNormalise();
+        for(String motorName : this.getMotors().keySet()){
+            this.getMotor(motorName).setPower(this.getDrivePowers().get(motorName));
+        }
     }
 
     /***
@@ -28,8 +45,28 @@ public class XDrive extends DriveBase {
      * @param power the power with which to move the robot
      */
     @Override
-    public void drivePower(double angle, double power) {
+    public void setStrafe(double angle, double power) {
 
+    }
+
+    /***
+     * Drive the robot along a set vector.
+     * @param driveVector the vector to drive the robot along
+     */
+    @Override
+    public void setStrafe(Vector driveVector) {
+        this.setStrafeMotorPower(MotorMap.XDRIVE_FRONT_LEFT_DC.getMotorName(),
+                ((-driveVector.getMagnitude())
+                        * Math.cos(driveVector.getAngleBetween(Vector.X_2) - Math.PI/4)));
+        this.setStrafeMotorPower(MotorMap.XDRIVE_FRONT_RIGHT_DC.getMotorName(),
+                ((-driveVector.getMagnitude())
+                        * Math.cos(driveVector.getAngleBetween(Vector.X_2) + Math.PI/4)));
+        this.setStrafeMotorPower(MotorMap.XDRIVE_BACK_RIGHT_DC.getMotorName(),
+                (driveVector.getMagnitude()
+                        * Math.cos(driveVector.getAngleBetween(Vector.X_2) - Math.PI/4)));
+        this.setStrafeMotorPower(MotorMap.XDRIVE_BACK_LEFT_DC.getMotorName(),
+                (driveVector.getMagnitude()
+                        * Math.cos(driveVector.getAngleBetween(Vector.X_2) + Math.PI/4)));
     }
 
     /***
@@ -54,12 +91,46 @@ public class XDrive extends DriveBase {
 
     /***
      * Rotate the robot a certain direction at a certain power (meant to be run in a loop)
-     * @param direction the rotation direction of the robot
-     *                  (top down. CLOCKWISE or COUNTER_CLOCKWISE)
      * @param power the power with which to rotate the robot
      */
     @Override
-    public void rotateDirection(RotationDirection direction, double power) {
+    public void setRotation(RotationDirection direction, double power) {
+        this.setStrafeMotorPower(MotorMap.XDRIVE_FRONT_LEFT_DC.getMotorName(), power);
+        this.setStrafeMotorPower(MotorMap.XDRIVE_FRONT_RIGHT_DC.getMotorName(), power);
+        this.setStrafeMotorPower(MotorMap.XDRIVE_BACK_RIGHT_DC.getMotorName(), power);
+        this.setStrafeMotorPower(MotorMap.XDRIVE_BACK_LEFT_DC.getMotorName(), power);
+    }
 
+    /***
+     * Rotate the robot according to a vector (meant to be run in a loop)
+     * @param vector the vector to rotate the drivebase
+     */
+    @Override
+    public void setRotation(Vector vector) {
+        RotationDirection direction = Math.cos(vector.getAngleBetween(Vector.X_2)) < Math.PI/2
+                ? RotationDirection.CLOCKWISE : RotationDirection.COUNTER_CLOCKWISE ;
+        this.setRotation(direction, vector.getMagnitude());
+    }
+
+    /***
+     * Normalises the motor powers with the maximum value of 1 when input to the motors while
+     * preserving the desired ratios of power.
+     */
+    @Override
+    protected void motorNormalise() {
+        double maxValue = 0.1;
+
+        // calculate the max value
+        for(String motor : this.getMotors().keySet()){
+            maxValue = maxValue < Math.abs(this.getDrivePowers().get(motor))
+                    ? Math.abs(this.getDrivePowers().get(motor)) : maxValue;
+        }
+
+        // only scale the value if it is above 1. This will be most of the time.
+        if(maxValue > 1) {
+            for (String motor : this.getMotors().keySet()) {
+                this.setDrivePower(motor, this.getDrivePowers().get(motor) / maxValue);
+            }
+        }
     }
 }
