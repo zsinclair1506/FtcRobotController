@@ -27,12 +27,13 @@ package org.firstinspires.ftc.teamcode.robot.mapping;
  *      Gripper lower - dpad down
  *      Gripper open - dpad right
  *      Gripper raise - dpad up
- *      Intake down - a
+ *      Intake cycle - start
  *      Intake grab - x
+ *      Intake lift - y
+ *      Intake lower - a
  *      Intake release - b
  *      Intake switch positions - RTrigger
- *      Intake up - y
- *      Intake stop - start (that's the button name, it's not my fault)
+ *      Intake stop - back
  */
 public enum GamepadButtons {
 
@@ -94,7 +95,17 @@ public enum GamepadButtons {
     /***
      * Gamepad: 2
      */
-    INTAKE_DOWN("a"),
+    INTAKE_CYCLE("start"),
+
+    /***
+     * Gamepad: 2
+     */
+    INTAKE_LIFT("y"),
+
+    /***
+     * Gamepad: 2
+     */
+    INTAKE_LOWER("a"),
 
     /***
      * Gamepad: 2
@@ -109,17 +120,12 @@ public enum GamepadButtons {
     /***
      * Gamepad: 2
      */
-    INTAKE_STOP("start"),
+    INTAKE_STOP("back"),
 
     /***
      * Gamepad: 2
      */
     INTAKE_SWITCH_POSITIONS("right_trigger"),
-
-    /***
-     * Gamepad: 2
-     */
-    INTAKE_UP("y"),
     ;
 
     private final String buttonName;

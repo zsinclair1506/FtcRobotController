@@ -73,17 +73,15 @@ public class BlueSkyRobot extends Robot {
 
     /***
      * @see Gripper for more information.
-     * @param button
      */
-    public void clawClose(boolean button){
+    public void gripperClose(){
         ((WobbleArm)this.getMechanism("wobbleArm")).gripperClose();
     }
 
     /***
      * @see Gripper for more information.
-     * @param button
      */
-    public void clawOpen(boolean button){
+    public void gripperOpen(){
         ((WobbleArm)this.getMechanism("wobbleArm")).gripperOpen();
     }
 
@@ -124,14 +122,6 @@ public class BlueSkyRobot extends Robot {
 
     /***
      * @see Intake for more information.
-     * @param position @see Intake for more information.
-     */
-    public void intakeRotate(IntakePosition position){
-        ((Intake)this.getMechanism("intake")).rotate(position);
-    }
-
-    /***
-     * @see Intake for more information.
      */
     public void intakeGrab(){
         ((Intake)this.getMechanism("intake")).grab();
@@ -147,8 +137,15 @@ public class BlueSkyRobot extends Robot {
     /***
      * @see Intake for more information.
      */
-    public void intakeDropOff(){
+    public void intakeCycle(){
         ((Intake)this.getMechanism("intake")).dropOff();
+    }
+
+    /***
+     * @see Intake for more information.
+     */
+    public void intakeRotate(){
+        ((Intake) this.getMechanism("intake")).rotate();
     }
 
     /***
