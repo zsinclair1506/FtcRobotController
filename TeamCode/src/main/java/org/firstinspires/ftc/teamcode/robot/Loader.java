@@ -16,8 +16,8 @@ public class Loader extends Mechanism {
      * Loader constructor
      * @param map hardware map of the robot
      */
-    public Loader(HardwareMap map, Telemetry telemetry){
-        super(telemetry);
+    public Loader(HardwareMap map, Telemetry telemetry, Robot robot){
+        super(telemetry, robot);
         this.loaderMotor = map.get(Servo.class, MotorMap.LOADER_SERVO.getMotorName());
     }
 
