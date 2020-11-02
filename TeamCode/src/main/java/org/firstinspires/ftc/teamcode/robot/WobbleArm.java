@@ -16,10 +16,10 @@ public class WobbleArm extends Mechanism {
      * Wobblearm constructor
      * @param map hardware map of the robot
      */
-    public WobbleArm(HardwareMap map, Telemetry telemetry){
+    public WobbleArm(HardwareMap map, Telemetry telemetry, Robot robot){
         // assign motors here
-        super(telemetry);
-        this.gripper = new Gripper(map, telemetry);
+        super(telemetry, robot);
+        this.gripper = new Gripper(map, telemetry, robot);
 
     }
 

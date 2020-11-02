@@ -11,11 +11,11 @@ import java.util.HashMap;
 /***
  * The actions that all drivebases must do.
  */
-public abstract class DriveBase {
+public abstract class DriveBase extends Mechanism {
     protected HashMap<String, DcMotor> motors;
-    protected Telemetry telemetry;
 
-    public DriveBase(HardwareMap map, Telemetry telemetry){
+    public DriveBase(HardwareMap map, Telemetry telemetry, Robot robot){
+        super(telemetry, robot);
         this.telemetry = telemetry;
     }
 

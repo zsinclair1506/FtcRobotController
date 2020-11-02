@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.robot;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -14,8 +15,9 @@ public class Shooter extends Mechanism {
      * Shooter constructor
      * @param map hardware map of the robot
      */
-    public Shooter(HardwareMap map, Telemetry telemetry){
-        super(telemetry);
+    public Shooter(HardwareMap map, Telemetry telemetry, Robot robot){
+        super(telemetry, robot);
+//        this.whackyStick = map.get(DcMotor.class, MotorMap.SHOOTER_DC.getMotorName());
     }
 
     /***

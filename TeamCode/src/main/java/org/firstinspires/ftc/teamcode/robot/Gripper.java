@@ -15,8 +15,8 @@ public class Gripper extends Mechanism {
      * Gripper constructor. Maps servos for grippers.
      * @param map the hardware map to get the servos from.
      */
-    public Gripper(HardwareMap map, Telemetry telemetry){
-        super(telemetry);
+    public Gripper(HardwareMap map, Telemetry telemetry, Robot robot){
+        super(telemetry, robot);
     }
 
     /***

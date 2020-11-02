@@ -19,9 +19,9 @@ public class Intake extends Mechanism {
      * Intake constructor
      * @param map the hardware map of the robot
      */
-    public Intake(HardwareMap map, Telemetry telemetry){
+    public Intake(HardwareMap map, Telemetry telemetry, Robot robot){
         //map servos from hardware map
-        super(telemetry);
+        super(telemetry, robot);
     }
 
     /***

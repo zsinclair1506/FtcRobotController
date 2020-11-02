@@ -14,8 +14,8 @@ public class XDrive extends DriveBase {
      *
      * @param map the hardware map of the robot/phone/expansion hub.
      */
-    public XDrive (HardwareMap map, Telemetry telemetry) {
-        super(map, telemetry);
+    public XDrive (HardwareMap map, Telemetry telemetry, Robot robot) {
+        super(map, telemetry, robot);
         this.motors.put("frontLeft", map.get(DcMotor.class, "frontLeft"));
         this.motors.put("frontRight", map.get(DcMotor.class, "frontRight"));
         this.motors.put("backRight", map.get(DcMotor.class, "backRight"));

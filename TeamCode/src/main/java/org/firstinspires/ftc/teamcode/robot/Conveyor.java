@@ -15,8 +15,8 @@ public class Conveyor extends Mechanism {
      * Conveyor constructor
      * @param map the hardware map for the robot
      */
-    public Conveyor(HardwareMap map, Telemetry telemetry){
-        super(telemetry);
+    public Conveyor(HardwareMap map, Telemetry telemetry, Robot robot){
+        super(telemetry, robot);
     }
 
     /***

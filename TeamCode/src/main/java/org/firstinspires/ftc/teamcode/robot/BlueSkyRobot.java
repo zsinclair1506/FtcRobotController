@@ -17,11 +17,11 @@ public class BlueSkyRobot extends Robot {
      * @param map the hardware map containing all the hardware on the robot.
      */
     public BlueSkyRobot(HardwareMap map, Telemetry telemetry){
-        this.mechanisms.put("conveyor", new Conveyor(map, telemetry));
-        this.mechanisms.put("intake", new Intake(map, telemetry));
-        this.mechanisms.put("shooter", new Shooter(map, telemetry));
-        this.mechanisms.put("wobbleArm", new WobbleArm(map, telemetry));
-        this.driveBase = new XDrive(map, telemetry);
+//        this.mechanisms.put("conveyor", new Conveyor(map, telemetry));
+//        this.mechanisms.put("intake", new Intake(map, telemetry));
+//        this.mechanisms.put("shooter", new Shooter(map, telemetry));
+//        this.mechanisms.put("wobbleArm", new WobbleArm(map, telemetry));
+//        this.driveBase = new XDrive(map, telemetry);
     }
 
     /***
