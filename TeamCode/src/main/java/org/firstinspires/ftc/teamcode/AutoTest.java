@@ -53,14 +53,12 @@ public class AutoTest extends OpMode{
              * Distance to edge of scoring zone = 80in
              *
              * Motor Calcs
-             * 100rpm = 10.47 rad/s
-             * wheel radius = 4in
-             * Forward Velocity = 10.47 x 4 x √2 = 59.227
+             * wheel radius = 2in
+             * Forward Velocity = 14.000000000021771 x 2 x √2 = 39.5979797465
              * TODO: Double Check Accuracy
              */
 
-            //Drive Forward X Distance
-
+            //Drive Forward approx. 79in
             /** Repeat x2
             * Shoot powershot
             * Move Left
