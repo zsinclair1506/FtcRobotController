@@ -15,8 +15,8 @@ public class XDrive extends DriveBase {
      *
      * @param map the hardware map of the robot/phone/expansion hub.
      */
-    public XDrive (HardwareMap map, Telemetry telemetry) {
-        super(telemetry);
+    public XDrive (HardwareMap map, Telemetry telemetry, Robot robot) {
+        super(telemetry, robot);
         this.addMotor(MotorMap.XDRIVE_FRONT_LEFT_DC.getMotorName(),
                 map.get(DcMotor.class, MotorMap.XDRIVE_FRONT_LEFT_DC.getMotorName()));
         this.addMotor(MotorMap.XDRIVE_FRONT_RIGHT_DC.getMotorName(),
@@ -28,7 +28,8 @@ public class XDrive extends DriveBase {
     }
 
     /***
-     * Combines the power of the rotation and strafe and scales the maximum value to be between 1
+     * Combines the power of the rotation and strafe and scales the maximum value to be between 0
+     * and 1.
      */
     @Override
     public void drive() {

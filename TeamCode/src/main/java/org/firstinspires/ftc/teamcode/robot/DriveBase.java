@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.robot;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.robot.lib.RotationDirection;
@@ -11,19 +12,19 @@ import java.util.HashMap;
 /***
  * The actions that all drivebases must do as well as some common access methods.
  */
-public abstract class DriveBase {
+public abstract class DriveBase extends Mechanism {
     private HashMap<String, DcMotor> motors = new HashMap<>();
     private HashMap<String, Double> rotateMotorPowers = new HashMap<>();
     private HashMap<String, Double> strafeMotorPowers = new HashMap<>();
     private HashMap<String, Double> drivePower = new HashMap<>();
-    protected Telemetry telemetry;
 
     /***
      * Constructor for the DriveBase that makes telemetry available to all DriveBases.
      * @param telemetry the telemetry for the DriveBases
      */
-    public DriveBase(Telemetry telemetry){
-        this.telemetry = telemetry;
+
+    public DriveBase(Telemetry telemetry, Robot robot){
+        super(telemetry, robot);
     }
 
     /***
@@ -161,7 +162,7 @@ public abstract class DriveBase {
     }
 
     /***
-     * Com
+     * Combine nmotor powers. @see DriveBase#combineMotorPower
      */
     protected void byOurPowersCombined(){
         this.combineMotorPower();

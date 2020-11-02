@@ -90,8 +90,8 @@ public class Intake extends Mechanism {
      * Intake constructor
      * @param map the hardware map of the robot
      */
-    public Intake(HardwareMap map, Telemetry telemetry){
-        super(telemetry);
+    public Intake(HardwareMap map, Telemetry telemetry, Robot robot) {
+        super(telemetry, robot);
         this.rotationServo = map.get(Servo.class, MotorMap.INTAKE_ROTATE_SERVO.getMotorName());
         this.vertServo = map.get(CRServo.class, MotorMap.INTAKE_UP_CRSERVO.getMotorName());
         this.grabServo = map.get(Servo.class, MotorMap.INTAKE_GRAB_SERVO.getMotorName());

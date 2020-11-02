@@ -14,15 +14,14 @@ import org.firstinspires.ftc.teamcode.robot.mapping.MotorMap;
  */
 public class Conveyor extends Mechanism {
     private CRServo conveyorServo;
-    private Boolean ringPresent = false;
 
     /***
      * Conveyor constructor
      * @param map the hardware map for the robot
      */
-    public Conveyor(HardwareMap map, Telemetry telemetry){
-        super(telemetry);
-        conveyorServo = map.get(CRServo.class, MotorMap.CONVEYOR_CRSERVO.getMotorName());
+    public Conveyor(HardwareMap map, Telemetry telemetry, Robot robot){
+        super(telemetry, robot);
+        this.conveyorServo = map.get(CRServo.class, MotorMap.CONVEYOR_CRSERVO.getMotorName());
     }
 
     /***
