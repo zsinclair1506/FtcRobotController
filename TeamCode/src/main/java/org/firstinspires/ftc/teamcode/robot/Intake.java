@@ -18,7 +18,20 @@ public class Intake extends Mechanism {
     private Servo rotationServo;
     private CRServo vertServo;
     private Servo grabServo;
+    private CRServoThread servoThread = new CRServoThread(vertServo, VERT_UP);
+    private IntakePosition position = IntakePosition.INTAKE;
 
+    protected static int DESIRED_RUN_TIME_MS = 1000;
+    private static double VERT_UP = 0.8;
+    private static double GRAB_POSITION = 0.5;
+    private static double CLOSED_POSITION = 0.2;
+
+    /***
+     * Class to handle running a continuous servo asynchronously. For moving the intake to the top
+     * or bottom of the rail by running it for a certain amount of time. Since CRServo does not have
+     * a position sensor or control, it will have to be time based. (This may be affected by the
+     * battery level of the robot during operation.
+     */
     private class CRServoThread extends Thread {
         // As a note, I'm assuming Telemetry is not thread safe so not using it here
         private CRServo crservo;
@@ -38,6 +51,7 @@ public class Intake extends Mechanism {
          * Initialises servo parameters
          */
         private void init(){
+            this.runTume.reset();
         }
 
         /***
@@ -53,7 +67,13 @@ public class Intake extends Mechanism {
          */
         @Override
         public void run() {
+            this.init();
 
+            do{
+                this.crservo.setPower(this.servoPower);
+            } while (this.runTume.milliseconds() < DESIRED_RUN_TIME_MS);
+
+            this.crservo.setPower(0);
         }
 
         /***
@@ -61,7 +81,8 @@ public class Intake extends Mechanism {
          * @param inPower the power to set the shooter motor to run at
          */
         public void setPower(double inPower) {
-            this.servoPower = (inPower > 1 ? 1 : inPower);
+            int sign = inPower < 1 ? -1 : 1;
+            this.servoPower = sign * (Math.abs(inPower) > 1 ? 1 : Math.abs(inPower));
         }
     }
 
@@ -80,35 +101,36 @@ public class Intake extends Mechanism {
      * Lifts the intake mechanism up from the floor
      */
     public void lift(){
-
+        this.vertServo.setPower(VERT_UP);
     }
 
     /***
      * Causes the intake mechanism to grab a ring
      */
     public void grab(){
-
+        this.grabServo.setPosition(GRAB_POSITION);
     }
 
     /***
      * Causes the intake mechanism to release a ring
      */
     public void release(){
-
+        this.grabServo.setPosition(CLOSED_POSITION);
     }
 
     /***
      * Lowers the intake mechanism to the floor
      */
     public void lower(){
-
+        this.vertServo.setPower(-VERT_UP);
     }
 
     /***
      * Stop all motion on the intake mechanism
      */
     public void stop(){
-
+        this.servoThread.interrupt();
+        this.vertServo.setPower(0);
     }
 
     /***
@@ -127,6 +149,19 @@ public class Intake extends Mechanism {
      * @param position the position to rotate the intake to (INTAKE or DROP_OFF)
      */
     public void rotate(IntakePosition position){
+        this.rotationServo.setPosition(position.getPosition());
+        this.position = position;
+    }
 
+    /***
+     * Rotate to the other position for the intake. (INTAKE or DROP_OFF)
+     */
+    public void rotate(){
+        if (position == IntakePosition.INTAKE){
+            rotate(IntakePosition.DROP_OFF);
+        }
+        else{
+            rotate(IntakePosition.INTAKE);
+        }
     }
 }

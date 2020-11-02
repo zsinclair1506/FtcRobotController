@@ -1,11 +1,15 @@
 package org.firstinspires.ftc.teamcode.robot.lib;
 
 public enum IntakePosition {
-    DROP_OFF, INTAKE
+    DROP_OFF(0.9), INTAKE(0.5);
 
-    //will likely add pre-programmed servo positions for this
-    /*
-    TODO make constructor
-    TODO private double position
-     */
+    private double position;
+
+    IntakePosition(double position){
+        this.position = position;
+    }
+
+    public double getPosition() {
+        return this.position;
+    }
 }
