@@ -19,6 +19,7 @@ public class BlueSkyRobot extends Robot {
      * @param map the hardware map containing all the hardware on the robot.
      */
     public BlueSkyRobot(HardwareMap map, Telemetry telemetry){
+        super(telemetry);
         this.setDriveBase(new XDrive(map, telemetry, this));
 //        this.addMechanism(MechanismMap.LOADER.getName(), new Loader(map, telemetry, this));
 //        this.addMechanism(MechanismMap.WOBBLE_GOAL_ARM.getName(),
