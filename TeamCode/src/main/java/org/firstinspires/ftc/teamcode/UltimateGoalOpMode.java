@@ -57,9 +57,16 @@ public class UltimateGoalOpMode extends OpMode
         blueSky.setRotate(driveGamepad.getStickVector(GamepadButtons.ROBOT_ROTATE.getButtonName()));
         blueSky.drive();
 
-        blueSky.gripperOpen(operatorGamepad.getButton(GamepadButtons.GRIPPER_OPEN.getButtonName()));
+        if(driveGamepad.getTrigger(GamepadButtons.SHOOTER_SHOOT.getButtonName()) > 0.5){
+            blueSky.shooterShoot();
+        }
 
-        blueSky.gripperClose(operatorGamepad.getButton(GamepadButtons.GRIPPER_CLOSE.getButtonName()));
+        if(driveGamepad.getButton(GamepadButtons.SHOOTER_FEED_ME.getButtonName())){
+            blueSky.shooterFeedMe();
+        }
+
+
+
     }
 
     /*
