@@ -7,7 +7,7 @@ package org.firstinspires.ftc.teamcode.robot.mapping;
  *       ___LTrigger__                   __RTrigger__
  *      /             \                 /            \
  *     /               ----------------          Y    \
- *    |   DPAD                                X    B   \
+ *    |   DPAD         BK        ST           X    B   \
  *    |                                         A      |
  *    |       Left Stick         Right Stick           |
  *    |                  ________                     |
@@ -20,30 +20,26 @@ package org.firstinspires.ftc.teamcode.robot.mapping;
  *      Shooter Feed Me - left trigger
  *      Shooter Shoot - right trigger
  * GamePad 2:
+ *      Arm in/out - left stick y
+ *      Arm motion (up, down, right, left) - right stick
  *      Conveyor run - LTrigger
  *      Gripper close - dpad left
  *      Gripper lower - dpad down
  *      Gripper open - dpad right
  *      Gripper raise - dpad up
- *      Arm up/down/left/right - right stick
- *      Arm in/out - left stick y
  *      Intake down - a
  *      Intake grab - x
  *      Intake release - b
- *      Intake up - y
  *      Intake switch positions - RTrigger
+ *      Intake up - y
+ *      Intake stop - start (that's the button name, it's not my fault)
  */
 public enum GamepadButtons {
 
     /***
      * Gamepad: 1
      */
-    SHOOTER_SHOOT("right_trigger"),
-
-    /***
-     * Gamepad: 1
-     */
-    SHOOTER_FEED_ME("dpad_left"),
+    ROBOT_ROTATE("right_stick"),
 
     /***
      * Gamepad: 1
@@ -53,7 +49,17 @@ public enum GamepadButtons {
     /***
      * Gamepad: 1
      */
-    ROBOT_ROTATE("right_stick"),
+    SHOOTER_FEED_ME("dpad_left"),
+
+    /***
+     * Gamepad: 1
+     */
+    SHOOTER_SHOOT("right_trigger"),
+
+    /***
+     * Gamepad: 2
+     */
+    ARM_IN_OUT("left_stick"),
 
     /***
      * Gamepad: 2
@@ -63,7 +69,32 @@ public enum GamepadButtons {
     /***
      * Gamepad: 2
      */
-    ARM_IN_OUT("left_stick"),
+    CONVEYOR_RUN("right_trigger"),
+
+    /***
+     * Gamepad: 2
+     */
+    GRIPPER_CLOSE("b"),
+
+    /***
+     * Gamepad: 2
+     */
+    GRIPPER_LOWER("dpad_down"),
+
+    /***
+     * Gamepad: 2
+     */
+    GRIPPER_OPEN("dpad_right"),
+
+    /***
+     * Gamepad: 2
+     */
+    GRIPPER_RAISE("dpad_up"),
+
+    /***
+     * Gamepad: 2
+     */
+    INTAKE_DOWN("a"),
 
     /***
      * Gamepad: 2
@@ -78,7 +109,7 @@ public enum GamepadButtons {
     /***
      * Gamepad: 2
      */
-    INTAKE_UP("y"),
+    INTAKE_STOP("start"),
 
     /***
      * Gamepad: 2
@@ -88,54 +119,25 @@ public enum GamepadButtons {
     /***
      * Gamepad: 2
      */
-    GRIPPER_RAISE("dpad_up"),
-
-    /***
-     * Gamepad: 2
-     */
-    GRIPPER_LOWER("dpad_down"),
-
-    /***
-     * Gamepad: 2
-     */
-    ARM_ROTATE("x"),
-
-    /***
-     * Gamepad: 2
-     */
-    CONVEYOR_RUN("right_trigger"),
-
-    /***
-     * Gamepad: 2
-     */
-    GRIPPER_OPEN("dpad_right"),
-
-    /***
-     * Gamepad: 2
-     */
-    INTAKE_DOWN("a"),
-
-    /***
-     * Gamepad: 2
-     */
-    GRIPPER_CLOSE("b");
+    INTAKE_UP("y"),
+    ;
 
     private final String buttonName;
     /***
-     *
-     * @param bName
+     * Constructor for the action/button
+     * @param bName the name of the button for the action
      */
     GamepadButtons(String bName){
-        buttonName = bName;
+        this.buttonName = bName;
     }
 
 
     /***
-     * Getter for the buttonName String
-     * @return buttonName, buttonName is 'gotten' and returned
+     * Get the name of the button for the action
+     * @return the name of the button
      */
     public String getButtonName(){
-        return buttonName;
+        return this.buttonName;
     }
 
 }
