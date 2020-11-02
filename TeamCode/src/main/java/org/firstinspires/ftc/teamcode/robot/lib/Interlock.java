@@ -9,16 +9,6 @@ public class Interlock {
     private HashMap<Object, Boolean> interlocks = new HashMap<>();
 
     /***
-     * Constructor for Interlock.
-     * @param interlock the interlocks to link to this
-     */
-    public Interlock(Object...interlock){
-        for(Object lock : interlock){
-            this.interlocks.put(lock, false);
-        }
-    }
-
-    /***
      * Constructor with no arguments
      */
     public Interlock(){
