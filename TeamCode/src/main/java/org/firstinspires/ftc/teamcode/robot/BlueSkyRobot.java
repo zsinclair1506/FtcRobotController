@@ -126,7 +126,7 @@ public class BlueSkyRobot extends Robot {
      * @see Intake for more information.
      * @param position @see Intake for more information.
      */
-    public void intakeLRotate(IntakePosition position){
+    public void intakeRotate(IntakePosition position){
         ((Intake)this.getMechanism("intake")).rotate(position);
     }
 
