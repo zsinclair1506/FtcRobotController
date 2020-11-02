@@ -10,7 +10,8 @@ import org.firstinspires.ftc.teamcode.robot.mapping.MotorMap;
  * this class is for the loader mechanism on the robot
  */
 public class Loader extends Mechanism {
-    private Servo loaderMotor;
+    private Servo loaderServo;
+    private static double LOWER_POSITION = 0;
 
     /***
      * Loader constructor
@@ -18,7 +19,7 @@ public class Loader extends Mechanism {
      */
     public Loader(HardwareMap map, Telemetry telemetry, Robot robot){
         super(telemetry, robot);
-        this.loaderMotor = map.get(Servo.class, MotorMap.LOADER_SERVO.getMotorName());
+        this.loaderServo = map.get(Servo.class, MotorMap.LOADER_SERVO.getMotorName());
     }
 
     /***
@@ -32,13 +33,13 @@ public class Loader extends Mechanism {
      * Lower the loader from shooting angle/height to loading height.
      */
     public void lower(){
-
+        this.loaderServo.setPosition(this.LOWER_POSITION);
     }
 
     /***
      * Raise the loader from loading height to shooting angle/height
      */
     public void raise(){
-
+        this.loaderServo.setPosition(this.LOWER_POSITION);
     }
 }
