@@ -139,14 +139,4 @@ public class BlueSkyRobot extends Robot {
     public void intakeStop(){
         ((Intake)this.mechanisms.get("intake")).stop();
     }
-
-    /***
-     * @see WobbleArm for more information.
-     * @param direction @see WobbleArm for more information.
-     */
-    public void wobbleArmRotate(RotationDirection direction){
-        ((WobbleArm)this.mechanisms.get("wobbleArm")).rotate(direction, 1);
-    }
-
-
 }
