@@ -53,18 +53,18 @@ public class UltimateGoalOpMode extends OpMode
      */
     @Override
     public void loop() {
+        telemetry.addData("preJoystick","");
         blueSky.setStrafe(driveGamepad.getStickVector(GamepadButtons.ROBOT_STRAFE.getButtonName()));
         blueSky.setRotate(driveGamepad.getStickVector(GamepadButtons.ROBOT_ROTATE.getButtonName()));
-        blueSky.drive();
-
+//        blueSky.drive();
+        
         if(driveGamepad.getTrigger(GamepadButtons.SHOOTER_SHOOT.getButtonName()) > 0.5){
             blueSky.shooterShoot();
         }
 
-        if(driveGamepad.getButton(GamepadButtons.SHOOTER_FEED_ME.getButtonName())){
-            blueSky.shooterFeedMe();
-        }
-
+//        if(driveGamepad.getButton(GamepadButtons.SHOOTER_FEED_ME.getButtonName())){
+//            blueSky.shooterFeedMe();
+//        }
 
 
     }

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.robot;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -19,7 +20,8 @@ public class Shooter extends Mechanism {
      */
     public Shooter(HardwareMap map, Telemetry telemetry, Robot robot){
         super(telemetry, robot);
-        whackyStick = map.get(DcMotor.class, MotorMap.SHOOTER_DC.getMotorName());
+        this.whackyStick = map.get(DcMotor.class, MotorMap.SHOOTER_DC.getMotorName());
+        this.whackyStick.setDirection(DcMotorSimple.Direction.REVERSE);
         this.getInterlock().registerInterlock(this.robot.getMechanism(MechanismMap.SHOOTER.getName()));
     }
 
@@ -28,10 +30,11 @@ public class Shooter extends Mechanism {
      * @param power the power with which to shoot a ring [0-1]
      */
     public void shoot(double power){
-        if (!whackyStick.isBusy()){
-            whackyStick.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            whackyStick.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            whackyStick.setPower(power);
+        if (!this.whackyStick.isBusy()){
+            this.whackyStick.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            this.whackyStick.setTargetPosition(1440/9);
+            this.whackyStick.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            this.whackyStick.setPower(power);
         }
     }
 
@@ -39,7 +42,7 @@ public class Shooter extends Mechanism {
      * Shoots a ring with a preset power
      */
     public void shoot() {
-    shoot(1);
+        shoot(1);
     }
 
     /***
