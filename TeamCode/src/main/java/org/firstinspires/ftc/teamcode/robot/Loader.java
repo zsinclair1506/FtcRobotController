@@ -7,7 +7,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.robot.mapping.MotorMap;
 
 /***
- * this class is for the loader mechanism on the robot
+ * This class is for the loader mechanism on the robot.
  */
 public class Loader extends Mechanism {
     private Servo loaderServo;
