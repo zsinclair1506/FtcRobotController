@@ -156,14 +156,6 @@ public class BlueSkyRobot extends Robot {
     }
 
     /***
-     * @see WobbleArm for more information.
-     * @param direction @see WobbleArm for more information.
-     */
-    public void wobbleArmRotate(RotationDirection direction){
-        ((WobbleArm)this.getMechanism("wobbleArm")).rotate(direction, 1);
-    }
-
-    /***
      * @see Loader for more information.
      */
     public void loaderLoad(){
