@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.robot.BlueSkyRobot;
+import org.firstinspires.ftc.teamcode.robot.lib.Vector;
 import org.firstinspires.ftc.teamcode.robot.mapping.GamepadButtons;
 import org.firstinspires.ftc.teamcode.robot.lib.GamepadWrapper;
 
@@ -24,12 +25,15 @@ public class UltimateGoalOpMode extends OpMode
      */
     @Override
     public void init() {
+        telemetry.addData("beginInit","");
+        telemetry.update();
         this.blueSky = new BlueSkyRobot(hardwareMap, telemetry);
-        this.driveGamepad = new GamepadWrapper(gamepad1, telemetry);
-        this.operatorGamepad = new GamepadWrapper(gamepad2, telemetry);
+        this.driveGamepad = new GamepadWrapper(gamepad1);
+        this.operatorGamepad = new GamepadWrapper(gamepad2);
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
+        telemetry.update();
 
     }
 
@@ -45,7 +49,11 @@ public class UltimateGoalOpMode extends OpMode
      */
     @Override
     public void start() {
+        telemetry.addData("preReset","");
+        telemetry.update();
         runtime.reset();
+        telemetry.addData("postReset","");
+        telemetry.update();
     }
 
     /*
@@ -53,16 +61,27 @@ public class UltimateGoalOpMode extends OpMode
      */
     @Override
     public void loop() {
-        blueSky.setStrafe(driveGamepad.getStickVector(GamepadButtons.ROBOT_DRIVE.getButtonName()));
-        blueSky.setRotate(driveGamepad.getStickVector(GamepadButtons.ROBOT_ROTATE.getButtonName()));
-        blueSky.drive();
-
-        blueSky.clawOpen(operatorGamepad.getButton(GamepadButtons.GRIPPER_OPEN.getButtonName()));
-
-        blueSky.clawClose(operatorGamepad.getButton(GamepadButtons.GRIPPER_CLOSE.getButtonName()));
+//        blueSky.setStrafe(driveGamepad.getStickVector(GamepadButtons.ROBOT_STRAFE.getButtonName()));
+//        blueSky.setRotate(driveGamepad.getStickVector(GamepadButtons.ROBOT_ROTATE.getButtonName()));
+//        blueSky.drive();
+//
+//        if(driveGamepad.getTrigger(GamepadButtons.SHOOTER_SHOOT.getButtonName()) > 0.5){
+//            blueSky.shooterShoot();
+//        }
+//
+//        if(driveGamepad.getButton(GamepadButtons.SHOOTER_FEED_ME.getButtonName())){
+//            blueSky.shooterFeedMe();
+//        }
+//
+//        if(operatorGamepad.getTrigger(GamepadButtons.CONVEYOR_RUN.getButtonName()) > 0.8){
+//            blueSky.conveyorRun();
+//        }
+//        else if(operatorGamepad.getTrigger(GamepadButtons.CONVEYOR_RUN.getButtonName()) < 0.8){
+//            blueSky.conveyorStop();
+//        }
     }
 
-    /*
+    /***
      * Code to run ONCE after the driver hits STOP
      */
     @Override

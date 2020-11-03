@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.robot.lib.GripperPosition;
+import org.firstinspires.ftc.teamcode.robot.mapping.MotorMap;
 
 /***
  * The class is controlling the Gripper mechanism
@@ -15,25 +16,25 @@ public class Gripper extends Mechanism {
      * Gripper constructor. Maps servos for grippers.
      * @param map the hardware map to get the servos from.
      */
-    public Gripper(HardwareMap map, Telemetry telemetry){
-        super(telemetry);
-        clawServo = map.get(Servo.class, "clawServo");
+    public Gripper(HardwareMap map, Telemetry telemetry, Robot robot){
+        super(telemetry, robot);
+        this.clawServo = map.get(Servo.class, MotorMap.GRIPPER_SERVO.getMotorName());
     }
 
     /***
      * Closes the Gripper mechanism
      */
     public void closeGripper() {
-        double currentPos = clawServo.getPosition();
-        clawServo.setPosition(currentPos -= 0.05);
+        double currentPos = this.clawServo.getPosition();
+        this.clawServo.setPosition(currentPos -= 0.05);
     }
 
     /***
      * Opens the gripper mechanism
      */
     public void openGripper() {
-        double currentPos = clawServo.getPosition();
-        clawServo.setPosition(currentPos += 0.05);
+        double currentPos = this.clawServo.getPosition();
+        this.clawServo.setPosition(currentPos += 0.05);
     }
 
     /***

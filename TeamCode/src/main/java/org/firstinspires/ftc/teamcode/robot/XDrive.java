@@ -15,8 +15,8 @@ public class XDrive extends DriveBase {
      *
      * @param map the hardware map of the robot/phone/expansion hub.
      */
-    public XDrive (HardwareMap map, Telemetry telemetry) {
-        super(telemetry);
+    public XDrive (HardwareMap map, Telemetry telemetry, Robot robot) {
+        super(telemetry, robot);
         this.addMotor(MotorMap.XDRIVE_FRONT_LEFT_DC.getMotorName(),
                 map.get(DcMotor.class, MotorMap.XDRIVE_FRONT_LEFT_DC.getMotorName()));
         this.addMotor(MotorMap.XDRIVE_FRONT_RIGHT_DC.getMotorName(),
@@ -28,12 +28,14 @@ public class XDrive extends DriveBase {
     }
 
     /***
-     * Combines the power of the rotation and strafe and scales the maximum value to be between 1
+     * Combines the power of the rotation and strafe and scales the maximum value to be between 0
+     * and 1.
      */
     @Override
     public void drive() {
         this.byOurPowersCombined();
         this.motorNormalise();
+//
         for(String motorName : this.getMotors().keySet()){
             this.getMotor(motorName).setPower(this.getDrivePowers().get(motorName));
         }
@@ -95,10 +97,10 @@ public class XDrive extends DriveBase {
      */
     @Override
     public void setRotation(RotationDirection direction, double power) {
-        this.setStrafeMotorPower(MotorMap.XDRIVE_FRONT_LEFT_DC.getMotorName(), power);
-        this.setStrafeMotorPower(MotorMap.XDRIVE_FRONT_RIGHT_DC.getMotorName(), power);
-        this.setStrafeMotorPower(MotorMap.XDRIVE_BACK_RIGHT_DC.getMotorName(), power);
-        this.setStrafeMotorPower(MotorMap.XDRIVE_BACK_LEFT_DC.getMotorName(), power);
+        this.setRotateMotorPower(MotorMap.XDRIVE_FRONT_LEFT_DC.getMotorName(), power);
+        this.setRotateMotorPower(MotorMap.XDRIVE_FRONT_RIGHT_DC.getMotorName(), power);
+        this.setRotateMotorPower(MotorMap.XDRIVE_BACK_RIGHT_DC.getMotorName(), power);
+        this.setRotateMotorPower(MotorMap.XDRIVE_BACK_LEFT_DC.getMotorName(), power);
     }
 
     /***
@@ -122,8 +124,7 @@ public class XDrive extends DriveBase {
 
         // calculate the max value
         for(String motor : this.getMotors().keySet()){
-            maxValue = maxValue < Math.abs(this.getDrivePowers().get(motor))
-                    ? Math.abs(this.getDrivePowers().get(motor)) : maxValue;
+            maxValue = Math.max(maxValue, Math.abs(this.getDrivePowers().get(motor)));
         }
 
         // only scale the value if it is above 1. This will be most of the time.

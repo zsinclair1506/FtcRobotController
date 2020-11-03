@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.robot;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.robot.lib.RotationDirection;
@@ -11,19 +12,19 @@ import java.util.HashMap;
 /***
  * The actions that all drivebases must do as well as some common access methods.
  */
-public abstract class DriveBase {
+public abstract class DriveBase extends Mechanism {
     private HashMap<String, DcMotor> motors = new HashMap<>();
     private HashMap<String, Double> rotateMotorPowers = new HashMap<>();
     private HashMap<String, Double> strafeMotorPowers = new HashMap<>();
     private HashMap<String, Double> drivePower = new HashMap<>();
-    protected Telemetry telemetry;
 
     /***
      * Constructor for the DriveBase that makes telemetry available to all DriveBases.
      * @param telemetry the telemetry for the DriveBases
      */
-    public DriveBase(Telemetry telemetry){
-        this.telemetry = telemetry;
+
+    public DriveBase(Telemetry telemetry, Robot robot){
+        super(telemetry, robot);
     }
 
     /***
@@ -154,14 +155,14 @@ public abstract class DriveBase {
      * Combines the strafe and rotate powers into drive power.
      */
     protected void combineMotorPower(){
-        for(String motor : this.strafeMotorPowers.keySet()){
+        for(String motor : this.getMotors().keySet()){
             this.setDrivePower(motor,
                     this.strafeMotorPowers.get(motor) + this.rotateMotorPowers.get(motor));
         }
     }
 
     /***
-     * Com
+     * Combine motor powers. @see DriveBase#combineMotorPower
      */
     protected void byOurPowersCombined(){
         this.combineMotorPower();

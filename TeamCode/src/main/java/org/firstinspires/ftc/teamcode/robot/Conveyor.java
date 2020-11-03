@@ -14,15 +14,14 @@ import org.firstinspires.ftc.teamcode.robot.mapping.MotorMap;
  */
 public class Conveyor extends Mechanism {
     private CRServo conveyorServo;
-    private Boolean ringPresent = false;
 
     /***
      * Conveyor constructor
      * @param map the hardware map for the robot
      */
-    public Conveyor(HardwareMap map, Telemetry telemetry){
-        super(telemetry);
-        conveyorServo = map.get(CRServo.class, MotorMap.CONVEYOR_CRSERVO.getMotorName());
+    public Conveyor(HardwareMap map, Telemetry telemetry, Robot robot){
+        super(telemetry, robot);
+        this.conveyorServo = map.get(CRServo.class, MotorMap.CONVEYOR_CRSERVO.getMotorName());
     }
 
     /***
@@ -30,14 +29,22 @@ public class Conveyor extends Mechanism {
      * @param power the power with which to push the rings through the conveyor
      */
     public void convey(double power){
-        conveyorServo.setPower(power);
+        this.conveyorServo.setPower(power);
     }
 
     /***
      * Conveys rings from the intake to the shooting mechanism with a preset power
      */
     public void convey(){
-        convey(1);
+        this.conveyorServo.getController().pwmEnable();
+        this.convey(1);
+    }
+
+    /***
+     * Stops the conveyor
+     */
+    public void stop(){
+        this.conveyorServo.getController().pwmDisable();
     }
 
 }
