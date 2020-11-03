@@ -155,14 +155,14 @@ public abstract class DriveBase extends Mechanism {
      * Combines the strafe and rotate powers into drive power.
      */
     protected void combineMotorPower(){
-        for(String motor : this.strafeMotorPowers.keySet()){
+        for(String motor : this.getMotors().keySet()){
             this.setDrivePower(motor,
                     this.strafeMotorPowers.get(motor) + this.rotateMotorPowers.get(motor));
         }
     }
 
     /***
-     * Combine nmotor powers. @see DriveBase#combineMotorPower
+     * Combine motor powers. @see DriveBase#combineMotorPower
      */
     protected void byOurPowersCombined(){
         this.combineMotorPower();

@@ -33,17 +33,10 @@ public class XDrive extends DriveBase {
      */
     @Override
     public void drive() {
-        telemetry.addData("preCombination","");
-        telemetry.update();
         this.byOurPowersCombined();
-        telemetry.addData("postCombination","");
-        telemetry.update();
-
         this.motorNormalise();
-        telemetry.addData("postNorm","");
-        telemetry.update();
+//
         for(String motorName : this.getMotors().keySet()){
-            telemetry.addData("motorName", motorName);
             this.getMotor(motorName).setPower(this.getDrivePowers().get(motorName));
         }
     }
@@ -104,10 +97,10 @@ public class XDrive extends DriveBase {
      */
     @Override
     public void setRotation(RotationDirection direction, double power) {
-        this.setStrafeMotorPower(MotorMap.XDRIVE_FRONT_LEFT_DC.getMotorName(), power);
-        this.setStrafeMotorPower(MotorMap.XDRIVE_FRONT_RIGHT_DC.getMotorName(), power);
-        this.setStrafeMotorPower(MotorMap.XDRIVE_BACK_RIGHT_DC.getMotorName(), power);
-        this.setStrafeMotorPower(MotorMap.XDRIVE_BACK_LEFT_DC.getMotorName(), power);
+        this.setRotateMotorPower(MotorMap.XDRIVE_FRONT_LEFT_DC.getMotorName(), power);
+        this.setRotateMotorPower(MotorMap.XDRIVE_FRONT_RIGHT_DC.getMotorName(), power);
+        this.setRotateMotorPower(MotorMap.XDRIVE_BACK_RIGHT_DC.getMotorName(), power);
+        this.setRotateMotorPower(MotorMap.XDRIVE_BACK_LEFT_DC.getMotorName(), power);
     }
 
     /***
@@ -131,8 +124,7 @@ public class XDrive extends DriveBase {
 
         // calculate the max value
         for(String motor : this.getMotors().keySet()){
-            maxValue = maxValue < Math.abs(this.getDrivePowers().get(motor))
-                    ? Math.abs(this.getDrivePowers().get(motor)) : maxValue;
+            maxValue = Math.max(maxValue, Math.abs(this.getDrivePowers().get(motor)));
         }
 
         // only scale the value if it is above 1. This will be most of the time.

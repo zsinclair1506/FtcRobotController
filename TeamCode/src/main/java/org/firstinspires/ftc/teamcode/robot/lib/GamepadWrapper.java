@@ -14,15 +14,13 @@ import java.lang.reflect.Field;
 public class GamepadWrapper {
     private Gamepad gamepad;
     private Class gamepadClass = Gamepad.class; // used for reflection to get the fields
-    private Telemetry telemetry;
 
     /***
      * Constructor for the @GamepadWrapper
      * @param gamepad the gamepad that this wraps (around)
      */
-    public GamepadWrapper(Gamepad gamepad, Telemetry telemetry){
+    public GamepadWrapper(Gamepad gamepad){
         this.gamepad = gamepad;
-        this.telemetry = telemetry;
     }
 
     /***
@@ -108,6 +106,6 @@ public class GamepadWrapper {
      * @return the vector of the joystick
      */
     public Vector getStickVector(String stick){
-        return new Vector(this.getStickMagnitude(stick), this.getStickAngle(stick), telemetry);
+        return new Vector(this.getStickMagnitude(stick), this.getStickAngle(stick));
     }
 }

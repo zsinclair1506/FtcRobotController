@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.robot.BlueSkyRobot;
+import org.firstinspires.ftc.teamcode.robot.lib.Vector;
 import org.firstinspires.ftc.teamcode.robot.mapping.GamepadButtons;
 import org.firstinspires.ftc.teamcode.robot.lib.GamepadWrapper;
 
@@ -27,8 +28,8 @@ public class UltimateGoalOpMode extends OpMode
         telemetry.addData("beginInit","");
         telemetry.update();
         this.blueSky = new BlueSkyRobot(hardwareMap, telemetry);
-        this.driveGamepad = new GamepadWrapper(gamepad1, telemetry);
-        this.operatorGamepad = new GamepadWrapper(gamepad2, telemetry);
+        this.driveGamepad = new GamepadWrapper(gamepad1);
+        this.operatorGamepad = new GamepadWrapper(gamepad2);
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
@@ -60,8 +61,6 @@ public class UltimateGoalOpMode extends OpMode
      */
     @Override
     public void loop() {
-        telemetry.addData("preJoystick","");
-        telemetry.update();
         blueSky.setStrafe(driveGamepad.getStickVector(GamepadButtons.ROBOT_STRAFE.getButtonName()));
         blueSky.setRotate(driveGamepad.getStickVector(GamepadButtons.ROBOT_ROTATE.getButtonName()));
         blueSky.drive();
