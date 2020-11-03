@@ -3,13 +3,16 @@ package org.firstinspires.ftc.teamcode.robot;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.robot.lib.Interlock;
 
+import java.util.HashMap;
+
+
 /***
  *
  */
 public abstract class Mechanism {
     protected Telemetry telemetry;
     protected Robot robot;
-    protected Interlock interlock = new Interlock();
+    protected HashMap<String, Interlock> interlocks = new HashMap();
 
     /***
      * The constructor for any mechanism. This stores the robot and telemetry for debug and
@@ -23,10 +26,10 @@ public abstract class Mechanism {
     }
 
     /***
-     * Gets the interlock object for this mechanism.
-     * @return the interlock
+     * Gets the interlocks for this mechanism.
+     * @return the interlocks
      */
-    public Interlock getInterlock(){
-        return this.interlock;
+    public HashMap<String, Interlock> getInterlock(){
+        return this.interlocks;
     }
 }
