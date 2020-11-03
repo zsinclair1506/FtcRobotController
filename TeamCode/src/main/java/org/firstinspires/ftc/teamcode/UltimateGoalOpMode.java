@@ -61,18 +61,18 @@ public class UltimateGoalOpMode extends OpMode
      */
     @Override
     public void loop() {
-        blueSky.setStrafe(driveGamepad.getStickVector(GamepadButtons.ROBOT_STRAFE.getButtonName()));
-        blueSky.setRotate(driveGamepad.getStickVector(GamepadButtons.ROBOT_ROTATE.getButtonName()));
-        blueSky.drive();
-
+//        blueSky.setStrafe(driveGamepad.getStickVector(GamepadButtons.ROBOT_STRAFE.getButtonName()));
+//        blueSky.setRotate(driveGamepad.getStickVector(GamepadButtons.ROBOT_ROTATE.getButtonName()));
+//        blueSky.drive();
+//
 //        if(driveGamepad.getTrigger(GamepadButtons.SHOOTER_SHOOT.getButtonName()) > 0.5){
 //            blueSky.shooterShoot();
 //        }
-
+//
 //        if(driveGamepad.getButton(GamepadButtons.SHOOTER_FEED_ME.getButtonName())){
 //            blueSky.shooterFeedMe();
 //        }
-
+//
 //        if(operatorGamepad.getTrigger(GamepadButtons.CONVEYOR_RUN.getButtonName()) > 0.8){
 //            blueSky.conveyorRun();
 //        }
@@ -81,7 +81,7 @@ public class UltimateGoalOpMode extends OpMode
 //        }
     }
 
-    /*
+    /***
      * Code to run ONCE after the driver hits STOP
      */
     @Override
