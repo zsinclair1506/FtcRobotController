@@ -22,7 +22,7 @@ public class Shooter extends Mechanism {
         super(telemetry, robot);
         this.whackyStick = map.get(DcMotor.class, MotorMap.SHOOTER_DC.getMotorName());
         this.whackyStick.setDirection(DcMotorSimple.Direction.REVERSE);
-        this.getInterlock().registerInterlock(this.robot.getMechanism(MechanismMap.SHOOTER.getName()));
+//        this.getInterlock().registerInterlock(this.robot.getMechanism(MechanismMap.SHOOTER.getName()));
     }
 
     /***

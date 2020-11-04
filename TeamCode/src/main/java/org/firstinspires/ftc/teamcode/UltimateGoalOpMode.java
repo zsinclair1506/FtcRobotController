@@ -25,8 +25,6 @@ public class UltimateGoalOpMode extends OpMode
      */
     @Override
     public void init() {
-        telemetry.addData("beginInit","");
-        telemetry.update();
         this.blueSky = new BlueSkyRobot(hardwareMap, telemetry);
         this.driveGamepad = new GamepadWrapper(gamepad1);
         this.operatorGamepad = new GamepadWrapper(gamepad2);
@@ -49,11 +47,7 @@ public class UltimateGoalOpMode extends OpMode
      */
     @Override
     public void start() {
-        telemetry.addData("preReset","");
-        telemetry.update();
         runtime.reset();
-        telemetry.addData("postReset","");
-        telemetry.update();
     }
 
     /*

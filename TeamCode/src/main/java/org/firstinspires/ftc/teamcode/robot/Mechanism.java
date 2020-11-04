@@ -12,7 +12,7 @@ import java.util.HashMap;
 public abstract class Mechanism {
     protected Telemetry telemetry;
     protected Robot robot;
-    protected HashMap<String, Interlock> interlocks = new HashMap();
+    protected HashMap<String, Interlock> interlocks = new HashMap<>();
 
     /***
      * The constructor for any mechanism. This stores the robot and telemetry for debug and

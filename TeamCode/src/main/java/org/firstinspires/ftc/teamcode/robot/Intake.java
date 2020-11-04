@@ -101,6 +101,7 @@ public class Intake extends Mechanism {
      * Lifts the intake mechanism up from the floor
      */
     public void lift(){
+        this.vertServo.getController().pwmEnable();
         this.vertServo.setPower(VERT_UP);
     }
 
@@ -122,6 +123,7 @@ public class Intake extends Mechanism {
      * Lowers the intake mechanism to the floor
      */
     public void lower(){
+        this.vertServo.getController().pwmEnable();
         this.vertServo.setPower(-VERT_UP);
     }
 
@@ -130,7 +132,7 @@ public class Intake extends Mechanism {
      */
     public void stop(){
         this.servoThread.interrupt();
-        this.vertServo.setPower(0);
+        this.vertServo.getController().pwmDisable();
     }
 
     /***
@@ -148,7 +150,7 @@ public class Intake extends Mechanism {
      * Rotates the intake mechanism to a set location
      * @param position the position to rotate the intake to (INTAKE or DROP_OFF)
      */
-    public void rotate(IntakePosition position){
+    private void rotate(IntakePosition position){
         this.rotationServo.setPosition(position.getPosition());
         this.position = position;
     }
@@ -157,11 +159,19 @@ public class Intake extends Mechanism {
      * Rotate to the other position for the intake. (INTAKE or DROP_OFF)
      */
     public void rotate(){
-        if (position == IntakePosition.INTAKE){
-            rotate(IntakePosition.DROP_OFF);
+        if (this.position == IntakePosition.INTAKE){
+            this.rotate(IntakePosition.DROP_OFF);
         }
         else{
-            rotate(IntakePosition.INTAKE);
+            this.rotate(IntakePosition.INTAKE);
         }
+    }
+
+    /***
+     * Get the current position of the intake.
+     * @return the current position of the intake
+     */
+    public IntakePosition getPosition() {
+        return this.position;
     }
 }
