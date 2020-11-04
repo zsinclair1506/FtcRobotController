@@ -5,11 +5,12 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.robot.BlueSkyRobot;
-import org.firstinspires.ftc.teamcode.robot.lib.Vector;
 import org.firstinspires.ftc.teamcode.robot.mapping.GamepadButtons;
 import org.firstinspires.ftc.teamcode.robot.lib.GamepadWrapper;
 
-@TeleOp(name="Whack Motor Test", group="Robot Test")
+import java.util.HashMap;
+
+@TeleOp(name="BlueSky Test", group="Ultimate Goal")
 public class UltimateGoalOpMode extends OpMode
 {
     // Declare OpMode members.
@@ -17,7 +18,8 @@ public class UltimateGoalOpMode extends OpMode
     private BlueSkyRobot blueSky;
     private GamepadWrapper driveGamepad, operatorGamepad;
     private ElapsedTime debounceTime = new ElapsedTime();
-    private boolean debounce = false;
+    private HashMap<GamepadButtons, ElapsedTime> debounceTimers = new HashMap<>();
+    private HashMap<GamepadButtons, Boolean> debounce = new HashMap<>();
     private double debounceTimeMS = 250;
 
     /*
@@ -29,10 +31,20 @@ public class UltimateGoalOpMode extends OpMode
         this.driveGamepad = new GamepadWrapper(gamepad1);
         this.operatorGamepad = new GamepadWrapper(gamepad2);
 
+        this.debounceTimers.put(GamepadButtons.INTAKE_SWITCH_POSITIONS, new ElapsedTime());
+        this.debounceTimers.put(GamepadButtons.INTAKE_CYCLE, new ElapsedTime());
+        this.debounceTimers.put(GamepadButtons.INTAKE_STOP, new ElapsedTime());
+        this.debounceTimers.put(GamepadButtons.SHOOTER_FEED_ME, new ElapsedTime());
+        this.debounceTimers.put(GamepadButtons.SHOOTER_SHOOT, new ElapsedTime());
+        this.debounce.put(GamepadButtons.INTAKE_SWITCH_POSITIONS, false);
+        this.debounce.put(GamepadButtons.INTAKE_CYCLE, false);
+        this.debounce.put(GamepadButtons.INTAKE_STOP, false);
+        this.debounce.put(GamepadButtons.SHOOTER_FEED_ME, false);
+        this.debounce.put(GamepadButtons.SHOOTER_SHOOT, false);
+
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
         telemetry.update();
-
     }
 
     /*
@@ -55,17 +67,27 @@ public class UltimateGoalOpMode extends OpMode
      */
     @Override
     public void loop() {
-//        blueSky.setStrafe(driveGamepad.getStickVector(GamepadButtons.ROBOT_STRAFE.getButtonName()));
-//        blueSky.setRotate(driveGamepad.getStickVector(GamepadButtons.ROBOT_ROTATE.getButtonName()));
-//        blueSky.drive();
+        blueSky.setStrafe(driveGamepad.getStickVector(GamepadButtons.ROBOT_STRAFE.getButtonName()));
+        blueSky.setRotate(driveGamepad.getStickVector(GamepadButtons.ROBOT_ROTATE.getButtonName()));
+        blueSky.drive();
 //
-//        if(driveGamepad.getTrigger(GamepadButtons.SHOOTER_SHOOT.getButtonName()) > 0.5){
-//            blueSky.shooterShoot();
-//        }
-//
-//        if(driveGamepad.getButton(GamepadButtons.SHOOTER_FEED_ME.getButtonName())){
-//            blueSky.shooterFeedMe();
-//        }
+        if(driveGamepad.getTrigger(GamepadButtons.SHOOTER_SHOOT.getButtonName()) > 0.5){
+            // debounce
+            if(!this.debounce.get(GamepadButtons.SHOOTER_SHOOT)){
+                this.debounce.put(GamepadButtons.SHOOTER_SHOOT, true);
+                debounceTime.reset();
+                blueSky.shooterShoot();
+            }
+        }
+
+        if(driveGamepad.getButton(GamepadButtons.SHOOTER_FEED_ME.getButtonName())){
+            // debounce
+            if(!this.debounce.get(GamepadButtons.SHOOTER_FEED_ME)){
+                this.debounce.put(GamepadButtons.SHOOTER_FEED_ME, true);
+                debounceTime.reset();
+                blueSky.shooterFeedMe();
+            }
+        }
 
         if(operatorGamepad.getTrigger(GamepadButtons.CONVEYOR_RUN.getButtonName()) > 0.8){
             blueSky.conveyorRun();
@@ -93,15 +115,35 @@ public class UltimateGoalOpMode extends OpMode
 
         if(operatorGamepad.getTrigger(GamepadButtons.INTAKE_SWITCH_POSITIONS.getButtonName()) > 0.8){
             // debounce
-            if(!this.debounce){
-                this.debounce = true;
+            if(!this.debounce.get(GamepadButtons.INTAKE_SWITCH_POSITIONS)){
+                this.debounce.put(GamepadButtons.INTAKE_SWITCH_POSITIONS, true);
                 debounceTime.reset();
                 blueSky.intakeRotate();
             }
         }
 
-        if(debounceTime.milliseconds() > debounceTimeMS){
-            this.debounce = false;
+        if(operatorGamepad.getButton(GamepadButtons.INTAKE_CYCLE.getButtonName())){
+            // debounce
+            if(!this.debounce.get(GamepadButtons.INTAKE_CYCLE)){
+                this.debounce.put(GamepadButtons.INTAKE_CYCLE, true);
+                debounceTime.reset();
+                blueSky.intakeCycle();
+            }
+        }
+
+        if(operatorGamepad.getButton(GamepadButtons.INTAKE_STOP.getButtonName())){
+            // debounce
+            if(!this.debounce.get(GamepadButtons.INTAKE_STOP)){
+                this.debounce.put(GamepadButtons.INTAKE_STOP, true);
+                debounceTime.reset();
+                blueSky.intakeCancel();
+            }
+        }
+
+        for(GamepadButtons button : this.debounce.keySet()) {
+            if (debounceTimers.get(button).milliseconds() > debounceTimeMS) {
+                this.debounce.put(button, false);
+            }
         }
     }
 

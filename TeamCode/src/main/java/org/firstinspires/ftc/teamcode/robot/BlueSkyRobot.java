@@ -192,4 +192,8 @@ public class BlueSkyRobot extends Robot {
     public void conveyorStop(){
         ((Conveyor)this.mechanisms.get(MechanismMap.CONVEYOR.getName())).stop();
     }
+
+    public void intakeCancel(){
+        ((Intake)this.getMechanism(MechanismMap.INTAKE.getName())).cancel();
+    }
 }

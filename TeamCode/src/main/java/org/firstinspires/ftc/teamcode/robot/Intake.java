@@ -17,21 +17,22 @@ public class Intake extends Mechanism {
     private Servo rotationServo;
     private CRServo vertServo;
     private Servo grabServo;
-    private CRServoThread servoThread = new CRServoThread(vertServo, true);
-    private IntakePosition position = IntakePosition.INTAKE;
+    private CRServoThread servoThread;
+    private IntakePosition rotation = IntakePosition.INTAKE;
     private ElapsedTime servoRunTime = new ElapsedTime();
     private double servoUpTime = 0 ;
     private double servoDownTime = 0;
     private boolean servoLifting = false;
     private boolean servoLowering = false;
+    private boolean top = true;
 
-    protected final int DESIRED_UP_TIME_MS = 1000;
-    protected final int DESIRED_DOWN_TIME_MS = 750;
+    protected final int DESIRED_UP_TIME_MS = 4200;
+    protected final int DESIRED_DOWN_TIME_MS = 3900;
     private final double VERT_UP = -0.6; // Servo Power
     private final double REST_POWER = -0.1; // rest power
 
     public enum IntakePosition {
-        DROP_OFF(0.3),
+        DROP_OFF(0.1),
         INTAKE(0.6),
         GRAB_POSITION(0.1),
         CLOSED_POSITION(0.25),
@@ -57,6 +58,7 @@ public class Intake extends Mechanism {
         this.rotationServo = map.get(Servo.class, MotorMap.INTAKE_ROTATE_SERVO.getMotorName());
         this.vertServo = map.get(CRServo.class, MotorMap.INTAKE_UP_CRSERVO.getMotorName());
         this.grabServo = map.get(Servo.class, MotorMap.INTAKE_GRAB_SERVO.getMotorName());
+        this.servoThread = new CRServoThread(vertServo, true);
     }
 
     /***
@@ -68,16 +70,19 @@ public class Intake extends Mechanism {
     private class CRServoThread extends Thread {
         // As a note, I'm assuming Telemetry is not thread safe so not using it here
         private CRServo crservo;
-        private final double SERVO_POWER = 0.7;
+        private final double SERVO_POWER = 1;
         private ElapsedTime runTime = new ElapsedTime();
         private boolean down = true;
 
         /***
          * Constructor for the thread
          * @param crservo the servo to run asynchronously
+         * @param down the direction of travel, true is down
+         *
          */
         public CRServoThread (CRServo crservo, boolean down){
             this.crservo = crservo;
+            this.down = down;
         }
 
         /***
@@ -107,11 +112,15 @@ public class Intake extends Mechanism {
                 do{
                     this.crservo.setPower(down ? this.SERVO_POWER : -this.SERVO_POWER);
                     Thread.sleep(100);
-                } while (this.runTime.milliseconds() < DESIRED_UP_TIME_MS);
+                } while
+                (this.runTime.milliseconds() < (down ? DESIRED_DOWN_TIME_MS : DESIRED_UP_TIME_MS));
 
-                this.crservo.setPower(REST_POWER);
             } catch (InterruptedException e) {
                 telemetry.addData("Intake Lift Interrupted. Runtime: ", this.runTime.milliseconds());
+            }
+            finally{
+                this.crservo.setPower(REST_POWER);
+                top = !top;
             }
         }
 
@@ -128,36 +137,40 @@ public class Intake extends Mechanism {
      * Lifts the intake mechanism up from the floor
      */
     public void lift(){
-        this.vertServo.setPower(VERT_UP);
-//        if(!this.servoLifting){
-//            if(this.servoLowering){
-//                this.servoDownTime += this.servoRunTime.milliseconds();
+        if(!servoThread.isRunning()) {
+            this.vertServo.setPower(VERT_UP);
+//            if(!this.servoLifting){
+//                if(this.servoLowering){
+//                    this.servoDownTime += this.servoRunTime.milliseconds();
+//                }
+//                this.servoRunTime.reset();
+//                this.servoLifting = true;
+//                this.servoLowering = false;
+//                this.vertServo.getController().pwmEnable();
+//                this.vertServo.setPower(VERT_UP);
 //            }
-//            this.servoRunTime.reset();
-//            this.servoLifting = true;
-//            this.servoLowering = false;
-//            this.vertServo.getController().pwmEnable();
-//            this.vertServo.setPower(VERT_UP);
-//        }
+        }
     }
 
     /***
      * Lowers the intake mechanism to the floor
      */
     public void lower(){
-        this.vertServo.setPower(-VERT_UP);
-//        if(this.getPosition() != IntakePosition.DROP_OFF){
-//            if(!this.servoLowering){
-//                if(this.servoLifting){
-//                    this.servoUpTime += this.servoRunTime.milliseconds();
+        if(!servoThread.isRunning()) {
+            this.vertServo.setPower(-VERT_UP);
+//            if(this.getPosition() != IntakePosition.DROP_OFF){
+//                if(!this.servoLowering){
+//                    if(this.servoLifting){
+//                        this.servoUpTime += this.servoRunTime.milliseconds();
+//                    }
+//                    this.servoRunTime.reset();
+//                    this.servoLowering = true;
+//                    this.servoLifting = false;
+//                    this.vertServo.getController().pwmEnable();
+//                    this.vertServo.setPower(-VERT_UP);
 //                }
-//                this.servoRunTime.reset();
-//                this.servoLowering = true;
-//                this.servoLifting = false;
-//                this.vertServo.getController().pwmEnable();
-//                this.vertServo.setPower(-VERT_UP);
 //            }
-//        }
+        }
     }
 
     /***
@@ -178,27 +191,34 @@ public class Intake extends Mechanism {
      * Stop all motion on the intake mechanism
      */
     public void stop(){
-        this.vertServo.setPower(REST_POWER);
-//        this.vertServo.getController().pwmDisable();
-//        if(servoLifting){
-//            this.servoUpTime += this.servoRunTime.milliseconds();
-//            this.servoLifting = false;
-//        }
-//        else if(servoLowering){
-//            this.servoDownTime += this.servoRunTime.milliseconds();
-//            this.servoLowering = false;
-//        }
+        if(!servoThread.isRunning()) {
+            this.vertServo.setPower(REST_POWER);
+//            this.vertServo.getController().pwmDisable();
+//            if(servoLifting){
+//                this.servoUpTime += this.servoRunTime.milliseconds();
+//                this.servoLifting = false;
+//            }
+//            else if(servoLowering){
+//                this.servoDownTime += this.servoRunTime.milliseconds();
+//                this.servoLowering = false;
+//            }
+        }
+    }
+
+    public void cancel(){
+        if(!servoThread.isRunning()) {
+            this.servoThread.interrupt();
+        }
     }
 
     /***
      * Go through the actions to drop a ring off at the hopper
      */
     public void dropOff(){
-        /*
-        Will likely have to be a thread since this series of actions will take time and we want
-        to continue to move around and do other things. Will have to check for thread running in
-        each of the other methods to make sure we're not accessing data concurrently.
-         */
+        if(!this.servoThread.isRunning() && this.getRotation() == IntakePosition.INTAKE) {
+            this.servoThread.setDirection(top);
+            this.servoThread.run();
+        }
     }
 
     /***
@@ -207,7 +227,7 @@ public class Intake extends Mechanism {
      */
     private void rotate(IntakePosition position){
         this.rotationServo.setPosition(position.getPosition());
-        this.position = position;
+        this.rotation = position;
         this.telemetry.addData("position", position.getPosition());
     }
 
@@ -215,11 +235,13 @@ public class Intake extends Mechanism {
      * Rotate to the other position for the intake. (INTAKE or DROP_OFF)
      */
     public void rotate(){
-        if (this.position == IntakePosition.INTAKE){
-            this.rotate(IntakePosition.DROP_OFF);
-        }
-        else{
-            this.rotate(IntakePosition.INTAKE);
+        if(!servoThread.isRunning()){
+            if (this.rotation == IntakePosition.INTAKE){
+                this.rotate(IntakePosition.DROP_OFF);
+            }
+            else{
+                this.rotate(IntakePosition.INTAKE);
+            }
         }
     }
 
@@ -227,7 +249,7 @@ public class Intake extends Mechanism {
      * Get the current position of the intake.
      * @return the current position of the intake
      */
-    public IntakePosition getPosition() {
-        return this.position;
+    public IntakePosition getRotation() {
+        return this.rotation;
     }
 }
