@@ -16,9 +16,9 @@ public class UltimateGoalOpMode extends OpMode
     private ElapsedTime runtime = new ElapsedTime();
     private BlueSkyRobot blueSky;
     private GamepadWrapper driveGamepad, operatorGamepad;
-
-    // Set to print telemetry data to the phone
-    private boolean debug = false;
+    private ElapsedTime debounceTime = new ElapsedTime();
+    private boolean debounce = false;
+    private double debounceTimeMS = 250;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -66,13 +66,13 @@ public class UltimateGoalOpMode extends OpMode
 //        if(driveGamepad.getButton(GamepadButtons.SHOOTER_FEED_ME.getButtonName())){
 //            blueSky.shooterFeedMe();
 //        }
-//
-//        if(operatorGamepad.getTrigger(GamepadButtons.CONVEYOR_RUN.getButtonName()) > 0.8){
-//            blueSky.conveyorRun();
-//        }
-//        else if(operatorGamepad.getTrigger(GamepadButtons.CONVEYOR_RUN.getButtonName()) < 0.8){
-//            blueSky.conveyorStop();
-//        }
+
+        if(operatorGamepad.getTrigger(GamepadButtons.CONVEYOR_RUN.getButtonName()) > 0.8){
+            blueSky.conveyorRun();
+        }
+        else if(operatorGamepad.getTrigger(GamepadButtons.CONVEYOR_RUN.getButtonName()) < 0.8){
+            blueSky.conveyorStop();
+        }
 
         if(operatorGamepad.getButton(GamepadButtons.INTAKE_LIFT.getButtonName())){
             blueSky.intakeLift();
@@ -84,15 +84,24 @@ public class UltimateGoalOpMode extends OpMode
             blueSky.intakeStop();
         }
 
-        if(operatorGamepad.getButton((GamepadButtons.INTAKE_GRAB.getButtonName()))){
+        if(operatorGamepad.getButton(GamepadButtons.INTAKE_GRAB.getButtonName())){
             blueSky.intakeGrab();
         }
-        else if(operatorGamepad.getButton((GamepadButtons.INTAKE_RELEASE.getButtonName()))){
+        else if(operatorGamepad.getButton(GamepadButtons.INTAKE_RELEASE.getButtonName())){
             blueSky.intakeRelease();
         }
 
-        if(operatorGamepad.getButton(GamepadButtons.INTAKE_SWITCH_POSITIONS.getButtonName())){
-            blueSky.intakeRotate();
+        if(operatorGamepad.getTrigger(GamepadButtons.INTAKE_SWITCH_POSITIONS.getButtonName()) > 0.8){
+            // debounce
+            if(!this.debounce){
+                this.debounce = true;
+                debounceTime.reset();
+                blueSky.intakeRotate();
+            }
+        }
+
+        if(debounceTime.milliseconds() > debounceTimeMS){
+            this.debounce = false;
         }
     }
 
