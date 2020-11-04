@@ -73,6 +73,27 @@ public class UltimateGoalOpMode extends OpMode
 //        else if(operatorGamepad.getTrigger(GamepadButtons.CONVEYOR_RUN.getButtonName()) < 0.8){
 //            blueSky.conveyorStop();
 //        }
+
+        if(operatorGamepad.getButton(GamepadButtons.INTAKE_LIFT.getButtonName())){
+            blueSky.intakeLift();
+        }
+        else if(operatorGamepad.getButton(GamepadButtons.INTAKE_LOWER.getButtonName())){
+            blueSky.intakeLower();
+        }
+        else{
+            blueSky.intakeStop();
+        }
+
+        if(operatorGamepad.getButton((GamepadButtons.INTAKE_GRAB.getButtonName()))){
+            blueSky.intakeGrab();
+        }
+        else if(operatorGamepad.getButton((GamepadButtons.INTAKE_RELEASE.getButtonName()))){
+            blueSky.intakeRelease();
+        }
+
+        if(operatorGamepad.getButton(GamepadButtons.INTAKE_SWITCH_POSITIONS.getButtonName())){
+            blueSky.intakeRotate();
+        }
     }
 
     /***
