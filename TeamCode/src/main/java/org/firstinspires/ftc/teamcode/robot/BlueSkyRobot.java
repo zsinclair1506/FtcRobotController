@@ -25,8 +25,7 @@ public class BlueSkyRobot extends Robot {
 //                new WobbleArm(map, telemetry, this));
         this.addMechanism(MechanismMap.CONVEYOR.getName(),
                 new Conveyor(map, telemetry, this));
-//        this.addMechanism(MechanismMap.INTAKE.getName(),
-//                new Intake(map, telemetry, this));
+        this.addMechanism(MechanismMap.INTAKE.getName(), new Intake(map, telemetry, this));
         this.addMechanism(MechanismMap.SHOOTER.getName(), new Shooter(map, telemetry, this));
     }
 
