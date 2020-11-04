@@ -12,6 +12,7 @@ import org.firstinspires.ftc.teamcode.robot.mapping.MotorMap;
 public class Loader extends Mechanism {
     private Servo loaderServo;
     private static double LOWER_POSITION = 0;
+    private static double UPPER_POSITION = 1;
 
     /***
      * Loader constructor
@@ -40,6 +41,6 @@ public class Loader extends Mechanism {
      * Raise the loader from loading height to shooting angle/height
      */
     public void raise(){
-        this.loaderServo.setPosition(this.LOWER_POSITION);
+        this.loaderServo.setPosition(this.UPPER_POSITION);
     }
 }

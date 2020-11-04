@@ -14,6 +14,7 @@ import org.firstinspires.ftc.teamcode.robot.mapping.MotorMap;
  */
 public class Conveyor extends Mechanism {
     private CRServo conveyorServo;
+    private final double REST_POWER = -0.05;
 
     /***
      * Conveyor constructor
@@ -36,7 +37,6 @@ public class Conveyor extends Mechanism {
      * Conveys rings from the intake to the shooting mechanism with a preset power
      */
     public void convey(){
-        this.conveyorServo.getController().pwmEnable();
         this.convey(1);
     }
 
@@ -44,7 +44,7 @@ public class Conveyor extends Mechanism {
      * Stops the conveyor
      */
     public void stop(){
-        this.conveyorServo.getController().pwmDisable();
+        this.convey(REST_POWER);
     }
 
 }
