@@ -17,7 +17,7 @@ public class Intake extends Mechanism {
     private Servo rotationServo;
     private CRServo vertServo;
     private Servo grabServo;
-    private CRServoThread servoThread = new CRServoThread(vertServo, VERT_UP);
+    private CRServoThread servoThread = new CRServoThread(vertServo, true);
     private IntakePosition position = IntakePosition.INTAKE;
     private ElapsedTime servoRunTime = new ElapsedTime();
     private double servoUpTime = 0 ;
@@ -25,14 +25,16 @@ public class Intake extends Mechanism {
     private boolean servoLifting = false;
     private boolean servoLowering = false;
 
-    protected static int DESIRED_RUN_TIME_MS = 1000;
-    private static double VERT_UP = 0.8;
-    private static double GRAB_POSITION = 0.5;
-    private static double CLOSED_POSITION = 0.2;
+    protected final int DESIRED_UP_TIME_MS = 1000;
+    protected final int DESIRED_DOWN_TIME_MS = 750;
+    private final double VERT_UP = -0.6; // Servo Power
+    private final double REST_POWER = -0.1; // rest power
 
     public enum IntakePosition {
-        DROP_OFF(0.9),
-        INTAKE(0.5),
+        DROP_OFF(0.3),
+        INTAKE(0.6),
+        GRAB_POSITION(0.1),
+        CLOSED_POSITION(0.25),
         ;
 
         private final double position;
@@ -46,6 +48,16 @@ public class Intake extends Mechanism {
         }
     }
 
+    /***
+     * Intake constructor
+     * @param map the hardware map of the robot
+     */
+    public Intake(HardwareMap map, Telemetry telemetry, Robot robot) {
+        super(telemetry, robot);
+        this.rotationServo = map.get(Servo.class, MotorMap.INTAKE_ROTATE_SERVO.getMotorName());
+        this.vertServo = map.get(CRServo.class, MotorMap.INTAKE_UP_CRSERVO.getMotorName());
+        this.grabServo = map.get(Servo.class, MotorMap.INTAKE_GRAB_SERVO.getMotorName());
+    }
 
     /***
      * Class to handle running a continuous servo asynchronously. For moving the intake to the top
@@ -56,16 +68,16 @@ public class Intake extends Mechanism {
     private class CRServoThread extends Thread {
         // As a note, I'm assuming Telemetry is not thread safe so not using it here
         private CRServo crservo;
-        private double servoPower;
+        private final double SERVO_POWER = 0.7;
         private ElapsedTime runTime = new ElapsedTime();
+        private boolean down = true;
 
         /***
          * Constructor for the thread
          * @param crservo the servo to run asynchronously
          */
-        public CRServoThread (CRServo crservo, double power){
+        public CRServoThread (CRServo crservo, boolean down){
             this.crservo = crservo;
-            this.servoPower = power;
         }
 
         /***
@@ -73,6 +85,7 @@ public class Intake extends Mechanism {
          */
         private void init(){
             this.runTime.reset();
+            this.crservo.getController().pwmEnable();
         }
 
         /***
@@ -92,42 +105,29 @@ public class Intake extends Mechanism {
                 this.init();
 
                 do{
-                    this.crservo.setPower(this.servoPower);
-                } while (this.runTime.milliseconds() < DESIRED_RUN_TIME_MS);
-
-                this.crservo.setPower(0);
+                    this.crservo.setPower(down ? this.SERVO_POWER : -this.SERVO_POWER);
                     Thread.sleep(100);
+                } while (this.runTime.milliseconds() < DESIRED_UP_TIME_MS);
+
+                this.crservo.setPower(REST_POWER);
             } catch (InterruptedException e) {
                 telemetry.addData("Intake Lift Interrupted. Runtime: ", this.runTime.milliseconds());
             }
         }
 
         /***
-         * Sets the servo power to inpower or 1, whichever is smaller
-         * @param inPower the power to set the shooter motor to run at
+         * Sets the servo direction for the thread
+         * @param down whether it should go down or not
          */
-        public void setPower(double inPower) {
-            int sign = inPower < 1 ? -1 : 1;
-            this.servoPower = sign * (Math.abs(inPower) > 1 ? 1 : Math.abs(inPower));
+        public void setDirection(boolean down) {
+            this.down = down;
         }
-    }
-
-    /***
-     * Intake constructor
-     * @param map the hardware map of the robot
-     */
-    public Intake(HardwareMap map, Telemetry telemetry, Robot robot) {
-        super(telemetry, robot);
-        this.rotationServo = map.get(Servo.class, MotorMap.INTAKE_ROTATE_SERVO.getMotorName());
-        this.vertServo = map.get(CRServo.class, MotorMap.INTAKE_UP_CRSERVO.getMotorName());
-        this.grabServo = map.get(Servo.class, MotorMap.INTAKE_GRAB_SERVO.getMotorName());
     }
 
     /***
      * Lifts the intake mechanism up from the floor
      */
     public void lift(){
-        this.vertServo.getController().pwmEnable();
         this.vertServo.setPower(VERT_UP);
 //        if(!this.servoLifting){
 //            if(this.servoLowering){
@@ -145,7 +145,6 @@ public class Intake extends Mechanism {
      * Lowers the intake mechanism to the floor
      */
     public void lower(){
-        this.vertServo.getController().pwmEnable();
         this.vertServo.setPower(-VERT_UP);
 //        if(this.getPosition() != IntakePosition.DROP_OFF){
 //            if(!this.servoLowering){
@@ -165,22 +164,22 @@ public class Intake extends Mechanism {
      * Causes the intake mechanism to grab a ring
      */
     public void grab(){
-        this.grabServo.setPosition(GRAB_POSITION);
+        this.grabServo.setPosition(IntakePosition.GRAB_POSITION.getPosition());
     }
 
     /***
      * Causes the intake mechanism to release a ring
      */
     public void release(){
-        this.grabServo.setPosition(CLOSED_POSITION);
+        this.grabServo.setPosition(IntakePosition.CLOSED_POSITION.getPosition());
     }
 
     /***
      * Stop all motion on the intake mechanism
      */
     public void stop(){
-        this.servoThread.interrupt();
-        this.vertServo.getController().pwmDisable();
+        this.vertServo.setPower(REST_POWER);
+//        this.vertServo.getController().pwmDisable();
 //        if(servoLifting){
 //            this.servoUpTime += this.servoRunTime.milliseconds();
 //            this.servoLifting = false;
@@ -209,6 +208,7 @@ public class Intake extends Mechanism {
     private void rotate(IntakePosition position){
         this.rotationServo.setPosition(position.getPosition());
         this.position = position;
+        this.telemetry.addData("position", position.getPosition());
     }
 
     /***
