@@ -20,11 +20,17 @@ public class Intake extends Mechanism {
     private Servo grabServo;
     private CRServoThread servoThread = new CRServoThread(vertServo, VERT_UP);
     private IntakePosition position = IntakePosition.INTAKE;
+    private ElapsedTime servoRunTime = new ElapsedTime();
+    private double servoUpTime = 0 ;
+    private double servoDownTime = 0;
+    private boolean servoLifting = false;
+    private boolean servoLowering = false;
 
     protected static int DESIRED_RUN_TIME_MS = 1000;
     private static double VERT_UP = 0.8;
     private static double GRAB_POSITION = 0.5;
     private static double CLOSED_POSITION = 0.2;
+
 
     /***
      * Class to handle running a continuous servo asynchronously. For moving the intake to the top
@@ -36,7 +42,7 @@ public class Intake extends Mechanism {
         // As a note, I'm assuming Telemetry is not thread safe so not using it here
         private CRServo crservo;
         private double servoPower;
-        private ElapsedTime runTume = new ElapsedTime();
+        private ElapsedTime runTime = new ElapsedTime();
 
         /***
          * Constructor for the thread
@@ -51,7 +57,7 @@ public class Intake extends Mechanism {
          * Initialises servo parameters
          */
         private void init(){
-            this.runTume.reset();
+            this.runTime.reset();
         }
 
         /***
@@ -67,13 +73,18 @@ public class Intake extends Mechanism {
          */
         @Override
         public void run() {
-            this.init();
+            try {
+                this.init();
 
-            do{
-                this.crservo.setPower(this.servoPower);
-            } while (this.runTume.milliseconds() < DESIRED_RUN_TIME_MS);
+                do{
+                    this.crservo.setPower(this.servoPower);
+                } while (this.runTime.milliseconds() < DESIRED_RUN_TIME_MS);
 
-            this.crservo.setPower(0);
+                this.crservo.setPower(0);
+                    Thread.sleep(100);
+            } catch (InterruptedException e) {
+                telemetry.addData("Intake Lift Interrupted. Runtime: ", this.runTime.milliseconds());
+            }
         }
 
         /***
@@ -103,6 +114,36 @@ public class Intake extends Mechanism {
     public void lift(){
         this.vertServo.getController().pwmEnable();
         this.vertServo.setPower(VERT_UP);
+//        if(!this.servoLifting){
+//            if(this.servoLowering){
+//                this.servoDownTime += this.servoRunTime.milliseconds();
+//            }
+//            this.servoRunTime.reset();
+//            this.servoLifting = true;
+//            this.servoLowering = false;
+//            this.vertServo.getController().pwmEnable();
+//            this.vertServo.setPower(VERT_UP);
+//        }
+    }
+
+    /***
+     * Lowers the intake mechanism to the floor
+     */
+    public void lower(){
+        this.vertServo.getController().pwmEnable();
+        this.vertServo.setPower(-VERT_UP);
+//        if(this.getPosition() != IntakePosition.DROP_OFF){
+//            if(!this.servoLowering){
+//                if(this.servoLifting){
+//                    this.servoUpTime += this.servoRunTime.milliseconds();
+//                }
+//                this.servoRunTime.reset();
+//                this.servoLowering = true;
+//                this.servoLifting = false;
+//                this.vertServo.getController().pwmEnable();
+//                this.vertServo.setPower(-VERT_UP);
+//            }
+//        }
     }
 
     /***
@@ -120,19 +161,19 @@ public class Intake extends Mechanism {
     }
 
     /***
-     * Lowers the intake mechanism to the floor
-     */
-    public void lower(){
-        this.vertServo.getController().pwmEnable();
-        this.vertServo.setPower(-VERT_UP);
-    }
-
-    /***
      * Stop all motion on the intake mechanism
      */
     public void stop(){
         this.servoThread.interrupt();
         this.vertServo.getController().pwmDisable();
+//        if(servoLifting){
+//            this.servoUpTime += this.servoRunTime.milliseconds();
+//            this.servoLifting = false;
+//        }
+//        else if(servoLowering){
+//            this.servoDownTime += this.servoRunTime.milliseconds();
+//            this.servoLowering = false;
+//        }
     }
 
     /***
