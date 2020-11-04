@@ -174,4 +174,8 @@ public class Intake extends Mechanism {
     public IntakePosition getPosition() {
         return this.position;
     }
+
+    public void updateInterlocks(){
+
+    }
 }

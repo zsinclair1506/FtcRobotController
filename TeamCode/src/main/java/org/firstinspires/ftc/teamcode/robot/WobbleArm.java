@@ -129,4 +129,7 @@ public class WobbleArm extends Mechanism {
 
     }
 
+    public void updateInterlocks(){
+
+    }
 }

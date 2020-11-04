@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.robot;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.robot.lib.Interlock;
+import org.firstinspires.ftc.teamcode.robot.mapping.InterlockMap;
 
 import java.util.HashMap;
 
@@ -26,10 +27,12 @@ public abstract class Mechanism {
     }
 
     /***
-     * Gets the interlocks for this mechanism.
-     * @return the interlocks
+     * Gets the interlock for this mechanism.
+     * @return the interlock
      */
-    public HashMap<String, Interlock> getInterlock(){
-        return this.interlocks;
+    public Interlock getInterlock(InterlockMap.Actions key){
+        return this.interlocks.get(key);
     }
+
+    public abstract void updateInterlocks();
 }

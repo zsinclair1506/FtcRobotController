@@ -83,4 +83,8 @@ public class Gripper extends Mechanism {
     public void moveToPos(GripperPosition position){
 
     }
+
+    public void updateInterlocks(){
+
+    }
 }

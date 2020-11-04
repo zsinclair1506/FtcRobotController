@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.robot.lib;
 
+import org.firstinspires.ftc.teamcode.robot.mapping.InterlockMap;
+
 import java.util.HashMap;
 
 /***
@@ -40,9 +42,9 @@ public class Interlock {
     /***
      * Set the value for an interlock
      * @param lockObject the object to use as the lock
-     * @param lock the state of the lock
+     * @param lock the state of the lock, true for locked
      */
-    public void setInterlock(Object lockObject, boolean lock){
+    public void setInterlock(InterlockMap.Blockers lockObject, boolean lock){
         this.interlocks.put(lockObject, lock);
     }
 }

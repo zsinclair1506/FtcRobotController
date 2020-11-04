@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.robot.mapping.InterlockMap;
 import org.firstinspires.ftc.teamcode.robot.mapping.MechanismMap;
 import org.firstinspires.ftc.teamcode.robot.mapping.MotorMap;
 
@@ -22,7 +23,6 @@ public class Shooter extends Mechanism {
         super(telemetry, robot);
         this.whackyStick = map.get(DcMotor.class, MotorMap.SHOOTER_DC.getMotorName());
         this.whackyStick.setDirection(DcMotorSimple.Direction.REVERSE);
-//        this.getInterlock().registerInterlock(this.robot.getMechanism(MechanismMap.SHOOTER.getName()));
     }
 
     /***
@@ -49,6 +49,10 @@ public class Shooter extends Mechanism {
      * Loading the ring into the shooting mechanism
      */
     public void feedMe(){
+
+    }
+
+    public void updateInterlocks(){
 
     }
 }

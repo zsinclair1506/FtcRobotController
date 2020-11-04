@@ -60,4 +60,9 @@ public abstract class Robot {
         return this.driveBase;
     }
 
+    public void updateInterlocks(){
+        for(Mechanism mechanism : this.mechanisms.values()){
+            mechanism.updateInterlocks();
+        }
+    }
 }

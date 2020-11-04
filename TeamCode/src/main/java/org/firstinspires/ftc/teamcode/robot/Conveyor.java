@@ -47,4 +47,7 @@ public class Conveyor extends Mechanism {
         this.conveyorServo.getController().pwmDisable();
     }
 
+    public void updateInterlocks(){
+
+    }
 }

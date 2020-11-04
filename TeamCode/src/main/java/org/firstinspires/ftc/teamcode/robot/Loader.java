@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.robot.mapping.InterlockMap;
+import org.firstinspires.ftc.teamcode.robot.mapping.MechanismMap;
 import org.firstinspires.ftc.teamcode.robot.mapping.MotorMap;
 
 /***
@@ -40,6 +42,12 @@ public class Loader extends Mechanism {
      * Raise the loader from loading height to shooting angle/height
      */
     public void raise(){
-        this.loaderServo.setPosition(this.LOWER_POSITION);
+//        if (this.getInterlock(InterlockMap.LOADER_RAISE).isUnlocked()) {
+//            this.loaderServo.setPosition(this.LOWER_POSITION);
+//        }
+    }
+
+    public void updateInterlocks(){
+
     }
 }

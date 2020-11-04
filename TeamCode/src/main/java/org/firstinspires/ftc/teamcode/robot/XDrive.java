@@ -134,4 +134,8 @@ public class XDrive extends DriveBase {
             }
         }
     }
+
+    public void updateInterlocks(){
+        //empty implementation. No interlocks to update.
+    }
 }
