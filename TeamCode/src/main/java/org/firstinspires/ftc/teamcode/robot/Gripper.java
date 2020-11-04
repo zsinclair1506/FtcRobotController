@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.robot.lib.GripperPosition;
 import org.firstinspires.ftc.teamcode.robot.mapping.MotorMap;
 
 /***
@@ -12,6 +11,15 @@ import org.firstinspires.ftc.teamcode.robot.mapping.MotorMap;
  */
 public class Gripper extends Mechanism {
     private Servo clawServo;
+
+    public enum GripperPosition {
+        RING,
+        WOBBLE_GOAL,
+        OPEN,
+        CLOSED,
+        ;
+    }
+
     /***
      * Gripper constructor. Maps servos for grippers.
      * @param map the hardware map to get the servos from.

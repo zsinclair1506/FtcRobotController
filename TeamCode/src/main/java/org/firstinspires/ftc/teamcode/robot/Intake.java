@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.robot.lib.IntakePosition;
 import org.firstinspires.ftc.teamcode.robot.mapping.MotorMap;
 
 /***
@@ -30,6 +29,22 @@ public class Intake extends Mechanism {
     private static double VERT_UP = 0.8;
     private static double GRAB_POSITION = 0.5;
     private static double CLOSED_POSITION = 0.2;
+
+    public enum IntakePosition {
+        DROP_OFF(0.9),
+        INTAKE(0.5),
+        ;
+
+        private final double position;
+
+        IntakePosition(double position){
+            this.position = position;
+        }
+
+        public double getPosition() {
+            return this.position;
+        }
+    }
 
 
     /***

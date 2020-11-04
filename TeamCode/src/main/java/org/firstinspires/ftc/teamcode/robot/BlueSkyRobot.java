@@ -3,8 +3,7 @@ package org.firstinspires.ftc.teamcode.robot;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.robot.lib.IntakePosition;
-import org.firstinspires.ftc.teamcode.robot.lib.RotationDirection;
+import org.firstinspires.ftc.teamcode.robot.mapping.RotationDirection;
 import org.firstinspires.ftc.teamcode.robot.lib.Vector;
 import org.firstinspires.ftc.teamcode.robot.mapping.MechanismMap;
 
