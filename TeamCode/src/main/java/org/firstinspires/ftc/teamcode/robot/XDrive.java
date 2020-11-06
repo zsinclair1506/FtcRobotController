@@ -48,7 +48,14 @@ public class XDrive extends DriveBase {
      */
     @Override
     public void setStrafe(double angle, double power) {
-
+        this.setStrafeMotorPower(MotorMap.XDRIVE_FRONT_LEFT_DC.getMotorName(),
+                (-power * Math.cos(angle - Math.PI/4)));
+        this.setStrafeMotorPower(MotorMap.XDRIVE_FRONT_RIGHT_DC.getMotorName(),
+                (-power * Math.cos(angle + Math.PI/4)));
+        this.setStrafeMotorPower(MotorMap.XDRIVE_BACK_RIGHT_DC.getMotorName(),
+                (power * Math.cos(angle - Math.PI/4)));
+        this.setStrafeMotorPower(MotorMap.XDRIVE_BACK_LEFT_DC.getMotorName(),
+                (power * Math.cos(angle + Math.PI/4)));
     }
 
     /***
@@ -57,18 +64,7 @@ public class XDrive extends DriveBase {
      */
     @Override
     public void setStrafe(Vector driveVector) {
-        this.setStrafeMotorPower(MotorMap.XDRIVE_FRONT_LEFT_DC.getMotorName(),
-                ((-driveVector.getMagnitude())
-                        * Math.cos(driveVector.getAngleBetween(Vector.X_2) - Math.PI/4)));
-        this.setStrafeMotorPower(MotorMap.XDRIVE_FRONT_RIGHT_DC.getMotorName(),
-                ((-driveVector.getMagnitude())
-                        * Math.cos(driveVector.getAngleBetween(Vector.X_2) + Math.PI/4)));
-        this.setStrafeMotorPower(MotorMap.XDRIVE_BACK_RIGHT_DC.getMotorName(),
-                (driveVector.getMagnitude()
-                        * Math.cos(driveVector.getAngleBetween(Vector.X_2) - Math.PI/4)));
-        this.setStrafeMotorPower(MotorMap.XDRIVE_BACK_LEFT_DC.getMotorName(),
-                (driveVector.getMagnitude()
-                        * Math.cos(driveVector.getAngleBetween(Vector.X_2) + Math.PI/4)));
+        this.setStrafe(driveVector.getMagnitude(), driveVector.getAngleBetween(Vector.X_2));
     }
 
     /***
