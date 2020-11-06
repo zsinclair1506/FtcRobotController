@@ -19,6 +19,14 @@ public class AutoTest extends OpMode{
         // Set to print telemetry data to the phone
         private boolean debug = false;
 
+        public final void sleep(long milliseconds) {
+                try   {
+                        Thread.sleep(milliseconds);
+                } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                }
+        }
+
         /*
          * Code to run ONCE when the driver hits INIT
          */
@@ -48,7 +56,8 @@ public class AutoTest extends OpMode{
         public void start() {
             runtime.reset();
 
-            blueSky.setStrafe();
+            blueSky.setStrafe(1,Math.PI/2);
+
             /**
              * Wheel Circumference = 12.57in
              * Distance to edge of scoring zone = 80in
