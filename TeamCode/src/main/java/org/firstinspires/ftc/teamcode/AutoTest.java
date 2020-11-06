@@ -48,6 +48,7 @@ public class AutoTest extends OpMode{
         public void start() {
             runtime.reset();
 
+            blueSky.setStrafe();
             /**
              * Wheel Circumference = 12.57in
              * Distance to edge of scoring zone = 80in
@@ -65,6 +66,9 @@ public class AutoTest extends OpMode{
             */
             //Shoot powershot 3
             //Drive forward to park
+
+
+            //Object recognition? If we make it to nationals?
         }
 
         /*

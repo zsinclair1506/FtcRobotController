@@ -87,11 +87,11 @@ import org.firstinspires.ftc.teamcode.robot.BlueSkyRobot;
  *
  * Fix up commenting
  */
-/***
+
 @Autonomous(name="Pushbot: Auto Drive By Gyro", group="Pushbot")
 public class PushbotTest extends LinearOpMode {
-    /* Declare OpMode members.
-    private BlueSyRobot bluesky;
+    /* Declare OpMode members.*/
+    private BlueSkyRobot bluesky;
     BNO055IMU imu;                    // Additional Gyro device
     Orientation lastAngles = new Orientation();
     double globalAngle, power = .30, correction;
@@ -112,6 +112,8 @@ public class PushbotTest extends LinearOpMode {
     static final double     P_TURN_COEFF            = 0.1;     // Larger is more responsive, but also less stable
     static final double     P_DRIVE_COEFF           = 0.15;     // Larger is more responsive, but also less stable
 
+    double error = 0;
+    double
 
     @Override
     public void runOpMode() {
@@ -119,7 +121,7 @@ public class PushbotTest extends LinearOpMode {
         /*
          * Initialize the standard drive system variables.
          * The init() method of the hardware class does most of the work here
-         *
+         */
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
 
@@ -136,8 +138,10 @@ public class PushbotTest extends LinearOpMode {
         telemetry.update();
 
         // Ensure the robot it stationary, then reset the encoders and calibrate the gyro.
-        robot.leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        bluesky._____.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        bluesky._____.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        bluesky._____.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        bluesky._____.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         // Send telemetry message to alert driver that we are calibrating;
         telemetry.addData(">", "Calibrating Gyro");
@@ -155,8 +159,10 @@ public class PushbotTest extends LinearOpMode {
         telemetry.update();
 
         // Set motors to run using encoders
-        robot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bluesky.______.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bluesky.______.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bluesky.______.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bluesky.______.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Wait for the game to start (Display Gyro value), and reset gyro before we move..
         while (!isStarted()) {
@@ -165,19 +171,6 @@ public class PushbotTest extends LinearOpMode {
         }
 
         gyro.resetZAxisIntegrator(); // Does this exist for the REV IMU?
-
-        // Step through each leg of the path,
-        // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        // Put a hold after each turn
-        gyroDrive(DRIVE_SPEED, 48.0, 0.0);    // Drive FWD 48 inches
-        gyroTurn( TURN_SPEED, -45.0);         // Turn  CCW to -45 Degrees
-        gyroHold( TURN_SPEED, -45.0, 0.5);    // Hold -45 Deg heading for a 1/2 second
-        gyroDrive(DRIVE_SPEED, 12.0, -45.0);  // Drive FWD 12 inches at 45 degrees
-        gyroTurn( TURN_SPEED,  45.0);         // Turn  CW  to  45 Degrees
-        gyroHold( TURN_SPEED,  45.0, 0.5);    // Hold  45 Deg heading for a 1/2 second
-        gyroTurn( TURN_SPEED,   0.0);         // Turn  CW  to   0 Degrees
-        gyroHold( TURN_SPEED,   0.0, 1.0);    // Hold  0 Deg heading for a 1 second
-        gyroDrive(DRIVE_SPEED,-48.0, 0.0);    // Drive REV 48 inches
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
@@ -209,15 +202,15 @@ public class PushbotTest extends LinearOpMode {
             speed = Range.clip(Math.abs(speed), 0.0, 1.0);
             robot.leftDrive.setPower(speed);
             robot.rightDrive.setPower(speed);
-            *
+            */
 
             // keep looping while we are still active, and BOTH motors are running.
             while (opModeIsActive() &&
-                    (robot.leftDrive.isBusy() && robot.rightDrive.isBusy())) {
+                    (bluesky._____.isBusy() && bluesky.______.isBusy())) {
 
                 // adjust relative speed based on heading error.
-                error = getError(angle);
-                steer = getSteer(error, P_DRIVE_COEFF);
+
+                //79, shoot, move, shoot, move, shoot, move, shoot, 1.5
 
                 // if driving in reverse, the motor correction also needs to be reversed
                 if (distance < 0)
@@ -234,23 +227,25 @@ public class PushbotTest extends LinearOpMode {
                     rightSpeed /= max;
                 }
 
-                robot.leftDrive.setPower(leftSpeed);
-                robot.rightDrive.setPower(rightSpeed);
+
+                //Vector maths stuff that we use in TeleOp
+                bluesky._____.setPower(leftSpeed);
+                bluesky._____.setPower(rightSpeed);
 
             }
 
             // Stop all motion;
-            robot.leftDrive.setPower(0);
-            robot.rightDrive.setPower(0);
+            bluesky._____.setPower(0);
+            bluesky._____.setPower(0);
 
             // Turn off RUN_TO_POSITION
-            robot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            robot.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            bluesky._____.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            bluesky._____.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
-    }
+
     /**
      * Resets the cumulative angle tracking to zero.
-     *
+     */
     private void resetAngle()
     {
         lastAngles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
@@ -261,7 +256,7 @@ public class PushbotTest extends LinearOpMode {
     /**
      * Get current cumulative angle rotation from last reset.
      * @return Angle in degrees. + = left, - = right.
-     *
+     */
     private double getAngle()
     {
         // We experimentally determined the Z axis is the axis we want to use for heading angle.
@@ -288,7 +283,7 @@ public class PushbotTest extends LinearOpMode {
     /**
      * See if we are moving in a straight line and if not return a power correction value.
      * @return Power adjustment, + is adjust left - is adjust right.
-     *
+     */
     private double checkDirection()
     {
         // The gain value determines how sensitive the correction is to direction changes.
@@ -311,10 +306,9 @@ public class PushbotTest extends LinearOpMode {
     /**
      * Rotate left or right the number of degrees. Does not support turning more than 180 degrees.
      * @param degrees Degrees to turn, + is left - is right
-     *
-    private void rotate(int degrees, double power)
-    {
-        double  leftPower, rightPower;
+     */
+    private void rotate(int degrees, double power) {
+        double leftPower, rightPower;
 
         // restart imu movement tracking.
         resetAngle();
@@ -322,32 +316,29 @@ public class PushbotTest extends LinearOpMode {
         // getAngle() returns + when rotating counter clockwise (left) and - when rotating
         // clockwise (right).
 
-        if (degrees < 0)
-        {   // turn right.
+        if (degrees < 0) {   // turn right.
             leftPower = power;
             rightPower = -power;
-        }
-        else if (degrees > 0)
-        {   // turn left.
+        } else if (degrees > 0) {   // turn left.
             leftPower = -power;
             rightPower = power;
-        }
-        else return;
+        } else return;
 
         // set power to rotate.
         leftMotor.setPower(leftPower);
         rightMotor.setPower(rightPower);
 
         // rotate until turn is completed.
-        if (degrees < 0)
-        {
+        if (degrees < 0) {
             // On right turn we have to get off zero first.
-            while (opModeIsActive() && getAngle() == 0) {}
+            while (opModeIsActive() && getAngle() == 0) {
+            }
 
-            while (opModeIsActive() && getAngle() > degrees) {}
-        }
-        else    // left turn.
-            while (opModeIsActive() && getAngle() < degrees) {}
+            while (opModeIsActive() && getAngle() > degrees) {
+            }
+        } else    // left turn.
+            while (opModeIsActive() && getAngle() < degrees) {
+            }
 
         // turn the motors off.
         rightMotor.setPower(0);
@@ -358,5 +349,5 @@ public class PushbotTest extends LinearOpMode {
 
         // reset angle tracking on new heading.
         resetAngle();
-*/
-//}
+    }
+}
