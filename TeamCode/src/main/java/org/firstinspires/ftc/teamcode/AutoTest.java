@@ -56,7 +56,11 @@ public class AutoTest extends OpMode{
         public void start() {
             runtime.reset();
 
-            blueSky.setStrafe(1,Math.PI/2);
+            for (;runtime.milliseconds() < 1000;){
+                    blueSky.setStrafe(1,Math.PI/2);
+                    blueSky.drive();
+                }
+
 
             /**
              * Wheel Circumference = 12.57in
@@ -64,7 +68,7 @@ public class AutoTest extends OpMode{
              *
              * Motor Calcs
              * wheel radius = 2in
-             * Forward Velocity = 14.000000000021771 x 2 x √2 = 39.5979797465
+             * Forward Velocity = 10.47... x 2 x √2 = 29.619219598...
              * TODO: Double Check Accuracy
              */
 
