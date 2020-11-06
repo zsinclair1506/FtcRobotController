@@ -87,10 +87,10 @@ import org.firstinspires.ftc.teamcode.robot.BlueSkyRobot;
  *
  * Fix up commenting
  */
-
+/***
 @Autonomous(name="Pushbot: Auto Drive By Gyro", group="Pushbot")
 public class PushbotTest extends LinearOpMode {
-    /* Declare OpMode members.*/
+    /* Declare OpMode members.*
     private BlueSkyRobot bluesky;
     BNO055IMU imu;                    // Additional Gyro device
     Orientation lastAngles = new Orientation();
@@ -121,7 +121,7 @@ public class PushbotTest extends LinearOpMode {
         /*
          * Initialize the standard drive system variables.
          * The init() method of the hardware class does most of the work here
-         */
+         *
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
 
@@ -202,7 +202,7 @@ public class PushbotTest extends LinearOpMode {
             speed = Range.clip(Math.abs(speed), 0.0, 1.0);
             robot.leftDrive.setPower(speed);
             robot.rightDrive.setPower(speed);
-            */
+            *
 
             // keep looping while we are still active, and BOTH motors are running.
             while (opModeIsActive() &&
@@ -245,7 +245,7 @@ public class PushbotTest extends LinearOpMode {
 
     /**
      * Resets the cumulative angle tracking to zero.
-     */
+     *
     private void resetAngle()
     {
         lastAngles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
@@ -256,7 +256,7 @@ public class PushbotTest extends LinearOpMode {
     /**
      * Get current cumulative angle rotation from last reset.
      * @return Angle in degrees. + = left, - = right.
-     */
+     *
     private double getAngle()
     {
         // We experimentally determined the Z axis is the axis we want to use for heading angle.
@@ -283,7 +283,7 @@ public class PushbotTest extends LinearOpMode {
     /**
      * See if we are moving in a straight line and if not return a power correction value.
      * @return Power adjustment, + is adjust left - is adjust right.
-     */
+     *
     private double checkDirection()
     {
         // The gain value determines how sensitive the correction is to direction changes.
@@ -306,7 +306,7 @@ public class PushbotTest extends LinearOpMode {
     /**
      * Rotate left or right the number of degrees. Does not support turning more than 180 degrees.
      * @param degrees Degrees to turn, + is left - is right
-     */
+     *
     private void rotate(int degrees, double power) {
         double leftPower, rightPower;
 
@@ -351,3 +351,4 @@ public class PushbotTest extends LinearOpMode {
         resetAngle();
     }
 }
+*/
