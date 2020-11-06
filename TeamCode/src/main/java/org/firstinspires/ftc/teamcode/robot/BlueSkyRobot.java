@@ -141,7 +141,7 @@ public class BlueSkyRobot extends Robot {
      * @see Intake for more information.
      */
     public void intakeCycle(){
-        ((Intake)this.getMechanism(MechanismMap.INTAKE.getName())).dropOff();
+        ((Intake)this.getMechanism(MechanismMap.INTAKE.getName())).cycle();
     }
 
     /***

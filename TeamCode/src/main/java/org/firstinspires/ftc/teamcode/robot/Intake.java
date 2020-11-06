@@ -214,10 +214,7 @@ public class Intake extends Mechanism {
     /***
      * Go through the actions to drop a ring off at the hopper
      */
-    public void dropOff(){
-        if(!this.servoThread.isRunning() && this.getRotation() == IntakePosition.INTAKE) {
-            this.servoThread.setDirection(top);
-            this.servoThread.run();
+    public void cycle(){
         }
     }
 
