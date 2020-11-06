@@ -27,10 +27,10 @@ package org.firstinspires.ftc.teamcode.robot.mapping;
  *      Gripper lower - dpad down
  *      Gripper open - dpad right
  *      Gripper raise - dpad up
- *      Intake cycle - rbumper
+ *      Intake cycle - a
  *      Intake grab - x
- *      Intake lift - y
- *      Intake lower - a
+ *      Intake lift - rbumper
+ *      Intake lower - lbumper
  *      Intake release - b
  *      Intake switch positions - RTrigger
  *      Intake stop - back
@@ -95,17 +95,17 @@ public enum GamepadButtons {
     /***
      * Gamepad: 2
      */
-    INTAKE_CYCLE("right_bumper"),
+    INTAKE_CYCLE("a"),
 
     /***
      * Gamepad: 2
      */
-    INTAKE_LIFT("y"),
+    INTAKE_LIFT("right_bumper"),
 
     /***
      * Gamepad: 2
      */
-    INTAKE_LOWER("a"),
+    INTAKE_LOWER("left_bumper"),
 
     /***
      * Gamepad: 2

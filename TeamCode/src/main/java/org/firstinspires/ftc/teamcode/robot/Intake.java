@@ -25,7 +25,7 @@ public class Intake extends Mechanism {
     private boolean isLifting = false;
     private boolean top = true;
 
-//    protected final int DESIRED_UP_TIME_MS = 4200; // 1.0769 downtime
+    protected final int DESIRED_UP_TIME_MS = 4200; // 1.0769 downtime
     protected final int DESIRED_DOWN_TIME_MS = 3900; //
     private final double VERT_UP_POWER = -0.6; // Servo Power
     private final double REST_POWER = -0.1; // rest power
@@ -77,7 +77,6 @@ public class Intake extends Mechanism {
         private ElapsedTime runTime = new ElapsedTime();
         private boolean down = true;
         private double desiredRunTime = 0;
-        private boolean fullCycle = false;
 
         /***
          * Constructor for the thread
@@ -117,37 +116,27 @@ public class Intake extends Mechanism {
                 } while
                 (this.runTime.milliseconds() < this.desiredRunTime);
 
-                if(fullCycle){
-                    countTime();
+                grab();
+                Thread.sleep(50);
 
-                    isLowering = false;
-                    isLifting = false;
+                do{
+                    this.crservo.setPower(-this.SERVO_POWER);
+                    Thread.sleep(20);
+                } while
+                (this.runTime.milliseconds() < this.desiredRunTime);
 
-                    rotate();
-                    Thread.sleep(250);
-                    release();
-                    Thread.sleep(100);
-                    rotate();
-                }
+                rotate();
+                Thread.sleep(250);
+                release();
+                Thread.sleep(100);
+                rotate();
+
             } catch (InterruptedException e) {
                 this.interrupt();
                 telemetry.addData("Intake Lift Interrupted. Runtime: ", this.runTime.milliseconds());
             }
             finally{
                 this.crservo.setPower(REST_POWER);
-
-                if(fullCycle){
-                    this.setFullCycle(false);
-                    servoDownTime = 0;
-                }
-                else{
-                    if(this.down) {
-                        servoDownTime += this.runTime.milliseconds();
-                    }
-                    else{
-                        servoDownTime -= this.runTime.milliseconds();
-                    }
-                }
             }
         }
 
@@ -182,15 +171,6 @@ public class Intake extends Mechanism {
 
             this.crservo.setPower(REST_POWER);
         }
-
-
-        /***
-         * Sets whether the thread should perform a full cycle.
-         * @param fullCycle whether this thread should perform a full cycle
-         */
-        public void setFullCycle(boolean fullCycle) {
-            this.fullCycle = fullCycle;
-        }
     }
 
     /***
@@ -198,19 +178,7 @@ public class Intake extends Mechanism {
      */
     public void lift(){
         if(!servoThread.isRunning()) {
-            this.countTime();
-
-            if(this.servoDownTime > 0){
-                this.servoThread.setRunTime(SERVO_UP_RATIO * (this.servoDownTime));
-                this.servoThread.setGoDown(false);
-                this.servoThread.start();
-
-                this.isLifting = true;
-                this.isLowering = false;
-            }
-            else{
-                this.vertServo.setPower(VERT_UP_POWER);
-            }
+            this.vertServo.setPower(VERT_UP_POWER);
         }
     }
 
@@ -219,19 +187,7 @@ public class Intake extends Mechanism {
      */
     public void lower(){
         if(!servoThread.isRunning()) {
-            this.countTime();
-
-            if(this.servoDownTime < this.DESIRED_DOWN_TIME_MS){
-                this.servoThread.setRunTime(this.DESIRED_DOWN_TIME_MS - this.servoDownTime);
-                this.servoThread.setGoDown(true);
-                this.servoThread.start();
-
-                this.isLifting = false;
-                this.isLowering = true;
-            }
-            else{
-                this.vertServo.setPower(-VERT_UP_POWER);
-            }
+            this.vertServo.setPower(-VERT_UP_POWER);
         }
     }
 
@@ -240,12 +196,7 @@ public class Intake extends Mechanism {
      */
     public void stop(){
         if(!servoThread.isRunning()) {
-            this.countTime();
-
             this.vertServo.setPower(REST_POWER);
-
-            this.isLifting = false;
-            this.isLowering = false;
         }
     }
 
@@ -288,9 +239,7 @@ public class Intake extends Mechanism {
      */
     public void cycle(){
         if(!this.servoThread.isRunning()
-                && this.getRotation() == IntakePosition.INTAKE
-                && this.servoDownTime > 0) {
-            this.servoThread.setFullCycle(true);
+                && this.getRotation() == IntakePosition.INTAKE) {
             this.servoThread.setRunTime(SERVO_UP_RATIO * (this.servoDownTime));
             this.servoThread.setGoDown(false);
             this.servoThread.start();
