@@ -81,7 +81,7 @@ public class UltimateGoalOpMode extends OpMode
         }
 
         if(driveGamepad.getButton(GamepadButtons.SHOOTER_FEED_ME.getButtonName())){
-            // debounce
+            // debounce SHOOTER_FEED_ME
             if(!this.debounce.get(GamepadButtons.SHOOTER_FEED_ME)){
                 this.debounce.put(GamepadButtons.SHOOTER_FEED_ME, true);
                 debounceTime.reset();
@@ -114,7 +114,7 @@ public class UltimateGoalOpMode extends OpMode
         }
 
         if(operatorGamepad.getTrigger(GamepadButtons.INTAKE_SWITCH_POSITIONS.getButtonName()) > 0.8){
-            // debounce
+            // debounce INTAKE_SWITCH_POSITIONS
             if(!this.debounce.get(GamepadButtons.INTAKE_SWITCH_POSITIONS)){
                 this.debounce.put(GamepadButtons.INTAKE_SWITCH_POSITIONS, true);
                 debounceTime.reset();
@@ -123,7 +123,7 @@ public class UltimateGoalOpMode extends OpMode
         }
 
         if(operatorGamepad.getButton(GamepadButtons.INTAKE_CYCLE.getButtonName())){
-            // debounce
+            // debounce INTAKE_CYCLE
             if(!this.debounce.get(GamepadButtons.INTAKE_CYCLE)){
                 this.debounce.put(GamepadButtons.INTAKE_CYCLE, true);
                 debounceTime.reset();
@@ -132,7 +132,7 @@ public class UltimateGoalOpMode extends OpMode
         }
 
         if(operatorGamepad.getButton(GamepadButtons.INTAKE_STOP.getButtonName())){
-            // debounce
+            // debounce INTAKE_STOP
             if(!this.debounce.get(GamepadButtons.INTAKE_STOP)){
                 this.debounce.put(GamepadButtons.INTAKE_STOP, true);
                 debounceTime.reset();
@@ -152,6 +152,6 @@ public class UltimateGoalOpMode extends OpMode
      */
     @Override
     public void stop() {
-
+        // TODO: stop all threads
     }
 }
