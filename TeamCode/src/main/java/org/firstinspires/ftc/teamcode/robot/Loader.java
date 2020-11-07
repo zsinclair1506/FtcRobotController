@@ -11,8 +11,8 @@ import org.firstinspires.ftc.teamcode.robot.mapping.MotorMap;
  */
 public class Loader extends Mechanism {
     private Servo loaderServo;
-    private static double LOWER_POSITION = 0;
-    private static double UPPER_POSITION = 1;
+    private static double LOWER_POSITION = 0.4;
+    private static double UPPER_POSITION = 0.5;
 
     /***
      * Loader constructor
@@ -35,6 +35,7 @@ public class Loader extends Mechanism {
      */
     public void lower(){
         this.loaderServo.setPosition(this.LOWER_POSITION);
+        telemetry.addData("Position:", " Lower");
     }
 
     /***
@@ -42,5 +43,6 @@ public class Loader extends Mechanism {
      */
     public void raise(){
         this.loaderServo.setPosition(this.UPPER_POSITION);
+        telemetry.addData("Position:", " Upper");
     }
 }
