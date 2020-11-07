@@ -109,12 +109,10 @@ public class Intake extends Mechanism {
             try {
                 this.init();
 
-                do{
+                while(this.runTime.milliseconds() < (down ? DESIRED_DOWN_TIME_MS : DESIRED_UP_TIME_MS)) {
                     this.crservo.setPower(down ? this.SERVO_POWER : -this.SERVO_POWER);
                     Thread.sleep(100);
-                } while
-                (this.runTime.milliseconds() < (down ? DESIRED_DOWN_TIME_MS : DESIRED_UP_TIME_MS));
-
+                }
             } catch (InterruptedException e) {
                 telemetry.addData("Intake Lift Interrupted. Runtime: ", this.runTime.milliseconds());
             }
