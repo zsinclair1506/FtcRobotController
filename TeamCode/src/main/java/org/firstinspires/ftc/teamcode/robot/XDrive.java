@@ -14,6 +14,8 @@ import java.util.HashMap;
 public class XDrive extends DriveBase {
     private boolean init = true;
     private HashMap<String, Integer> startPos = new HashMap<>();
+    private HashMap<String, Vector> vectors = new HashMap<>();
+    private double pi = Math.pi;
 
     /***
      *
@@ -79,10 +81,8 @@ public class XDrive extends DriveBase {
     @Override
     public void driveDistance(double angle, double distance) {
         if(init){ // first run
-            int i = 0;
-
             for(String motorName : this.getMotors().keySet()){
-                startPos.put(motorName, this.getMotor(motorName).getCurrentPosition());
+                startPos.put(motorName, this.getMotor(motorName).getCurrentPosition()/1440*4*2.54*pi);
             }
 
             
@@ -132,6 +132,16 @@ public class XDrive extends DriveBase {
              */
             init = false;
         }
+        int i = 0;
+        double[] angles = {pi/4, 3*pi/4};
+        Vector sum = new Vector(0,0);
+        for (String motorName : startPos.keySet()) {
+            sum.add(new Vector((this.getMotor(motorName).getCurrentPosition()-startPos.get(motorName))/1440*4*2.54*pi, angles[i%2]));
+            ++i;
+        }
+        Vector drvV = new Vector(distance, angle);
+        Vector remV = drvV.subtract(sum);
+        this.setStrafe(remV);
     }
 
     /***
