@@ -5,24 +5,26 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.robot.mapping.RotationDirection;
+import org.firstinspires.ftc.teamcode.robot.lib.Odometry;
 import org.firstinspires.ftc.teamcode.robot.lib.Vector;
 import org.firstinspires.ftc.teamcode.robot.mapping.MotorMap;
 
-import java.util.HashMap;
-
 
 public class XDrive extends DriveBase {
-    private boolean init = true;
-    private HashMap<String, Integer> startPos = new HashMap<>();
-    private HashMap<String, Vector> vectors = new HashMap<>();
-    private double pi = Math.pi;
+    /**
+     * 4 inch diameter
+     * 25.4 mm per inch
+     * 1440 counts per revolution
+     */
+    private final double DISTANCE_PER_COUNT = (4 * 25.4 * Math.PI) / 1440;
+    private static final double ACCEPTABLE_ERROR = 25;
 
     /***
      *
      * @param map the hardware map of the robot/phone/expansion hub.
      */
     public XDrive (HardwareMap map, Telemetry telemetry, Robot robot) {
-        super(telemetry, robot);
+        super(map, telemetry, robot);
         this.addMotor(MotorMap.XDRIVE_FRONT_LEFT_DC.getMotorName(),
                 map.get(DcMotor.class, MotorMap.XDRIVE_FRONT_LEFT_DC.getMotorName()));
         this.addMotor(MotorMap.XDRIVE_FRONT_RIGHT_DC.getMotorName(),
@@ -41,7 +43,7 @@ public class XDrive extends DriveBase {
     public void drive() {
         this.byOurPowersCombined();
         this.motorNormalise();
-//
+
         for(String motorName : this.getMotors().keySet()){
             this.getMotor(motorName).setPower(this.getDrivePowers().get(motorName));
         }
@@ -75,73 +77,88 @@ public class XDrive extends DriveBase {
 
     /***
      * Drive the robot a set distance at a certain angle. (Meant to be run in a loop)
+     * @param distance the distance to drive from current location in MM
      * @param angle the angle to drive the robot in, 0 is forward. This base slides
-     * @param distance the distance to drive from current location
      */
     @Override
-    public void driveDistance(double angle, double distance) {
-        if(init){ // first run
-            for(String motorName : this.getMotors().keySet()){
-                startPos.put(motorName, this.getMotor(motorName).getCurrentPosition()/1440*4*2.54*pi);
+    public void driveDistance(double distance, double angle) {
+        Vector desiredVector = new Vector(distance, angle);
+        Odometry odometry = this.getOdometry();
+        odometry.driveDistanceInit(this.getMotors());
+
+        /**
+         * DriveDistance; with reset displacements
+         * For each motor in this.getmotor.getvalues.keys
+         * for each key in motor map, getting names
+         * with name get motor and encoder count
+         *
+         * with encoder count, new hashmap
+         * setting up 4 vectors based on their name and orientation
+         * loop to calc vector (Vector sum = new vector 0,0)
+         * add 3 vectors and get travel vector
+         *
+         * compare with desired vector (mag, angle)
+         * calculate error in magnitude (displacement of robot)
+         * (possible clever magic with circumference, encoder counts and total counts?)
+         *
+         * magnitude: Distance travelled
+         * resultant vector: rv
+         * desired vector: dv
+         * remaining vector: remv
+         *
+         * diff between dv and rv gives remv and correction angle needed
+         *
+         * feed values into setstrafe method
+         *
+         * call a 0 setrotate
+         *
+         * if trying to call a hashmap that doesnt exist it returns null
+         *
+         * null check in byourpowerscombined?
+         * if null add 0
+         *
+         * if checkrotate is needed, use IMU methods
+         * setrotate in XDrive, not IMU
+         * XDrive will contain the same code as IMU one
+         *
+         * Copy IMU one to XDrive
+         *
+         * CALL .DRIVE BECUASE YES
+         *
+         * if strafe, rotate and other things are null, it will not cause issue bc they will
+         * become 0
+         *
+         * Can all be apart of drivedistance becuase yes
+         */
+
+        Vector driveSum = new Vector(0,0);
+        double motorAngle = 0;
+
+        for (String motorName : odometry.getStartPos().keySet()) { // only approximate angles :(
+            if(motorName == MotorMap.XDRIVE_FRONT_LEFT_DC.getMotorName()) {
+                motorAngle = -3 * Math.PI / 4;;
+            }
+            else if(motorName == MotorMap.XDRIVE_FRONT_RIGHT_DC.getMotorName()) {
+                motorAngle = 3 * Math.PI / 4;
+            }
+            else if(motorName == MotorMap.XDRIVE_BACK_RIGHT_DC.getMotorName()) {
+                motorAngle = Math.PI / 4;
+            }
+            else if (motorName == MotorMap.XDRIVE_BACK_LEFT_DC.getMotorName()) {
+                motorAngle = -Math.PI / 4;
             }
 
-            
-            /**
-             * DriveDistance; with reset displacements
-             * For each motor in this.getmotor.getvalues.keys
-             * for each key in motor map, getting names
-             * with name get motor and encoder count
-             *
-             * with encoder count, new hashmap
-             * setting up 4 vectors based on their name and orientation
-             * loop to calc vector (Vector sum = new vector 0,0)
-             * add 3 vectors and get travel vector
-             *
-             * compare with desired vector (mag, angle)
-             * calculate error in magnitude (displacement of robot)
-             * (possible clever magic with circumference, encoder counts and total counts?)
-             *
-             * magnitude: Distance travelled
-             * resultant vector: rv
-             * desired vector: dv
-             * remaining vector: remv
-             *
-             * diff between dv and rv gives remv and correction angle needed
-             *
-             * feed values into setstrafe method
-             *
-             * call a 0 setrotate
-             *
-             * if trying to call a hashmap that doesnt exist it returns null
-             *
-             * null check in byourpowerscombined?
-             * if null add 0
-             *
-             * if checkrotate is needed, use IMU methods
-             * setrotate in XDrive, not IMU
-             * XDrive will contain the same code as IMU one
-             *
-             * Copy IMU one to XDrive
-             *
-             * CALL .DRIVE BECUASE YES
-             *
-             * if strafe, rotate and other things are null, it will not cause issue bc they will
-             * become 0
-             *
-             * Can all be apart of drivedistance becuase yes
-             */
-            init = false;
+            driveSum.add(new Vector(
+                    (this.getMotor(motorName).getCurrentPosition()
+                            - this.getOdometry().getStartPos().get(motorName))
+                            * DISTANCE_PER_COUNT,
+                    motorAngle));
         }
-        int i = 0;
-        double[] angles = {pi/4, 3*pi/4};
-        Vector sum = new Vector(0,0);
-        for (String motorName : startPos.keySet()) {
-            sum.add(new Vector((this.getMotor(motorName).getCurrentPosition()-startPos.get(motorName))/1440*4*2.54*pi, angles[i%2]));
-            ++i;
+
+        Vector remainingVector = desiredVector.subtract(driveSum);
+        if(remainingVector.getMagnitude() >= ACCEPTABLE_ERROR){
+            this.setStrafe(remainingVector);
         }
-        Vector drvV = new Vector(distance, angle);
-        Vector remV = drvV.subtract(sum);
-        this.setStrafe(remV);
     }
 
     /***
@@ -151,7 +168,12 @@ public class XDrive extends DriveBase {
      */
     @Override
     public void rotateAngle(double angle, double power) {
+        // restart imu movement tracking.
+        this.getOdometry().rotateAngleInit();
+        double degrees = this.getOdometry().getAngle();
 
+        this.setRotation(degrees < 0
+                ? RotationDirection.CLOCKWISE : RotationDirection.COUNTER_CLOCKWISE, power);
     }
 
     /***
@@ -172,38 +194,9 @@ public class XDrive extends DriveBase {
      */
     @Override
     public void setRotation(Vector vector) {
-        RotationDirection direction = Math.cos(vector.getAngleBetween(Vector.X_2)) < Math.PI/2
+        RotationDirection direction = (-Math.PI / 2 < vector.getAngleBetween(Vector.X_2)
+                && vector.getAngleBetween(Vector.X_2) < Math.PI / 2)
                 ? RotationDirection.CLOCKWISE : RotationDirection.COUNTER_CLOCKWISE ;
         this.setRotation(direction, vector.getMagnitude());
-    }
-
-    /***
-     * Normalises the motor powers with the maximum value of 1 when input to the motors while
-     * preserving the desired ratios of power.
-     */
-    @Override
-    protected void motorNormalise() {
-        double maxValue = 0.1;
-
-        // calculate the max value
-        for(String motor : this.getMotors().keySet()){
-            maxValue = Math.max(maxValue, Math.abs(this.getDrivePowers().get(motor)));
-        }
-
-        // only scale the value if it is above 1. This will be most of the time.
-        if(maxValue > 1) {
-            for (String motor : this.getMotors().keySet()) {
-                this.setDrivePower(motor, this.getDrivePowers().get(motor) / maxValue);
-            }
-        }
-    }
-
-    public double getDistance(){
-
-        return 0;
-    }
-
-    public void driveDistance(Vector driveVector) {
-        this.setStrafe(driveVector.getMagnitude(), driveVector.getAngleBetween(Vector.X_2));
     }
 }

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.robot.lib;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -9,27 +10,38 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
+import java.util.HashMap;
+
 public class Odometry{
+    private boolean initDriveDistance = true;
+    private boolean initRotateAngle = true;
+    private HashMap<String, Integer> startPos = new HashMap<>();
 
-    BNO055IMU imu;
-    Orientation lastAngles = new Orientation();
-    Telemetry telemetry;
-    double globalAngle, power = .30, correction;
+    private BNO055IMU imu;
+    private Orientation lastAngles = new Orientation();
+    private Telemetry telemetry;
+    private double globalAngle;
 
+    /***
+     * Constructor for Odometry, initialises
+     * @param map
+     * @param telemetry
+     */
     public Odometry(HardwareMap map, Telemetry telemetry) {
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        this.telemetry = telemetry;
 
         parameters.mode = BNO055IMU.SensorMode.IMU;
         parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
         parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
         parameters.loggingEnabled = false;
 
-        imu = map.get(BNO055IMU.class, "imu");
+        this.imu = map.get(BNO055IMU.class, "imu");
 
-        imu.initialize(parameters);
+        this.imu.initialize(parameters);
 
         // make sure the imu gyro is calibrated before continuing.
+
+        this.telemetry = telemetry;
         telemetry.addData("imu calibration status", imu.getCalibrationStatus().toString());
     }
 
@@ -37,9 +49,8 @@ public class Odometry{
      * Resets the cumulative angle tracking to zero.
      */
     private void resetAngle() {
-        lastAngles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
-
-        globalAngle = 0;
+        this.lastAngles = this.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
+        this.globalAngle = 0;
     }
 
     /**
@@ -47,26 +58,29 @@ public class Odometry{
      *
      * @return Angle in degrees. + = left, - = right.
      */
-    private double getAngle() {
+    public double getAngle() {
         // We experimentally determined the Z axis is the axis we want to use for heading angle.
         // We have to process the angle because the imu works in euler angles so the Z axis is
         // returned as 0 to +180 or 0 to -180 rolling back to -179 or +179 when rotation passes
         // 180 degrees. We detect this transition and track the total cumulative angle of rotation.
 
-        Orientation angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
+        Orientation angles = this.imu.getAngularOrientation(
+                AxesReference.INTRINSIC,
+                AxesOrder.ZYX,
+                AngleUnit.RADIANS);
 
-        double deltaAngle = angles.firstAngle - lastAngles.firstAngle;
+        double deltaAngle = angles.firstAngle - this.lastAngles.firstAngle;
 
         if (deltaAngle < (-Math.PI))
             deltaAngle += (2 * Math.PI);
         else if (deltaAngle > Math.PI)
             deltaAngle -= (2 * Math.PI);
 
-        globalAngle += deltaAngle;
+        this.globalAngle += deltaAngle;
 
-        lastAngles = angles;
+        this.lastAngles = angles;
 
-        return globalAngle;
+        return this.globalAngle;
     }
 
     /**
@@ -76,13 +90,13 @@ public class Odometry{
      *
      * @return Ajustment/ Correction for heading.
      */
-    private double checkDirection() {
+    public double checkDirection() {
         // Gain is determined by the sensitivity of adjustment to direction changes
         // Experimenting is required, this has to be changed in the program, rather than by a control
         // Gain is correct when you maintain a straight heading
         double correction, angle, gain = .10;
 
-        angle = getAngle();
+        angle = this.getAngle();
 
         if (angle == 0)
             correction = 0;             // Adjustment is not needed as there is no error
@@ -94,46 +108,43 @@ public class Odometry{
         return correction;
     }
 
-    /**
-     * Rotate left or right the number of degrees. Does not support turning more than 180 degrees.
-     *
-     * @param degrees Degrees to turn, + is left - is right
+    /***
+     * Initialises the base encouder counts for a run of the drivebase.
+     * @param motors a hashmap of the motors to initialise
      */
-    private void rotate(int degrees, double power) {
-        double frontLeftPower, frontRightPower, rearLeftPower, rearRightPower;
+    public void driveDistanceInit(HashMap<String, DcMotor> motors){
+        if(this.initDriveDistance){ // first run
+            for(DcMotor motor : motors.values()){
+                motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            }
+            for(String motorName : motors.keySet()){
+                this.startPos.put(motorName, motors.get(motorName).getCurrentPosition());
+            }
 
-        // restart imu movement tracking.
-        resetAngle();
+            this.initDriveDistance = false;
+        }
+    }
 
-        // getAngle() returns + when rotating counter clockwise (left) and - when rotating
-        // clockwise (right).
+    /***
+     * Gets the starting position of the motor encoders
+     * @return
+     */
+    public HashMap<String, Integer> getStartPos() {
+        return this.startPos;
+    }
 
-        //TODO: Update to match outputs for XDrive?
-        if (degrees < 0) {   // turn right.
-            frontLeftPower = -power;
-            frontRightPower = -power;
-            rearLeftPower = -power;
-            rearRightPower = -power;
-        } else if (degrees > 0) {   // turn left.
-            frontLeftPower = power;
-            frontRightPower = power;
-            rearLeftPower = power;
-            rearRightPower = power;
-        } else return;
+    public void rotateAngleInit() {
+        if(this.initRotateAngle){
+            this.resetAngle();
+            this.initRotateAngle = false;
+        }
+    }
 
+    public void rotateAngleReset(){
+        this.initRotateAngle = true;
+    }
 
-        /**
-         // rotate until turn is completed.
-         if (degrees < 0) {
-         // On right turn we have to get off zero first.
-         while (opModeIsActive() && getAngle() == 0) {
-         }
-
-         while (opModeIsActive() && getAngle() > degrees) {
-         }
-         } else    // left turn.
-         while (opModeIsActive() && getAngle() < degrees) {
-         }
-         */
+    public void driveDistanceReset(){
+        this.initDriveDistance = true;
     }
 }

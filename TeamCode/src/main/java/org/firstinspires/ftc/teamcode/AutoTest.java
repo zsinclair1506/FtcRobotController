@@ -2,30 +2,15 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.robot.BlueSkyRobot;
-import org.firstinspires.ftc.teamcode.robot.lib.GamepadWrapper;
-import org.firstinspires.ftc.teamcode.robot.mapping.GamepadButtons;
 
 @Autonomous(name="Auto Test", group="Robot Test")
 public class AutoTest extends OpMode{
-
-        // Declare OpMode members.
         private ElapsedTime runtime = new ElapsedTime();
         private BlueSkyRobot blueSky;
 
-        // Set to print telemetry data to the phone
-        private boolean debug = false;
-
-        public final void sleep(long milliseconds) {
-                try   {
-                        Thread.sleep(milliseconds);
-                } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                }
-        }
 
         /*
          * Code to run ONCE when the driver hits INIT
@@ -36,7 +21,6 @@ public class AutoTest extends OpMode{
 
             // Tell the driver that initialization is complete.
             telemetry.addData("Status", "Initialized");
-
         }
 
         /*
@@ -56,32 +40,6 @@ public class AutoTest extends OpMode{
         public void start() {
             runtime.reset();
 
-            for (;runtime.milliseconds() < 1001;){
-                    blueSky.setStrafe(1,Math.PI/2);
-                    blueSky.drive();
-                }
-
-
-            /**
-             * Wheel Circumference = 12.57in
-             * Distance to edge of scoring zone = 80in
-             *
-             * Motor Calcs
-             * wheel radius = 2in
-             * Forward Velocity = 10.47... x 2 x √2 = 29.619219598...
-             * TODO: Double Check Accuracy
-             */
-
-            //Drive Forward approx. 79in
-            /** Repeat x2
-            * Shoot powershot
-            * Move Left
-            */
-            //Shoot powershot 3
-            //Drive forward to park
-
-
-            //Object recognition? If we make it to nationals?
         }
 
         /*

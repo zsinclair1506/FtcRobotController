@@ -21,7 +21,7 @@ public class Vector {
      * Create a vector with the incoming values
      * @param inVaules the values to create the vector with
      */
-    public Vector(double... inVaules) {
+    private Vector(double... inVaules) {
         this.values = inVaules;
     }
 
