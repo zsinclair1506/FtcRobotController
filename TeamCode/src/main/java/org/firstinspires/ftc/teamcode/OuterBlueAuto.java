@@ -45,7 +45,7 @@ public class OuterBlueAuto extends OpMode{
                 // empty for running the check
             }
 
-            while(!this.blueSky.driveDistance(619.95, 0)){
+            while(!this.blueSky.driveDistance(777.43, 0)){
                 // empty for running the check
             }
 
