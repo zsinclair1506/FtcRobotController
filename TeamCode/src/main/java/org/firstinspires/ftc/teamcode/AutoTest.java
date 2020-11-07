@@ -56,7 +56,7 @@ public class AutoTest extends OpMode{
         public void start() {
             runtime.reset();
 
-            for (;runtime.milliseconds() < 1000;){
+            for (;runtime.milliseconds() < 1001;){
                     blueSky.setStrafe(1,Math.PI/2);
                     blueSky.drive();
                 }

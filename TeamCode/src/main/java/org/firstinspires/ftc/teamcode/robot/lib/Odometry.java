@@ -9,14 +9,14 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-public class IMUWrapper {
+public class Odometry{
 
     BNO055IMU imu;
     Orientation lastAngles = new Orientation();
     Telemetry telemetry;
     double globalAngle, power = .30, correction;
 
-    public IMUWrapper(HardwareMap map, Telemetry telemetry) {
+    public Odometry(HardwareMap map, Telemetry telemetry) {
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         this.telemetry = telemetry;
 

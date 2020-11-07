@@ -85,10 +85,53 @@ public class XDrive extends DriveBase {
                 startPos.put(motorName, this.getMotor(motorName).getCurrentPosition());
             }
 
+            
+            /**
+             * DriveDistance; with reset displacements
+             * For each motor in this.getmotor.getvalues.keys
+             * for each key in motor map, getting names
+             * with name get motor and encoder count
+             *
+             * with encoder count, new hashmap
+             * setting up 4 vectors based on their name and orientation
+             * loop to calc vector (Vector sum = new vector 0,0)
+             * add 3 vectors and get travel vector
+             *
+             * compare with desired vector (mag, angle)
+             * calculate error in magnitude (displacement of robot)
+             * (possible clever magic with circumference, encoder counts and total counts?)
+             *
+             * magnitude: Distance travelled
+             * resultant vector: rv
+             * desired vector: dv
+             * remaining vector: remv
+             *
+             * diff between dv and rv gives remv and correction angle needed
+             *
+             * feed values into setstrafe method
+             *
+             * call a 0 setrotate
+             *
+             * if trying to call a hashmap that doesnt exist it returns null
+             *
+             * null check in byourpowerscombined?
+             * if null add 0
+             *
+             * if checkrotate is needed, use IMU methods
+             * setrotate in XDrive, not IMU
+             * XDrive will contain the same code as IMU one
+             *
+             * Copy IMU one to XDrive
+             *
+             * CALL .DRIVE BECUASE YES
+             *
+             * if strafe, rotate and other things are null, it will not cause issue bc they will
+             * become 0
+             *
+             * Can all be apart of drivedistance becuase yes
+             */
             init = false;
         }
-
-
     }
 
     /***
@@ -143,5 +186,14 @@ public class XDrive extends DriveBase {
                 this.setDrivePower(motor, this.getDrivePowers().get(motor) / maxValue);
             }
         }
+    }
+
+    public double getDistance(){
+
+        return 0;
+    }
+
+    public void driveDistance(Vector driveVector) {
+        this.setStrafe(driveVector.getMagnitude(), driveVector.getAngleBetween(Vector.X_2));
     }
 }
