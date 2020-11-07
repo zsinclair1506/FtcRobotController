@@ -8,8 +8,12 @@ import org.firstinspires.ftc.teamcode.robot.lib.RotationDirection;
 import org.firstinspires.ftc.teamcode.robot.lib.Vector;
 import org.firstinspires.ftc.teamcode.robot.mapping.MotorMap;
 
+import java.util.HashMap;
+
 
 public class XDrive extends DriveBase {
+    private boolean init = true;
+    private HashMap<String, Integer> startPos = new HashMap<>();
 
     /***
      *
@@ -74,6 +78,16 @@ public class XDrive extends DriveBase {
      */
     @Override
     public void driveDistance(double angle, double distance) {
+        if(init){ // first run
+            int i = 0;
+
+            for(String motorName : this.getMotors().keySet()){
+                startPos.put(motorName, this.getMotor(motorName).getCurrentPosition());
+            }
+
+            init = false;
+        }
+
 
     }
 
