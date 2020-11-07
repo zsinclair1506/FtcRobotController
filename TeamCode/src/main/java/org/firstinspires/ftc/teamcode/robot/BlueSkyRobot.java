@@ -3,8 +3,7 @@ package org.firstinspires.ftc.teamcode.robot;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.robot.lib.IntakePosition;
-import org.firstinspires.ftc.teamcode.robot.lib.RotationDirection;
+import org.firstinspires.ftc.teamcode.robot.mapping.RotationDirection;
 import org.firstinspires.ftc.teamcode.robot.lib.Vector;
 import org.firstinspires.ftc.teamcode.robot.mapping.MechanismMap;
 
@@ -26,8 +25,7 @@ public class BlueSkyRobot extends Robot {
 //                new WobbleArm(map, telemetry, this));
         this.addMechanism(MechanismMap.CONVEYOR.getName(),
                 new Conveyor(map, telemetry, this));
-//        this.addMechanism(MechanismMap.INTAKE.getName(),
-//                new Intake(map, telemetry, this));
+        this.addMechanism(MechanismMap.INTAKE.getName(), new Intake(map, telemetry, this));
         this.addMechanism(MechanismMap.SHOOTER.getName(), new Shooter(map, telemetry, this));
     }
 
@@ -193,5 +191,9 @@ public class BlueSkyRobot extends Robot {
      */
     public void conveyorStop(){
         ((Conveyor)this.mechanisms.get(MechanismMap.CONVEYOR.getName())).stop();
+    }
+
+    public void intakeCancel(){
+        ((Intake)this.getMechanism(MechanismMap.INTAKE.getName())).cancel();
     }
 }
