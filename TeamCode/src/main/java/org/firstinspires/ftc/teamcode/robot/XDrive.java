@@ -17,7 +17,8 @@ public class XDrive extends DriveBase {
      * 1440 counts per revolution
      */
     private final double DISTANCE_PER_COUNT = (4 * 25.4 * Math.PI) / 1440;
-    private static final double ACCEPTABLE_ERROR = 25;
+    private static final double ACCEPTABLE_DISTANCE_ERROR = 25;
+    private static final double ACCEPTABLE_ROTATION_ERROR = 25;
 
     /***
      *
@@ -79,9 +80,10 @@ public class XDrive extends DriveBase {
      * Drive the robot a set distance at a certain angle. (Meant to be run in a loop)
      * @param distance the distance to drive from current location in MM
      * @param angle the angle to drive the robot in, 0 is forward. This base slides
+     * @return true if completed
      */
     @Override
-    public void driveDistance(double distance, double angle) {
+    public boolean driveDistance(double distance, double angle) {
         Vector desiredVector = new Vector(distance, angle);
         Odometry odometry = this.getOdometry();
         odometry.driveDistanceInit(this.getMotors());
@@ -156,24 +158,39 @@ public class XDrive extends DriveBase {
         }
 
         Vector remainingVector = desiredVector.subtract(driveSum);
-        if(remainingVector.getMagnitude() >= ACCEPTABLE_ERROR){
+        if(remainingVector.getMagnitude() >= ACCEPTABLE_DISTANCE_ERROR){
             this.setStrafe(remainingVector);
         }
+        else{
+            this.getOdometry().driveDistanceReset();
+            return true;
+        }
+
+        return false;
     }
 
     /***
      * Rotate the robot by a certain angle at a certain power.
      * @param angle the angle to rotate through (clockwise is positive)
      * @param power the power to rotate the drivebase with
+     * @return true when completed
      */
     @Override
-    public void rotateAngle(double angle, double power) {
+    public boolean rotateAngle(double angle, double power) {
         // restart imu movement tracking.
         this.getOdometry().rotateAngleInit();
         double degrees = this.getOdometry().getAngle();
 
-        this.setRotation(degrees < 0
-                ? RotationDirection.CLOCKWISE : RotationDirection.COUNTER_CLOCKWISE, power);
+        if(degrees > ACCEPTABLE_ROTATION_ERROR){
+            this.setRotation(degrees < 0
+                    ? RotationDirection.CLOCKWISE : RotationDirection.COUNTER_CLOCKWISE, power);
+        }
+        else{
+            this.getOdometry().rotateAngleReset();
+            return true;
+        }
+
+        return false;
     }
 
     /***

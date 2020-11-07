@@ -187,6 +187,20 @@ public class BlueSkyRobot extends Robot {
     }
 
     /***
+     * @see DriveBase for more information.
+     */
+    public boolean driveDistance(double distance, double angle){
+        return ((XDrive) this.getDriveBase()).driveDistance(distance, angle);
+    }
+
+    /***
+     * @see DriveBase for more information.
+     */
+    public boolean rotateAngle(double angle, double power){
+        return ((XDrive) this.getDriveBase()).rotateAngle(angle, power);
+    }
+
+    /***
      * @see Conveyor for more information.
      */
     public void conveyorStop(){

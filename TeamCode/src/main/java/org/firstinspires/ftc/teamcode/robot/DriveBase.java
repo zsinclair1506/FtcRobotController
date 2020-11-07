@@ -54,15 +54,17 @@ public abstract class DriveBase extends Mechanism {
      * Drive the robot a set distance at a certain angle. (Meant to be run in a loop)
      * @param distance the distance to drive from current location
      * @param angle the angle to drive the robot (each drivebase will implement this differently)
+     * @return true if it is complete
      */
-    public abstract void driveDistance(double distance, double angle);
+    public abstract boolean driveDistance(double distance, double angle);
 
     /***
      * Rotate the robot by a certain angle at a certain power.
      * @param angle the angle to rotate through (clockwise is positive)
      * @param power the power to rotate the drivebase with
+     * @return true if it is complete
      */
-    public abstract void rotateAngle(double angle, double power);
+    public abstract boolean rotateAngle(double angle, double power);
 
     /***
      * Set the motor power for the motors to rotate at the set power. Will need to execute

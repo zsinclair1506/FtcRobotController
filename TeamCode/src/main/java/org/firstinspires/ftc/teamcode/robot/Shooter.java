@@ -32,7 +32,7 @@ public class Shooter extends Mechanism {
     public void shoot(double power){
         if (!this.whackyStick.isBusy()){
             this.whackyStick.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            this.whackyStick.setTargetPosition(1440/9);
+            this.whackyStick.setTargetPosition(3 * 1440 / 9);
             this.whackyStick.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             this.whackyStick.setPower(power);
         }
