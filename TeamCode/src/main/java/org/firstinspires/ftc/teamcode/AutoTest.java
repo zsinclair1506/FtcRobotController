@@ -40,6 +40,26 @@ public class AutoTest extends OpMode{
         public void start() {
             runtime.reset();
 
+
+            /**
+             * Wheel Circumference = 12.57in
+             * Distance to edge of scoring zone = 80in
+             *
+             * Motor Calcs
+             * wheel radius = 2in
+             * Forward Velocity = 10.47... x 2 x √2 = 29.619219598...
+             * TODO: Double Check Accuracy
+             */
+
+            //Drive Forward 2006.6mm
+            // IF STARTED ON OUTER TAPE MOVE 615.95mm TO THE RIGHT (BLUE) OR LEFT (RED)
+            // Move 157.48mm to the right (Blue) or 157.48mm to the right (Red)
+            /** Repeat x2
+            * Shoot powershot
+            * Move 195.58 to the right (blue) or left (red)
+            */
+            //Shoot powershot 3
+            //Drive forward 27.4mm to park
         }
 
         /*
