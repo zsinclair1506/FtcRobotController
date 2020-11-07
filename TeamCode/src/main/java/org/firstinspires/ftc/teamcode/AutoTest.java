@@ -72,13 +72,15 @@ public class AutoTest extends OpMode{
              * TODO: Double Check Accuracy
              */
 
-            //Drive Forward approx. 79in
+            //Drive Forward 2006.6mm
+            // IF STARTED ON OUTER TAPE MOVE 615.95mm TO THE RIGHT (BLUE) OR LEFT (RED)
+            // Move 157.48mm to the right (Blue) or 157.48mm to the right (Red)
             /** Repeat x2
             * Shoot powershot
-            * Move Left
+            * Move 195.58 to the right (blue) or left (red)
             */
             //Shoot powershot 3
-            //Drive forward to park
+            //Drive forward 27.4mm to park
 
 
             //Object recognition? If we make it to nationals?
