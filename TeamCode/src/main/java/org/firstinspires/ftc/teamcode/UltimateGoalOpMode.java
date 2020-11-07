@@ -89,6 +89,24 @@ public class UltimateGoalOpMode extends OpMode
             }
         }
 
+        if (driveGamepad.getButton(GamepadButtons.FEEDER_UP.getButtonName())){
+            // debounce
+            if(!this.debounce.get(GamepadButtons.FEEDER_UP)){
+                this.debounce.put(GamepadButtons.FEEDER_UP, true);
+                debounceTime.reset();
+                blueSky.loaderRaise();
+            }
+        }
+
+        if (driveGamepad.getButton(GamepadButtons.FEEDER_DOWN.getButtonName())){
+            // debounce
+            if(!this.debounce.get(GamepadButtons.FEEDER_DOWN)){
+                this.debounce.put(GamepadButtons.FEEDER_DOWN, true);
+                debounceTime.reset();
+                blueSky.loaderLower();
+            }
+        }
+
         if(operatorGamepad.getTrigger(GamepadButtons.CONVEYOR_RUN.getButtonName()) > 0.8){
             blueSky.conveyorRun();
         }

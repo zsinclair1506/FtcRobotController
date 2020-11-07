@@ -58,6 +58,13 @@ public enum GamepadButtons {
     SHOOTER_SHOOT("right_trigger"),
 
     /***
+     * Gamepad: 1
+     */
+    FEEDER_UP("y"),
+
+    FEEDER_DOWN("a"),
+
+    /***
      * Gamepad: 2
      */
     ARM_IN_OUT("left_stick"),
@@ -70,7 +77,7 @@ public enum GamepadButtons {
     /***
      * Gamepad: 2
      */
-    CONVEYOR_RUN("left_trigger"),
+     CONVEYOR_RUN("left_trigger"),
 
     /***
      * Gamepad: 2
