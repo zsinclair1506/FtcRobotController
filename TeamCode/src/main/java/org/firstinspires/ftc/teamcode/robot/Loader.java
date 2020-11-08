@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.robot.mapping.MotorMap;
  */
 public class Loader extends Mechanism {
     private Servo loaderServo;
-    private static double LOWER_POSITION = 0.4;
+    private static double LOWER_POSITION = 0.1;
     private static double UPPER_POSITION = 0.5;
 
     /***
