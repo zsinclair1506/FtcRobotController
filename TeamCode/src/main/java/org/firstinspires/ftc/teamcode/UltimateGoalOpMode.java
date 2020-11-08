@@ -36,11 +36,15 @@ public class UltimateGoalOpMode extends OpMode
         this.debounceTimers.put(GamepadButtons.INTAKE_STOP, new ElapsedTime());
         this.debounceTimers.put(GamepadButtons.SHOOTER_FEED_ME, new ElapsedTime());
         this.debounceTimers.put(GamepadButtons.SHOOTER_SHOOT, new ElapsedTime());
+        this.debounceTimers.put(GamepadButtons.FEEDER_DOWN, new ElapsedTime());
+        this.debounceTimers.put(GamepadButtons.FEEDER_UP, new ElapsedTime());
         this.debounce.put(GamepadButtons.INTAKE_SWITCH_POSITIONS, false);
         this.debounce.put(GamepadButtons.INTAKE_CYCLE, false);
         this.debounce.put(GamepadButtons.INTAKE_STOP, false);
         this.debounce.put(GamepadButtons.SHOOTER_FEED_ME, false);
         this.debounce.put(GamepadButtons.SHOOTER_SHOOT, false);
+        this.debounce.put(GamepadButtons.FEEDER_DOWN, false);
+        this.debounce.put(GamepadButtons.FEEDER_UP, false);
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
