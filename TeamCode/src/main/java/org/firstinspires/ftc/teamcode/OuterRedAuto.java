@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.robot.BlueSkyRobot;
 
-@Autonomous(name="Outer Blue Auto", group="BlueSky")
-public class OuterBlueAuto extends OpMode{
+@Autonomous(name="Outer Red Auto", group="BlueSky")
+public class OuterRedAuto extends OpMode{
         private ElapsedTime runtime = new ElapsedTime();
         private BlueSkyRobot blueSky;
 
