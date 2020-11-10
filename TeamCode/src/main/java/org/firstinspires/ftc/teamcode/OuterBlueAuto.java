@@ -136,7 +136,9 @@ public class OuterBlueAuto extends OpMode{
          */
         @Override
         public void start() {
-            this.autonomous.start();
+            if(!this.autonomous.isRunning()) {
+                this.autonomous.start();
+            }
         }
 
         /*
