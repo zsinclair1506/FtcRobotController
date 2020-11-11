@@ -17,10 +17,9 @@ public class UltimateGoalOpMode extends OpMode
     private ElapsedTime runtime = new ElapsedTime();
     private BlueSkyRobot blueSky;
     private GamepadWrapper driveGamepad, operatorGamepad;
-    private ElapsedTime debounceTime = new ElapsedTime();
     private HashMap<GamepadButtons, ElapsedTime> debounceTimers = new HashMap<>();
     private HashMap<GamepadButtons, Boolean> debounce = new HashMap<>();
-    private double debounceTimeMS = 250;
+    private static final double DEBOUNCE_TIME_MS = 250;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -75,11 +74,10 @@ public class UltimateGoalOpMode extends OpMode
         blueSky.setRotate(driveGamepad.getStickVector(GamepadButtons.ROBOT_ROTATE.getButtonName()));
         blueSky.drive();
 //
-        if(driveGamepad.getTrigger(GamepadButtons.SHOOTER_SHOOT.getButtonName()) > 0.5){
+        if(driveGamepad.getTriggerBool(GamepadButtons.SHOOTER_SHOOT.getButtonName())){
             // debounce
             if(!this.debounce.get(GamepadButtons.SHOOTER_SHOOT)){
                 this.debounce.put(GamepadButtons.SHOOTER_SHOOT, true);
-                debounceTime.reset();
                 blueSky.shooterShoot();
             }
         }
@@ -88,7 +86,6 @@ public class UltimateGoalOpMode extends OpMode
             // debounce
             if(!this.debounce.get(GamepadButtons.SHOOTER_FEED_ME)){
                 this.debounce.put(GamepadButtons.SHOOTER_FEED_ME, true);
-                debounceTime.reset();
                 blueSky.shooterFeedMe();
             }
         }
@@ -97,7 +94,6 @@ public class UltimateGoalOpMode extends OpMode
             // debounce
             if(!this.debounce.get(GamepadButtons.FEEDER_UP)){
                 this.debounce.put(GamepadButtons.FEEDER_UP, true);
-                debounceTime.reset();
                 blueSky.loaderRaise();
             }
         }
@@ -106,7 +102,6 @@ public class UltimateGoalOpMode extends OpMode
             // debounce
             if(!this.debounce.get(GamepadButtons.FEEDER_DOWN)){
                 this.debounce.put(GamepadButtons.FEEDER_DOWN, true);
-                debounceTime.reset();
                 blueSky.loaderLower();
             }
         }
@@ -139,7 +134,6 @@ public class UltimateGoalOpMode extends OpMode
             // debounce
             if(!this.debounce.get(GamepadButtons.INTAKE_SWITCH_POSITIONS)){
                 this.debounce.put(GamepadButtons.INTAKE_SWITCH_POSITIONS, true);
-                debounceTime.reset();
                 blueSky.intakeRotate();
             }
         }
@@ -148,7 +142,6 @@ public class UltimateGoalOpMode extends OpMode
             // debounce
             if(!this.debounce.get(GamepadButtons.INTAKE_CYCLE)){
                 this.debounce.put(GamepadButtons.INTAKE_CYCLE, true);
-                debounceTime.reset();
                 blueSky.intakeCycle();
             }
         }
@@ -157,13 +150,13 @@ public class UltimateGoalOpMode extends OpMode
             // debounce
             if(!this.debounce.get(GamepadButtons.INTAKE_STOP)){
                 this.debounce.put(GamepadButtons.INTAKE_STOP, true);
-                debounceTime.reset();
                 blueSky.intakeCancel();
             }
         }
 
         for(GamepadButtons button : this.debounce.keySet()) {
-            if (debounceTimers.get(button).milliseconds() > debounceTimeMS) {
+            if (debounceTimers.get(button).milliseconds() > DEBOUNCE_TIME_MS) {
+                debounceTimers.get(button).reset();
                 this.debounce.put(button, false);
             }
         }
