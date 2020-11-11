@@ -67,6 +67,15 @@ public class GamepadWrapper {
     }
 
     /***
+     * Gets whether the trigger is pressed or not
+     * @param trigger the trigger to get the value of
+     * @return true if the trigger is 'pressed' (> 0.8)
+     */
+    public boolean getTriggerBool(String trigger){
+        return (getJoystick(trigger) > 0.8);
+    }
+
+    /***
      * Get the angle the stick is being pressed in. (0 is +ve X)
      * @param stick the stick to get the angle of (left_stick or right_stick)
      * @return the angle of the stick

@@ -111,10 +111,10 @@ public class UltimateGoalOpMode extends OpMode
             }
         }
 
-        if(operatorGamepad.getTrigger(GamepadButtons.CONVEYOR_RUN.getButtonName()) > 0.8){
+        if(operatorGamepad.getTriggerBool(GamepadButtons.CONVEYOR_RUN.getButtonName())){
             blueSky.conveyorRun();
         }
-        else if(operatorGamepad.getTrigger(GamepadButtons.CONVEYOR_RUN.getButtonName()) < 0.8){
+        else if(operatorGamepad.getTriggerBool(GamepadButtons.CONVEYOR_RUN.getButtonName())){
             blueSky.conveyorStop();
         }
 
@@ -135,7 +135,7 @@ public class UltimateGoalOpMode extends OpMode
             blueSky.intakeRelease();
         }
 
-        if(operatorGamepad.getTrigger(GamepadButtons.INTAKE_SWITCH_POSITIONS.getButtonName()) > 0.8){
+        if(operatorGamepad.getTriggerBool(GamepadButtons.INTAKE_SWITCH_POSITIONS.getButtonName())){
             // debounce
             if(!this.debounce.get(GamepadButtons.INTAKE_SWITCH_POSITIONS)){
                 this.debounce.put(GamepadButtons.INTAKE_SWITCH_POSITIONS, true);
