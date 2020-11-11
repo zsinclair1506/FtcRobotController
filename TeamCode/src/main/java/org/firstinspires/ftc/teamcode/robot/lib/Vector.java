@@ -9,7 +9,6 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  */
 public class Vector {
     private double values[];
-    private Telemetry telemetry;
 
     public static Vector X_2 = new Vector(1, 0);
     public static Vector X_3 = new Vector(1, 0, 0);
@@ -22,7 +21,7 @@ public class Vector {
      * Create a vector with the incoming values
      * @param inVaules the values to create the vector with
      */
-    public Vector(double... inVaules) {
+    private Vector(double... inVaules) {
         this.values = inVaules;
     }
 
@@ -31,8 +30,7 @@ public class Vector {
      * @param magnitude the magnitude of the vector (length)
      * @param angle the angle of the vector from the X axis
      */
-    public Vector(double magnitude, double angle, Telemetry telemetry){
-        this.telemetry = telemetry;
+    public Vector(double magnitude, double angle){
         this.values = new double[]{magnitude * Math.cos(angle), magnitude * Math.sin(angle)};
     }
 
@@ -76,10 +74,14 @@ public class Vector {
     /**
      * Calculates the angle between this vector and the incoming vector.
      * @param vector the vector to get the angle between
-     * @return
+     * @return 0 if acos would produce NaN or the angle between this and the visiting vector
      */
     public double getAngleBetween(Vector vector){
-        return (this.getValues()[1] < 0 ? -1 : 1) * Math.acos(this.dot(vector)/(this.getMagnitude() * vector.getMagnitude()));
+        if (this.getMagnitude() * vector.getMagnitude() != 0) {
+            return (this.getValues()[1] < 0 ? -1 : 1)
+                    * Math.acos(this.dot(vector) / (this.getMagnitude() * vector.getMagnitude()));
+        }
+        return 0;
     }
 
     /***

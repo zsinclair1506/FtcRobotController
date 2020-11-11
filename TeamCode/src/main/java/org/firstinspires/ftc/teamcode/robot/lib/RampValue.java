@@ -21,6 +21,15 @@ public class RampValue {
     private Telemetry telemetry;
 
     /***
+     * RampModes are how a change in value can be controlled.
+     * S_CURVE - low acceleration in and out of the ramp up
+     * TRAPEZOID - straight line between two points
+     */
+    public enum RampMode {
+        S_CURVE, TRAPEZOID
+    }
+
+    /***
      * Constructor for no preset values
      */
     public RampValue(Telemetry telemetry){
@@ -29,7 +38,7 @@ public class RampValue {
 
     /***
      * Constructor with preset values
-     * @param mode the ramp mode to be set [SCURVE or TRAPEZOID]
+     * @param mode the ramp mode to be set [S_CURVE or TRAPEZOID]
      * @param maxRampAccel the maximum allowed acceleration
      * @param origValue the starting value
      * @param setPoint the desired final value
@@ -54,7 +63,7 @@ public class RampValue {
 
     /***
      * Set the ramp mode
-     * @param mode the ramp mode to set [SCURVE or TRAPEZOID]
+     * @param mode the ramp mode to set [S_CURVE or TRAPEZOID]
      */
     public void setMode(RampMode mode){
         this.rampMode = mode;
@@ -69,21 +78,21 @@ public class RampValue {
     }
 
     /***
-     * Set the dilation of the increasing part of the SCURVE.
+     * Set the dilation of the increasing part of the S_CURVE.
      * Will be 1 / dilation meaning that larger numbers will give slower curves.
-     * @param scurveUpDilation the dilation to set
+     * @param sCurveUpDilation the dilation to set
      */
-    public void setScurveUpDilation(int scurveUpDilation){
-        this.s_upDilation = 1 / scurveUpDilation;
+    public void setSCurveUpDilation(int sCurveUpDilation){
+        this.s_upDilation = 1 / sCurveUpDilation;
     }
 
     /***
      * Set the dilation of the decreasing part of the SCURVE.
      * Will be 1 / dilation meaning that larger numbers will give slower curves.
-     * @param scurveDownDilation the dilation to set
+     * @param sCurveDownDilation the dilation to set
      */
-    public void setScurveDownDilation(int scurveDownDilation){
-        this.s_downDilation = 1 / scurveDownDilation;
+    public void setSCurveDownDilation(int sCurveDownDilation){
+        this.s_downDilation = 1 / sCurveDownDilation;
     }
 
     /***
@@ -173,7 +182,7 @@ public class RampValue {
                 }
 
                 break;
-            case SCURVE: // smooth transition, controlled jerk
+            case S_CURVE: // smooth transition, controlled jerk
                 double expectedValue;
 
                 // the gradient at which to swap between increasing velocity and decreasing velocity

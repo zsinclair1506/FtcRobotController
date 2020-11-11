@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.robot;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+
 /***
  *
  */
@@ -19,5 +20,4 @@ public abstract class Mechanism {
         this.telemetry = telemetry;
         this.robot = robot;
     }
-
 }

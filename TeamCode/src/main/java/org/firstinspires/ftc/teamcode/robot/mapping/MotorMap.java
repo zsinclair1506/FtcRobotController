@@ -38,17 +38,17 @@ public enum MotorMap {
     /***
      * The servo at the end of the intake to grab the rings
      */
-    INTAKE_GRAB_SERVO(""),
+    INTAKE_GRAB_SERVO("intakeGrab"),
 
     /***
      * The continuous rotation servo for the up and down of the intake mechanism
      */
-    INTAKE_UP_CRSERVO(""),
+    INTAKE_UP_CRSERVO("intakeUp"),
 
     /***
      * The servo for the rotation of the intake mechanism
      */
-    INTAKE_ROTATE_SERVO(""),
+    INTAKE_ROTATE_SERVO("intakeRotate"),
 
     /***
      * The motor for the whackystick shooter

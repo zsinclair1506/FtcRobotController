@@ -14,15 +14,13 @@ import java.lang.reflect.Field;
 public class GamepadWrapper {
     private Gamepad gamepad;
     private Class gamepadClass = Gamepad.class; // used for reflection to get the fields
-    private Telemetry telemetry;
 
     /***
      * Constructor for the @GamepadWrapper
      * @param gamepad the gamepad that this wraps (around)
      */
-    public GamepadWrapper(Gamepad gamepad, Telemetry telemetry){
+    public GamepadWrapper(Gamepad gamepad){
         this.gamepad = gamepad;
-        this.telemetry = telemetry;
     }
 
     /***
@@ -69,6 +67,15 @@ public class GamepadWrapper {
     }
 
     /***
+     * Gets whether the trigger is pressed or not
+     * @param trigger the trigger to get the value of
+     * @return true if the trigger is 'pressed' (> 0.8)
+     */
+    public boolean getTriggerBool(String trigger){
+        return (getJoystick(trigger) > 0.8);
+    }
+
+    /***
      * Get the angle the stick is being pressed in. (0 is +ve X)
      * @param stick the stick to get the angle of (left_stick or right_stick)
      * @return the angle of the stick
@@ -108,6 +115,6 @@ public class GamepadWrapper {
      * @return the vector of the joystick
      */
     public Vector getStickVector(String stick){
-        return new Vector(this.getStickMagnitude(stick), this.getStickAngle(stick), telemetry);
+        return new Vector(this.getStickMagnitude(stick), this.getStickAngle(stick));
     }
 }

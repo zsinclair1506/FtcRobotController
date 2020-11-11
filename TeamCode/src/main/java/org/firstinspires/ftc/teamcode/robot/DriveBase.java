@@ -4,7 +4,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.robot.lib.RotationDirection;
+import org.firstinspires.ftc.teamcode.robot.mapping.RotationDirection;
+import org.firstinspires.ftc.teamcode.robot.lib.Odometry;
 import org.firstinspires.ftc.teamcode.robot.lib.Vector;
 
 import java.util.HashMap;
@@ -17,14 +18,16 @@ public abstract class DriveBase extends Mechanism {
     private HashMap<String, Double> rotateMotorPowers = new HashMap<>();
     private HashMap<String, Double> strafeMotorPowers = new HashMap<>();
     private HashMap<String, Double> drivePower = new HashMap<>();
+    private Odometry odometry;
 
     /***
      * Constructor for the DriveBase that makes telemetry available to all DriveBases.
      * @param telemetry the telemetry for the DriveBases
      */
 
-    public DriveBase(Telemetry telemetry, Robot robot){
+    public DriveBase(HardwareMap map, Telemetry telemetry, Robot robot){
         super(telemetry, robot);
+        this.odometry = new Odometry(map, telemetry);
     }
 
     /***
@@ -49,17 +52,19 @@ public abstract class DriveBase extends Mechanism {
 
     /***
      * Drive the robot a set distance at a certain angle. (Meant to be run in a loop)
-     * @param angle the angle to drive the robot (each drivebase will implement this differently)
      * @param distance the distance to drive from current location
+     * @param angle the angle to drive the robot (each drivebase will implement this differently)
+     * @return true if it is complete
      */
-    public abstract void driveDistance(double angle, double distance);
+    public abstract boolean driveDistance(double distance, double angle);
 
     /***
      * Rotate the robot by a certain angle at a certain power.
      * @param angle the angle to rotate through (clockwise is positive)
      * @param power the power to rotate the drivebase with
+     * @return true if it is complete
      */
-    public abstract void rotateAngle(double angle, double power);
+    public abstract boolean rotateAngle(double angle, double power);
 
     /***
      * Set the motor power for the motors to rotate at the set power. Will need to execute
@@ -82,8 +87,25 @@ public abstract class DriveBase extends Mechanism {
      * to allow a motor to be working at 100% (1) even if the motor would only achieve .7 (should
      * be limited to if the magnitude is close to 1 [0.8 or greater?] otherwise it will always be
      * driving full power)
+     *
+     * Normalises the motor powers with the maximum value of 1 when input to the motors while
+     * preserving the desired ratios of power.
      */
-    protected abstract void motorNormalise();
+    protected void motorNormalise() {
+        double maxValue = 0;
+
+        // calculate the max value
+        for(String motor : this.getMotors().keySet()){
+            maxValue = Math.max(maxValue, Math.abs(this.getDrivePowers().get(motor)));
+        }
+
+        // only scale the value if it is above 1. This will be most of the time.
+        if(maxValue > 1) {
+            for (String motor : this.getMotors().keySet()) {
+                this.setDrivePower(motor, this.getDrivePowers().get(motor) / maxValue);
+            }
+        }
+    }
 
     /***
      * Get the motor from the collection of motors for this drivebase.
@@ -155,16 +177,27 @@ public abstract class DriveBase extends Mechanism {
      * Combines the strafe and rotate powers into drive power.
      */
     protected void combineMotorPower(){
-        for(String motor : this.strafeMotorPowers.keySet()){
-            this.setDrivePower(motor,
-                    this.strafeMotorPowers.get(motor) + this.rotateMotorPowers.get(motor));
+        for(String motor : this.getMotors().keySet()){
+            double strafe = this.strafeMotorPowers.get(motor) == null
+                    ? 0 : this.strafeMotorPowers.get(motor);
+            double rotate = this.rotateMotorPowers.get(motor) == null
+                    ? 0 : this.rotateMotorPowers.get(motor);
+            this.setDrivePower(motor, strafe + rotate);
         }
     }
 
     /***
-     * Combine nmotor powers. @see DriveBase#combineMotorPower
+     * Combine motor powers. @see DriveBase#combineMotorPower
      */
     protected void byOurPowersCombined(){
         this.combineMotorPower();
+    }
+
+    /***
+     * Gets the odometry.
+     * @return the odometry
+     */
+    public Odometry getOdometry() {
+        return this.odometry;
     }
 }
