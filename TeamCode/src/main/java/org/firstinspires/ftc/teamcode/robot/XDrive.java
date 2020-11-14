@@ -83,7 +83,7 @@ public class XDrive extends DriveBase {
      * @return true if completed
      */
     @Override
-    public boolean driveDistance(double distance, double angle) {
+    public boolean driveDistance(double distance, double angle, byte currentState) {
         Vector desiredVector = new Vector(distance, angle);
         Odometry odometry = this.getOdometry();
         odometry.driveDistanceInit(this.getMotors());
@@ -160,13 +160,14 @@ public class XDrive extends DriveBase {
         Vector remainingVector = desiredVector.subtract(driveSum);
         if(remainingVector.getMagnitude() >= ACCEPTABLE_DISTANCE_ERROR){
             this.setStrafe(remainingVector);
-        }
-        else{
+        } else{
             this.getOdometry().driveDistanceReset();
-            return true;
+             /* the number 7 is the number of states in the machine plus 1, it's not arbitrary, but, I'll create
+             and more readable code when I know that my hacky stuff works :) */ 
+            return (currentState+1) % 7;
         }
 
-        return false;
+        return currentState;
     }
 
     /***
