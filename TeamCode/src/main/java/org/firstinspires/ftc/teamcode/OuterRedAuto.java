@@ -22,8 +22,6 @@ public class OuterRedAuto extends OpMode{
         @Override
         public void init() {
             this.blueSky = new BlueSkyRobot(hardwareMap, telemetry);
-            this.state = 1;
-
             // Tell the driver that initialization is complete.
             telemetry.addData("Status", "Initialized");
         }
@@ -44,6 +42,7 @@ public class OuterRedAuto extends OpMode{
         @Override
         public void start() {
             runtime.reset();
+            this.state = 1;
 
             /*** while(!this.blueSky.driveDistance(2006.6, Math.PI / 2)){
                 // straight up
