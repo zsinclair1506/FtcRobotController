@@ -13,7 +13,7 @@ public class OuterRedAuto extends OpMode{
         // This variable stores the current 'state' or instruction that the robot is undertaking
         // It is made a byte because floating points are not necessary and it seems unlikely
         // That there will be more than 128 phases that the robot has to undergo in 30 seconds
-        private byte state = 1;  
+        private byte state;  
 
 
         /*
@@ -22,6 +22,7 @@ public class OuterRedAuto extends OpMode{
         @Override
         public void init() {
             this.blueSky = new BlueSkyRobot(hardwareMap, telemetry);
+            this.state = 1;
 
             // Tell the driver that initialization is complete.
             telemetry.addData("Status", "Initialized");
@@ -127,24 +128,24 @@ public class OuterRedAuto extends OpMode{
          */
         @Override
         public void loop() {
-            switch (state) {
+            switch (this.state) {
                 case 1:
-                    state = this.blueSky.driveDistance(2006.6, Math.PI/2, state);
+                    this.state = this.blueSky.driveDistance(2006.6, Math.PI/2, this.state);
                     break;
                 case 2:
-                    state = this.blueSky.driveDistance(615.95, Math.PI, state);
+                    this.state = this.blueSky.driveDistance(615.95, Math.PI, this.state);
                     break;
                 case 3:
-                    state = this.blueSky.driveDistance(157.48, Math.PI, state);
+                    this.state = this.blueSky.driveDistance(157.48, Math.PI, this.state);
                     break;
                 case 4:
-                    state = this.blueSky.driveDistance(195.58, Math.PI, state);
+                    this.state = this.blueSky.driveDistance(195.58, Math.PI, this.state);
                     break;
                 case 5:
-                    state = this.blueSky.driveDistance(195.58, Math.PI, state);    
+                    this.state = this.blueSky.driveDistance(195.58, Math.PI, this.state);    
                     break;
                 case 6:
-                    state = this.blueSky.driveDistance(27.4, Math.PI/2, state);
+                    this.state = this.blueSky.driveDistance(27.4, Math.PI/2, this.state);
                 default:
                     this.blueSky.setStrafe(0,0);
                     break;
