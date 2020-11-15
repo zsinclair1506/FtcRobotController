@@ -31,12 +31,12 @@ public class OuterBlueAuto extends OpMode{
         public void run() {
             runtime.reset();
 
-            while(!blueSky.driveDistance(2006.6, Math.PI / 2)){
+            while(1 != blueSky.driveDistance(2006.6, Math.PI / 2, (byte) 1)){
                 // straight up
                 // empty for running the check
             }
 
-            while(!blueSky.driveDistance(777.43, 0)){
+            while(1 != blueSky.driveDistance(777.43, 0, (byte) 1)){
                 // empty for running the check
             }
 
@@ -47,7 +47,7 @@ public class OuterBlueAuto extends OpMode{
             }
 
             runtime.reset();
-            while(!blueSky.driveDistance(195.58, 0)){
+            while(1 != blueSky.driveDistance(195.58, 0, (byte) 1)){
                 blueSky.loaderLower();
                 if(runtime.milliseconds() < 300){
                     blueSky.conveyorRun();
@@ -71,7 +71,7 @@ public class OuterBlueAuto extends OpMode{
             }
 
             runtime.reset();
-            while(!blueSky.driveDistance(195.58, 0)){
+            while(1 != blueSky.driveDistance(195.58, 0, (byte) 1)){
                 blueSky.loaderLower();
                 if(runtime.milliseconds() < 150){
                     blueSky.conveyorRun();
@@ -94,7 +94,7 @@ public class OuterBlueAuto extends OpMode{
                 // empty to delay time
             }
 
-            while(!blueSky.driveDistance(27.4, Math.PI / 2)){
+            while(1 != blueSky.driveDistance(27.4, Math.PI / 2, (byte) 1)){
                 blueSky.loaderLower();
             }
 
