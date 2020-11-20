@@ -6,10 +6,14 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.robot.BlueSkyRobot;
 
-@Autonomous(name="Outer Blue Auto", group="BlueSky")
-public class OuterBlueAuto extends OpMode{
+@Autonomous(name="Outer Red Auto", group="Ultimate Goal")
+public class OuterRedAuto extends OpMode{
         private ElapsedTime runtime = new ElapsedTime();
         private BlueSkyRobot blueSky;
+        // This variable stores the current 'state' or instruction that the robot is undertaking
+        // It is made a byte because floating points are not necessary and it seems unlikely
+        // That there will be more than 128 phases that the robot has to undergo in 30 seconds
+        private byte state;  
 
 
         /*
@@ -18,7 +22,6 @@ public class OuterBlueAuto extends OpMode{
         @Override
         public void init() {
             this.blueSky = new BlueSkyRobot(hardwareMap, telemetry);
-
             // Tell the driver that initialization is complete.
             telemetry.addData("Status", "Initialized");
         }
@@ -39,8 +42,9 @@ public class OuterBlueAuto extends OpMode{
         @Override
         public void start() {
             runtime.reset();
+            this.state = 1;
 
-            while(!this.blueSky.driveDistance(2006.6, Math.PI / 2)){
+            /*** while(!this.blueSky.driveDistance(2006.6, Math.PI / 2)){
                 // straight up
                 // empty for running the check
             }
@@ -105,11 +109,11 @@ public class OuterBlueAuto extends OpMode{
 
             while(!this.blueSky.driveDistance(27.4, Math.PI / 2)){
                 this.blueSky.loaderLower();
-            }
+            } */
 
             //Drive Forward 2006.6mm
             // IF STARTED ON OUTER TAPE MOVE 615.95mm TO THE RIGHT (BLUE) OR LEFT (RED)
-            // Move 157.48mm to the right (Blue) or 157.48mm to the right (Red)
+            // Move 157.48mm to the right (Blue) or 157.48mm to the left (Red)
             /** Repeat x2
             * Shoot powershot
             * Move 195.58 to the right (blue) or left (red)
@@ -123,7 +127,28 @@ public class OuterBlueAuto extends OpMode{
          */
         @Override
         public void loop() {
-
+            switch (this.state) {
+                case 1:
+                    this.state = this.blueSky.driveDistance(2006.6, Math.PI/2, this.state);
+                    break;
+                case 2:
+                    this.state = this.blueSky.driveDistance(615.95, Math.PI, this.state);
+                    break;
+                case 3:
+                    this.state = this.blueSky.driveDistance(157.48, Math.PI, this.state);
+                    break;
+                case 4:
+                    this.state = this.blueSky.driveDistance(195.58, Math.PI, this.state);
+                    break;
+                case 5:
+                    this.state = this.blueSky.driveDistance(195.58, Math.PI, this.state);    
+                    break;
+                case 6:
+                    this.state = this.blueSky.driveDistance(27.4, Math.PI/2, this.state);
+                default:
+                    this.blueSky.setStrafe(0,0);
+                    break;
+            }
         }
 
         /*
@@ -131,6 +156,6 @@ public class OuterBlueAuto extends OpMode{
          */
         @Override
         public void stop() {
-
+            this.blueSky.setStrafe(0,0);
         }
     }

@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.robot.lib.GamepadWrapper;
 
 import java.util.HashMap;
 
-@TeleOp(name="BlueSky Test", group="Ultimate Goal")
+@TeleOp(name="BlueSky TeleOp", group="Ultimate Goal")
 public class UltimateGoalOpMode extends OpMode
 {
     // Declare OpMode members.

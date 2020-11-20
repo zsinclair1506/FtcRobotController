@@ -35,7 +35,6 @@ public class Loader extends Mechanism {
      */
     public void lower(){
         this.loaderServo.setPosition(this.LOWER_POSITION);
-        telemetry.addData("Position:", " Lower");
     }
 
     /***
@@ -43,6 +42,5 @@ public class Loader extends Mechanism {
      */
     public void raise(){
         this.loaderServo.setPosition(this.UPPER_POSITION);
-        telemetry.addData("Position:", " Upper");
     }
 }

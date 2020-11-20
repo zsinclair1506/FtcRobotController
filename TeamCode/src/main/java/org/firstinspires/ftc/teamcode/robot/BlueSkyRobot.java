@@ -189,8 +189,8 @@ public class BlueSkyRobot extends Robot {
     /***
      * @see DriveBase for more information.
      */
-    public boolean driveDistance(double distance, double angle){
-        return ((XDrive) this.getDriveBase()).driveDistance(distance, angle);
+    public byte driveDistance(double distance, double angle, byte currentState){
+        return ((XDrive) this.getDriveBase()).driveDistance(distance, angle, currentState);
     }
 
     /***

@@ -76,14 +76,19 @@ public class XDrive extends DriveBase {
         this.setStrafe(driveVector.getMagnitude(), driveVector.getAngleBetween(Vector.X_2));
     }
 
+    @Override
+    public boolean driveDistance(double distance, double angle) {
+        return false;
+    }
+
     /***
      * Drive the robot a set distance at a certain angle. (Meant to be run in a loop)
      * @param distance the distance to drive from current location in MM
      * @param angle the angle to drive the robot in, 0 is forward. This base slides
      * @return true if completed
      */
-    @Override
-    public boolean driveDistance(double distance, double angle) {
+
+    public byte driveDistance(double distance, double angle, byte currentState) {
         Vector desiredVector = new Vector(distance, angle);
         Odometry odometry = this.getOdometry();
         odometry.driveDistanceInit(this.getMotors());
@@ -160,13 +165,14 @@ public class XDrive extends DriveBase {
         Vector remainingVector = desiredVector.subtract(driveSum);
         if(remainingVector.getMagnitude() >= ACCEPTABLE_DISTANCE_ERROR){
             this.setStrafe(remainingVector);
-        }
-        else{
+        } else{
             this.getOdometry().driveDistanceReset();
-            return true;
+             /* the number 7 is the number of states in the machine plus 1, it's not arbitrary, but, I'll create
+             and more readable code when I know that my hacky stuff works :) */ 
+            return (byte) ((currentState+1) % 7);
         }
 
-        return false;
+        return currentState;
     }
 
     /***
