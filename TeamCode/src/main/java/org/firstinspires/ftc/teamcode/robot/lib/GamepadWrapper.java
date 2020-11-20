@@ -179,7 +179,10 @@ public class GamepadWrapper {
         return new Vector(this.getStickMagnitude(stick), this.getStickAngle(stick));
     }
 
-
+    /***
+     * Check the debounce timer for the button and reset if it is passed the preset time.
+     * @param button the button to check the debounce for
+     */
     private void debounceReset(GamepadButtonMap button){
         if (debounceTimers.get(button).milliseconds() > DEBOUNCE_TIME_MS) {
             this.debounce.put(button, false);
