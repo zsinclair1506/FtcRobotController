@@ -56,7 +56,7 @@ public interface GamepadButtonMap {
         /***
          * Gamepad: 1
          */
-        SHOOTER_SHOOT("right_trigger", true),
+        SHOOTER_SHOOT("right_trigger", false),
 
         /***
          * Gamepad: 1

@@ -22,8 +22,8 @@ public class UltimateGoalOpMode extends OpMode
     @Override
     public void init() {
         this.blueSky = new BlueSkyRobot(hardwareMap, telemetry);
-        this.driveGamepad = new GamepadWrapper(gamepad1);
-        this.operatorGamepad = new GamepadWrapper(gamepad2);
+        this.driveGamepad = new GamepadWrapper(gamepad1, 1);
+        this.operatorGamepad = new GamepadWrapper(gamepad2, 2);
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
@@ -86,7 +86,7 @@ public class UltimateGoalOpMode extends OpMode
             this.blueSky.conveyorRun();
         }
         else if(operatorGamepad.getTriggerBool(GamepadButtonMap.OperatorGamepad.CONVEYOR_RUN)){
-            this.blueSky.conveyorStop();
+//            this.blueSky.conveyorStop();
         }
 
         if(operatorGamepad.getButton(GamepadButtonMap.OperatorGamepad.INTAKE_LIFT)){
@@ -96,14 +96,14 @@ public class UltimateGoalOpMode extends OpMode
             this.blueSky.intakeLower();
         }
         else{
-            this.blueSky.intakeStop();
+//            this.blueSky.intakeStop();
         }
 
         if(operatorGamepad.getButton(GamepadButtonMap.OperatorGamepad.INTAKE_GRAB)){
             this.blueSky.intakeGrab();
         }
         else if(operatorGamepad.getButton(GamepadButtonMap.OperatorGamepad.INTAKE_RELEASE)){
-            this.blueSky.intakeRelease();
+//            this.blueSky.intakeRelease();
         }
     }
 

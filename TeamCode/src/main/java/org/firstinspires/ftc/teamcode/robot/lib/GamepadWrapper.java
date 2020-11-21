@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.robot.lib;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.internal.ui.GamepadUser;
 import org.firstinspires.ftc.teamcode.robot.mapping.GamepadButtonMap;
 
@@ -25,9 +26,9 @@ public class GamepadWrapper {
      * supplied.
      * @param gamepad the gamepad that this wraps (around)
      */
-    public GamepadWrapper(Gamepad gamepad){
+    public GamepadWrapper(Gamepad gamepad, int id){
         this.gamepad = gamepad;
-        if(gamepad.getUser() == GamepadUser.ONE){ // Driver Gamepad
+        if(id == 1){ // Driver Gamepad
             for(GamepadButtonMap.DriverGamepad button : GamepadButtonMap.DriverGamepad.values()){
                 if(button.getDebounce()){
                     this.addDebounce(button);
@@ -94,9 +95,9 @@ public class GamepadWrapper {
      * @param joystick the joystick axis to get the value of
      * @return double value of the joystick axis
      */
-    public double getJoystick(GamepadButtonMap joystick) {
+    public double getJoystick(String joystick) {
         try {
-            Field joystickField = gamepadClass.getField(joystick.getButtonName());
+            Field joystickField = gamepadClass.getField(joystick);
             joystickField.setAccessible(true);
 
             return Double.valueOf((float) joystickField.get(gamepad));
@@ -113,7 +114,7 @@ public class GamepadWrapper {
      * @return double value of the trigger
      */
     public double getTrigger(GamepadButtonMap trigger){
-        return getJoystick(trigger);
+        return getJoystick(trigger.getButtonName());
     }
 
     /***
@@ -140,7 +141,7 @@ public class GamepadWrapper {
         }
 
         if(read) {
-            return (getJoystick(trigger) > 0.8);
+            return (getJoystick(trigger.getButtonName()) > 0.8);
         }
 
         return false;
@@ -152,8 +153,8 @@ public class GamepadWrapper {
      * @return the angle of the stick
      */
     private double getStickAngle(GamepadButtonMap stick) {
-        double x = this.getJoystick(stick);
-        double y = 0 - this.getJoystick(stick);
+        double x = this.getJoystick(stick.getButtonName() + "_x");
+        double y = 0 - this.getJoystick(stick.getButtonName() + "_y");
 
         return Math.atan2(y, x);
     }
@@ -164,8 +165,8 @@ public class GamepadWrapper {
      * @return the magnitude of the displacement
      */
     private double getStickMagnitude(GamepadButtonMap stick){
-        double x = this.getJoystick(stick);
-        double y = 0 - this.getJoystick(stick);
+        double x = this.getJoystick(stick.getButtonName() + "_x");
+        double y = 0 - this.getJoystick(stick.getButtonName() + "_y");
 
         return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
     }
