@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.robot.mapping.MotorMap;
 import org.firstinspires.ftc.teamcode.robot.mapping.RotationDirection;
 import org.firstinspires.ftc.teamcode.robot.lib.Odometry;
 import org.firstinspires.ftc.teamcode.robot.lib.Vector;
@@ -14,10 +15,10 @@ import java.util.HashMap;
  * The actions that all drivebases must do as well as some common access methods.
  */
 public abstract class DriveBase extends Mechanism {
-    private HashMap<String, DcMotor> motors = new HashMap<>();
-    private HashMap<String, Double> rotateMotorPowers = new HashMap<>();
-    private HashMap<String, Double> strafeMotorPowers = new HashMap<>();
-    private HashMap<String, Double> drivePower = new HashMap<>();
+    private HashMap<MotorMap, DcMotor> motors = new HashMap<>();
+    private HashMap<MotorMap, Double> rotateMotorPowers = new HashMap<>();
+    private HashMap<MotorMap, Double> strafeMotorPowers = new HashMap<>();
+    private HashMap<MotorMap, Double> drivePower = new HashMap<>();
     private Odometry odometry;
 
     /***
@@ -95,13 +96,13 @@ public abstract class DriveBase extends Mechanism {
         double maxValue = 0;
 
         // calculate the max value
-        for(String motor : this.getMotors().keySet()){
+        for(MotorMap motor : this.getMotors().keySet()){
             maxValue = Math.max(maxValue, Math.abs(this.getDrivePowers().get(motor)));
         }
 
         // only scale the value if it is above 1. This will be most of the time.
         if(maxValue > 1) {
-            for (String motor : this.getMotors().keySet()) {
+            for (MotorMap motor : this.getMotors().keySet()) {
                 this.setDrivePower(motor, this.getDrivePowers().get(motor) / maxValue);
             }
         }
@@ -112,7 +113,7 @@ public abstract class DriveBase extends Mechanism {
      * @param motorName the name of the motor to get
      * @return a motor with the given name
      */
-    protected DcMotor getMotor(String motorName){
+    protected DcMotor getMotor(MotorMap motorName){
         return this.motors.get(motorName);
     }
 
@@ -121,7 +122,7 @@ public abstract class DriveBase extends Mechanism {
      * @param motorName the name of the motor to add
      * @param motor the motor to add
      */
-    protected void addMotor(String motorName, DcMotor motor){
+    protected void addMotor(MotorMap motorName, DcMotor motor){
         this.motors.put(motorName, motor);
     }
 
@@ -130,7 +131,7 @@ public abstract class DriveBase extends Mechanism {
      * @param motorName the name of the motor to set the power for
      * @param power the power to set
      */
-    protected void setStrafeMotorPower(String motorName, double power){
+    protected void setStrafeMotorPower(MotorMap motorName, double power){
         this.strafeMotorPowers.put(motorName, power);
     }
 
@@ -139,7 +140,7 @@ public abstract class DriveBase extends Mechanism {
      * @param motorName the name of the motor to set power to
      * @param power the power to set
      */
-    protected void setRotateMotorPower(String motorName, double power){
+    protected void setRotateMotorPower(MotorMap motorName, double power){
         this.rotateMotorPowers.put(motorName, power);
     }
 
@@ -147,7 +148,7 @@ public abstract class DriveBase extends Mechanism {
      * Gets the collection of motors
      * @return the collection of motors
      */
-    protected HashMap<String, DcMotor> getMotors(){
+    protected HashMap<MotorMap, DcMotor> getMotors(){
         return this.motors;
     }
 
@@ -155,11 +156,11 @@ public abstract class DriveBase extends Mechanism {
      * Gets the collection of motor drive power
      * @return the motor drive power map
      */
-    protected HashMap<String, Double> getDrivePowers(){
+    protected HashMap<MotorMap, Double> getDrivePowers(){
         return this.drivePower;
     }
 
-    protected double getDrivePower(String motorName){
+    protected double getDrivePower(MotorMap motorName){
         return this.getDrivePowers().get(motorName);
     }
 
@@ -169,7 +170,7 @@ public abstract class DriveBase extends Mechanism {
      * @param motorName the name of the motor to set the power for
      * @param power the power to set to the motor
      */
-    protected void setDrivePower(String motorName, double power){
+    protected void setDrivePower(MotorMap motorName, double power){
         this.drivePower.put(motorName, power);
     }
 
@@ -177,7 +178,7 @@ public abstract class DriveBase extends Mechanism {
      * Combines the strafe and rotate powers into drive power.
      */
     protected void combineMotorPower(){
-        for(String motor : this.getMotors().keySet()){
+        for(MotorMap motor : this.getMotors().keySet()){
             double strafe = this.strafeMotorPowers.get(motor) == null
                     ? 0 : this.strafeMotorPowers.get(motor);
             double rotate = this.rotateMotorPowers.get(motor) == null

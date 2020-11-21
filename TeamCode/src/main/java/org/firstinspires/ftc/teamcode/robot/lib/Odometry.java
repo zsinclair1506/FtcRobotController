@@ -9,13 +9,14 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.teamcode.robot.mapping.MotorMap;
 
 import java.util.HashMap;
 
 public class Odometry{
     private boolean initDriveDistance = true;
     private boolean initRotateAngle = true;
-    private HashMap<String, Integer> startPos = new HashMap<>();
+    private HashMap<MotorMap, Integer> startPos = new HashMap<>();
 
     private BNO055IMU imu;
     private Orientation lastAngles = new Orientation();
@@ -113,12 +114,12 @@ public class Odometry{
      * Initialises the base encouder counts for a run of the drivebase.
      * @param motors a hashmap of the motors to initialise
      */
-    public void driveDistanceInit(HashMap<String, DcMotor> motors){
+    public void driveDistanceInit(HashMap<MotorMap, DcMotor> motors){
         if(this.initDriveDistance){ // first run
             for(DcMotor motor : motors.values()){
                 motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             }
-            for(String motorName : motors.keySet()){
+            for(MotorMap motorName : motors.keySet()){
                 this.startPos.put(motorName, motors.get(motorName).getCurrentPosition());
             }
 
@@ -130,7 +131,7 @@ public class Odometry{
      * Gets the starting position of the motor encoders
      * @return
      */
-    public HashMap<String, Integer> getStartPos() {
+    public HashMap<MotorMap, Integer> getStartPos() {
         return this.startPos;
     }
 

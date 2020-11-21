@@ -26,13 +26,13 @@ public class XDrive extends DriveBase {
      */
     public XDrive (HardwareMap map, Telemetry telemetry, Robot robot) {
         super(map, telemetry, robot);
-        this.addMotor(MotorMap.XDRIVE_FRONT_LEFT_DC.getMotorName(),
+        this.addMotor(MotorMap.XDRIVE_FRONT_LEFT_DC,
                 map.get(DcMotor.class, MotorMap.XDRIVE_FRONT_LEFT_DC.getMotorName()));
-        this.addMotor(MotorMap.XDRIVE_FRONT_RIGHT_DC.getMotorName(),
+        this.addMotor(MotorMap.XDRIVE_FRONT_RIGHT_DC,
                 map.get(DcMotor.class, MotorMap.XDRIVE_FRONT_RIGHT_DC.getMotorName()));
-        this.addMotor(MotorMap.XDRIVE_BACK_RIGHT_DC.getMotorName(),
+        this.addMotor(MotorMap.XDRIVE_BACK_RIGHT_DC,
                 map.get(DcMotor.class, MotorMap.XDRIVE_BACK_RIGHT_DC.getMotorName()));
-        this.addMotor(MotorMap.XDRIVE_BACK_LEFT_DC.getMotorName(),
+        this.addMotor(MotorMap.XDRIVE_BACK_LEFT_DC,
                 map.get(DcMotor.class, MotorMap.XDRIVE_BACK_LEFT_DC.getMotorName()));
     }
 
@@ -45,7 +45,7 @@ public class XDrive extends DriveBase {
         this.byOurPowersCombined();
         this.motorNormalise();
 
-        for(String motorName : this.getMotors().keySet()){
+        for(MotorMap motorName : this.getMotors().keySet()){
             this.getMotor(motorName).setPower(this.getDrivePowers().get(motorName));
         }
     }
@@ -57,13 +57,13 @@ public class XDrive extends DriveBase {
      */
     @Override
     public void setStrafe(double angle, double power) {
-        this.setStrafeMotorPower(MotorMap.XDRIVE_FRONT_LEFT_DC.getMotorName(),
+        this.setStrafeMotorPower(MotorMap.XDRIVE_FRONT_LEFT_DC,
                 (-power * Math.cos(angle - Math.PI/4)));
-        this.setStrafeMotorPower(MotorMap.XDRIVE_FRONT_RIGHT_DC.getMotorName(),
+        this.setStrafeMotorPower(MotorMap.XDRIVE_FRONT_RIGHT_DC,
                 (-power * Math.cos(angle + Math.PI/4)));
-        this.setStrafeMotorPower(MotorMap.XDRIVE_BACK_RIGHT_DC.getMotorName(),
+        this.setStrafeMotorPower(MotorMap.XDRIVE_BACK_RIGHT_DC,
                 (power * Math.cos(angle - Math.PI/4)));
-        this.setStrafeMotorPower(MotorMap.XDRIVE_BACK_LEFT_DC.getMotorName(),
+        this.setStrafeMotorPower(MotorMap.XDRIVE_BACK_LEFT_DC,
                 (power * Math.cos(angle + Math.PI/4)));
     }
 
@@ -141,17 +141,17 @@ public class XDrive extends DriveBase {
         Vector driveSum = new Vector(0,0);
         double motorAngle = 0;
 
-        for (String motorName : odometry.getStartPos().keySet()) { // only approximate angles :(
-            if(motorName == MotorMap.XDRIVE_FRONT_LEFT_DC.getMotorName()) {
+        for (MotorMap motorName : odometry.getStartPos().keySet()) { // only approximate angles :(
+            if(motorName == MotorMap.XDRIVE_FRONT_LEFT_DC) {
                 motorAngle = -3 * Math.PI / 4;;
             }
-            else if(motorName == MotorMap.XDRIVE_FRONT_RIGHT_DC.getMotorName()) {
+            else if(motorName == MotorMap.XDRIVE_FRONT_RIGHT_DC) {
                 motorAngle = 3 * Math.PI / 4;
             }
-            else if(motorName == MotorMap.XDRIVE_BACK_RIGHT_DC.getMotorName()) {
+            else if(motorName == MotorMap.XDRIVE_BACK_RIGHT_DC) {
                 motorAngle = Math.PI / 4;
             }
-            else if (motorName == MotorMap.XDRIVE_BACK_LEFT_DC.getMotorName()) {
+            else if (motorName == MotorMap.XDRIVE_BACK_LEFT_DC) {
                 motorAngle = -Math.PI / 4;
             }
 
@@ -205,10 +205,10 @@ public class XDrive extends DriveBase {
      */
     @Override
     public void setRotation(RotationDirection direction, double power) {
-        this.setRotateMotorPower(MotorMap.XDRIVE_FRONT_LEFT_DC.getMotorName(), power);
-        this.setRotateMotorPower(MotorMap.XDRIVE_FRONT_RIGHT_DC.getMotorName(), power);
-        this.setRotateMotorPower(MotorMap.XDRIVE_BACK_RIGHT_DC.getMotorName(), power);
-        this.setRotateMotorPower(MotorMap.XDRIVE_BACK_LEFT_DC.getMotorName(), power);
+        this.setRotateMotorPower(MotorMap.XDRIVE_FRONT_LEFT_DC, power);
+        this.setRotateMotorPower(MotorMap.XDRIVE_FRONT_RIGHT_DC, power);
+        this.setRotateMotorPower(MotorMap.XDRIVE_BACK_RIGHT_DC, power);
+        this.setRotateMotorPower(MotorMap.XDRIVE_BACK_LEFT_DC, power);
     }
 
     /***
